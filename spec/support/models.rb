@@ -1,0 +1,1 @@
+Fruit = Struct.new(:name)
