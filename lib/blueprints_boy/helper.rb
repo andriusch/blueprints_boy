@@ -1,8 +1,20 @@
 module BlueprintsBoy::Helper
   def set(name, value)
-    singleton_class.class_eval do
-      define_method(name) { value }
-    end
+    @_fixtures ||= {}
+    @_fixtures[name] = value
+    instance_eval <<-RUBY, __FILE__, __LINE__ + 1
+      def self.#{name}
+        @_fixtures[:#{name}]
+      end
+    RUBY
+  end
+
+  def autoset(name, value)
+    set(name, value) unless respond_to?(name)
+  end
+
+  def fixtures(name)
+    @_fixtures[name]
   end
 
   def build(name)

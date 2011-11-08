@@ -8,6 +8,6 @@ class BlueprintsBoy::Blueprint
 
   def build(environment)
     result = environment.instance_eval(&@block)
-    environment.set(@name, result)
+    environment.autoset(@name, result)
   end
 end

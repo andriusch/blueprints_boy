@@ -5,9 +5,27 @@ BlueprintsBoy.enable do |config|
 end
 
 describe 'blueprints boy' do
-  it "should allow setting methods directly" do
-    set :apple, 'apple'
-    apple.should == 'apple'
+  describe "set" do
+    it "should allow setting methods directly" do
+      set :apple, 'apple'
+      apple.should == 'apple'
+    end
+
+    it "should auto set variable" do
+      autoset :apple, 'apple'
+      apple.should == 'apple'
+    end
+
+    it "should not auto set variable if it's already set" do
+      set :variable, :correct
+      autoset :variable, :incorrect
+      variable.should == :correct
+    end
+
+    it "should allow reaching fixtures through fixtures method" do
+      set :apple, 'apple'
+      fixtures(:apple).should == 'apple'
+    end
   end
 
   it "should allow building blueprint" do
