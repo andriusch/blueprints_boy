@@ -17,7 +17,7 @@ module BlueprintsBoy::Helper
     @_fixtures[name]
   end
 
-  def build(name)
-    BlueprintsBoy.manager.build(self, name)
+  def build(*names)
+    BlueprintsBoy.manager.build(self, names)
   end
 end

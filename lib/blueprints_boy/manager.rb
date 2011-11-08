@@ -10,10 +10,12 @@ module BlueprintsBoy
       @blueprints[blueprint.name] = blueprint
     end
 
-    def build(environment, name)
-      blueprint = @blueprints[name]
-      raise BlueprintNotFound, "Blueprint :#{name} cannot be found" unless blueprint
-      blueprint.build(environment)
+    def build(environment, names)
+      names.each do |name|
+        blueprint = @blueprints[name]
+        raise BlueprintNotFound, "Blueprint :#{name} cannot be found" unless blueprint
+        blueprint.build(environment)
+      end
     end
   end
 end

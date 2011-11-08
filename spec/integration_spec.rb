@@ -28,9 +28,17 @@ describe 'blueprints boy' do
     end
   end
 
-  it "should allow building blueprint" do
-    build :apple
-    apple.should be_instance_of(Fruit)
-    apple.name.should == 'apple'
+  describe "build" do
+    it "should allow building blueprint" do
+      build :apple
+      apple.should be_instance_of(Fruit)
+      apple.name.should == 'apple'
+    end
+
+    it "should allow building several blueprints" do
+      build :apple, :orange
+      apple.name.should == 'apple'
+      orange.name.should == 'orange'
+    end
   end
 end

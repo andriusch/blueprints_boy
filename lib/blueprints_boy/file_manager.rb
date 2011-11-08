@@ -9,5 +9,6 @@ module BlueprintsBoy
     def blueprint(*args, &block)
       @manager.add(Blueprint.new(*args, &block))
     end
+    alias method_missing blueprint
   end
 end
