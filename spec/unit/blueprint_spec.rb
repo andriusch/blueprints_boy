@@ -31,4 +31,12 @@ describe BlueprintsBoy::Blueprint do
       blueprint1.build(env)
     end
   end
+
+  describe "teardown" do
+    it "should mark blueprint as not built" do
+      blueprint1.build(env)
+      blueprint1.teardown
+      blueprint1.should_not be_built
+    end
+  end
 end

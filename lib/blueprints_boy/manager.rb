@@ -17,5 +17,9 @@ module BlueprintsBoy
         blueprint.build(environment)
       end
     end
+
+    def teardown
+      @blueprints.each_value(&:teardown)
+    end
   end
 end

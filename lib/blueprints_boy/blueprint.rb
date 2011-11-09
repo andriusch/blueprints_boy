@@ -4,7 +4,7 @@ class BlueprintsBoy::Blueprint
   def initialize(name, &block)
     @name = name
     @block = block
-    @built = false
+    teardown
   end
 
   def build(environment)
@@ -16,5 +16,9 @@ class BlueprintsBoy::Blueprint
 
   def built?
     @built
+  end
+
+  def teardown
+    @built = false
   end
 end

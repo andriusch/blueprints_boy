@@ -21,4 +21,13 @@ describe BlueprintsBoy::Manager do
       }.to raise_error(BlueprintsBoy::BlueprintNotFound, 'Blueprint :blueprint_not_existing cannot be found')
     end
   end
+
+  describe "teardown" do
+    it "should mark all teardown all blueprints" do
+      subject.add(blueprint1)
+      subject.build(env, [:blueprint1])
+      subject.teardown
+      blueprint1.should_not be_built
+    end
+  end
 end
