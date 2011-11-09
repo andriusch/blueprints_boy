@@ -18,5 +18,17 @@ describe BlueprintsBoy::Blueprint do
       blueprint1.build(env)
       env.blueprint1.should == :correct
     end
+
+    it "should mark blueprint as built" do
+      expect {
+        blueprint1.build(env)
+      }.to change(blueprint1, :built?).from(false).to(true)
+    end
+
+    it "should not build blueprint twice" do
+      env.expects(:autoset).once
+      blueprint1.build(env)
+      blueprint1.build(env)
+    end
   end
 end
