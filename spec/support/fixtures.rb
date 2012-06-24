@@ -18,6 +18,10 @@ module Fixtures
     end
   end
 
+  def create_blueprint(name, &block)
+    BlueprintsBoy::Blueprint.new(empty_context, name, &block)
+  end
+
   fixture :env do
     create_env(Object)
   end
@@ -27,7 +31,7 @@ module Fixtures
 
     fixture "blueprint#{n}" do |result|
       result ||= send("mock#{n}")
-      BlueprintsBoy::Blueprint.new(empty_context, "blueprint#{n}") { result }
+      create_blueprint("blueprint#{n}") { result }
     end
   end
 

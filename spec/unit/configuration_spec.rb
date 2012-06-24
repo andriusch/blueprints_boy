@@ -7,8 +7,7 @@ describe BlueprintsBoy::Configuration do
     end
   end
 
-  it "should have correct attribute values" do\
-
+  it "should have correct attribute values" do
     subject.prebuild.should == []
     subject.transactions.should be_false
     subject.root.should == Pathname.pwd

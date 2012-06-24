@@ -47,6 +47,12 @@ describe BlueprintsBoy::Manager do
       subject.build env, [:blueprint2]
       subject.built.to_a.should == [:blueprint2, :blueprint1]
     end
+
+    it "should allow passing options" do
+      subject.add(create_blueprint(:options_blueprint) { options[:name] })
+      subject.build(env, [{:options_blueprint => {name: 'success'}}])
+      env.options_blueprint.should == 'success'
+    end
   end
 
   describe "teardown" do

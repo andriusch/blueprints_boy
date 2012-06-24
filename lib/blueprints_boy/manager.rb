@@ -18,12 +18,12 @@ module BlueprintsBoy
     alias_method :[], :find
 
     def build(environment, names)
-      names.each do |name|
+      parse_names(names).each do |name, build_options|
         unless @built.include?(name)
           @built << name
           blueprint = find(name)
           build environment, blueprint.context.dependencies
-          blueprint.build(environment)
+          blueprint.build(environment, build_options || {})
         end
       end
     end
@@ -34,6 +34,13 @@ module BlueprintsBoy
 
     def teardown
       @built = Set.new
+    end
+
+    private
+
+    def parse_names(names)
+      names_with_options = names.extract_options!
+      names.push *names_with_options
     end
   end
 end

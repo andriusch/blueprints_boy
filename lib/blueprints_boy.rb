@@ -1,4 +1,5 @@
 require 'active_support/dependencies/autoload'
+require 'active_support/core_ext/array/extract_options'
 require "blueprints_boy/version"
 
 module BlueprintsBoy
