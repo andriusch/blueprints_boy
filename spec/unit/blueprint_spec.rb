@@ -1,4 +1,4 @@
-require 'unit_spec_helper'
+require 'spec_helper'
 
 describe BlueprintsBoy::Blueprint do
   describe "name" do
@@ -92,10 +92,8 @@ describe BlueprintsBoy::Blueprint do
         end
       end
 
-      env_class = Class.new do
-        include mod, BlueprintsBoy::Helper
-      end
-      env = env_class.new
+      env_class = Class.new { include mod }
+      env = create_env(env_class)
 
       blueprint1.build(env, attr: 'value')
       env.options.should == :options

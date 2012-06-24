@@ -1,4 +1,4 @@
-require 'unit_spec_helper'
+require 'spec_helper'
 
 describe BlueprintsBoy::Context do
   let :manager do

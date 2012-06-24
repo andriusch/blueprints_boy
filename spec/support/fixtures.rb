@@ -11,8 +11,15 @@ module Fixtures
     end
   end
 
+  def create_env(klass)
+    klass.new.tap do |object|
+      object.extend(BlueprintsBoy::Helper)
+      object.instance_variable_set(:@_fixtures, {})
+    end
+  end
+
   fixture :env do
-    Object.new.tap { |object| object.extend(BlueprintsBoy::Helper) }
+    create_env(Object)
   end
 
   [1, 2, 3].each do |n|

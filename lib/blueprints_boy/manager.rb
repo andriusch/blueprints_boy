@@ -14,6 +14,7 @@ module BlueprintsBoy
     def find(name)
       @blueprints[name] or raise BlueprintNotFound, "Blueprint :#{name} cannot be found"
     end
+
     alias_method :[], :find
 
     def build(environment, names)
@@ -25,6 +26,10 @@ module BlueprintsBoy
           blueprint.build(environment)
         end
       end
+    end
+
+    def setup(environment)
+      environment.instance_variable_set(:@_fixtures, {})
     end
 
     def teardown

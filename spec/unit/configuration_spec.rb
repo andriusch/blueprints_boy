@@ -1,4 +1,4 @@
-require 'unit_spec_helper'
+require 'spec_helper'
 
 describe BlueprintsBoy::Configuration do
   it "should have filename with default value" do
@@ -8,6 +8,7 @@ describe BlueprintsBoy::Configuration do
   end
 
   it "should have correct attribute values" do\
+
     subject.prebuild.should == []
     subject.transactions.should be_false
     subject.root.should == Pathname.pwd

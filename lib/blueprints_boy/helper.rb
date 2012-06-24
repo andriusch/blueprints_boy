@@ -1,6 +1,5 @@
 module BlueprintsBoy::Helper
   def set(name, value)
-    @_fixtures ||= {}
     @_fixtures[name] = value
     instance_eval <<-RUBY, __FILE__, __LINE__ + 1
       def self.#{name}

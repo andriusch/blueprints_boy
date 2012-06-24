@@ -13,7 +13,7 @@ module BlueprintsBoy
   autoload :Blueprint
 
   def self.enable
-    yield config
+    yield config if block_given?
     require 'blueprints_boy/integration/rspec'
     prepare
   end

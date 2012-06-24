@@ -1,4 +1,4 @@
-require 'unit_spec_helper'
+require 'spec_helper'
 
 describe BlueprintsBoy do
   it "should return manager" do
