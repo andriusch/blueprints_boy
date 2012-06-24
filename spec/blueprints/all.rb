@@ -2,6 +2,6 @@ blueprint :apple do
   Fruit.new('apple')
 end
 
-orange do
+blueprint :orange do
   Fruit.new('orange')
 end

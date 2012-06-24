@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'unit_spec_helper'
 
 describe BlueprintsBoy::Configuration do
   it "should have filename with default value" do

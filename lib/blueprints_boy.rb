@@ -8,7 +8,7 @@ module BlueprintsBoy
 
   autoload :Configuration
   autoload :Helper
-  autoload :FileManager
+  autoload :Context
   autoload :Manager
   autoload :Blueprint
 
@@ -25,7 +25,7 @@ module BlueprintsBoy
   def self.read_files
     config.filenames.each do |pattern|
       Dir[config.root.join(pattern)].each do |file_name|
-        FileManager.new(file_name, manager) if File.file?(file_name)
+        Context.new(file_name, manager) if File.file?(file_name)
       end
     end
   end

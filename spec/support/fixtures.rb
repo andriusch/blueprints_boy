@@ -15,10 +15,20 @@ module Fixtures
     Object.new.tap { |object| object.extend(BlueprintsBoy::Helper) }
   end
 
-  fixture(:mock1) { mock('mock1') }
+  [1, 2, 3].each do |n|
+    fixture("mock#{n}") { "mock#{n}" }
 
-  fixture :blueprint1 do |result|
-    result ||= mock1
-    BlueprintsBoy::Blueprint.new(:blueprint1) { result }
+    fixture "blueprint#{n}" do |result|
+      result ||= send("mock#{n}")
+      BlueprintsBoy::Blueprint.new(empty_context, "blueprint#{n}") { result }
+    end
+  end
+
+  fixture :manager do
+    BlueprintsBoy::Manager.new
+  end
+
+  fixture :empty_context do
+    BlueprintsBoy::Context.new(ROOT.join('spec/support/empty_file.rb').to_s, manager)
   end
 end
