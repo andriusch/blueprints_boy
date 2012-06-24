@@ -29,16 +29,21 @@ describe BlueprintsBoy::Helper do
   end
 
   describe "build" do
+    before do
+      BlueprintsBoy.instance_variable_set(:@manager, manager)
+      manager.add blueprint1
+      manager.add blueprint2
+    end
+
     it "should allow building blueprint" do
-      env.build :apple
-      env.apple.should be_instance_of(Fruit)
-      env.apple.name.should == 'apple'
+      env.build :blueprint1
+      env.blueprint1.should == mock1
     end
 
     it "should allow building several blueprints" do
-      env.build :apple, :orange
-      env.apple.name.should == 'apple'
-      env.orange.name.should == 'orange'
+      env.build :blueprint1, :blueprint2
+      env.blueprint1.should == mock1
+      env.blueprint2.should == mock2
     end
   end
 end
