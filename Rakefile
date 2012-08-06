@@ -20,3 +20,16 @@ namespace :prepare do
     end
   end
 end
+
+task :default do
+  def run(caption, command)
+    puts caption
+    system command
+  end
+
+  run 'Unit tests', 'bundle exec rake spec:unit'
+  run 'RSpec integration', 'bundle exec rspec integration/rspec/rspec_spec.rb'
+  run 'Active record integration', 'bundle exec rspec integration/active_record/active_record_spec.rb'
+  run 'Active record (truncation) integration', 'bundle exec rspec integration/active_record/active_record_truncation_spec.rb'
+  run 'Mongoid integration', 'bundle exec rspec integration/mongoid/mongoid_spec.rb'
+end
