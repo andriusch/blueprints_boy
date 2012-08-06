@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "mocha"
   s.add_development_dependency "activerecord", ">= 3.0.0"
   s.add_development_dependency "mysql2"
+  s.add_development_dependency "mongoid", ">= 2.0.0"
   s.add_runtime_dependency "activesupport", ">= 3.0.0"
   s.add_runtime_dependency "database_cleaner"
 end

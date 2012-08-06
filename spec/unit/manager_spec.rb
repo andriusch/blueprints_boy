@@ -58,14 +58,7 @@ describe BlueprintsBoy::Manager do
   describe "setup" do
     it "should set @_blueprint_results to {}" do
       subject.setup(env)
-      env.instance_variable_get(:@_blueprint_results).should == {}
-    end
-
-    it "should run before test callbacks" do
-      subject.before_test { throw :success }
-      expect {
-        subject.setup(env)
-      }.to throw_symbol(:success)
+      env.instance_variable_get(:@_blueprint_data).should == {}
     end
   end
 
@@ -75,13 +68,6 @@ describe BlueprintsBoy::Manager do
       subject.build(env, [:blueprint1])
       subject.teardown
       subject.built.should be_empty
-    end
-
-    it "should run before test callbacks" do
-      subject.after_test { throw :success }
-      expect {
-        subject.teardown
-      }.to throw_symbol(:success)
     end
   end
 end

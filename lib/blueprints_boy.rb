@@ -1,6 +1,7 @@
 require 'active_support/dependencies/autoload'
 require 'active_support/core_ext/array/extract_options'
-require "blueprints_boy/version"
+require 'database_cleaner'
+require 'blueprints_boy/version'
 
 module BlueprintsBoy
   extend ActiveSupport::Autoload
@@ -17,12 +18,17 @@ module BlueprintsBoy
 
   def self.enable
     yield config if block_given?
-    require 'blueprints_boy/integration/rspec'
+    require 'blueprints_boy/integration/rspec' if defined?(RSpec)
+    require 'blueprints_boy/integration/active_record' if defined?(ActiveRecord)
+    require 'blueprints_boy/integration/mongoid' if defined?(Mongoid)
     prepare
   end
 
   def self.prepare
     read_files
+    DatabaseCleaner.clean_with(:truncation)
+  rescue DatabaseCleaner::NoORMDetected
+    # ignored
   end
 
   def self.read_files

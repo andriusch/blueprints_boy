@@ -21,7 +21,9 @@ module BlueprintsBoy
     # Also by default prebuildable blueprints list is empty, transactions are enabled and root is set to Rails.root or current directory.
     def initialize
       self.filenames = [nil, "spec", "test"].map do |dir|
-        File.join([dir, 'blueprints/*.rb'].compact)
+        ['blueprints.rb', 'blueprints/*.rb'].map do |pattern|
+          File.join([dir, pattern].compact)
+        end
       end
       @prebuild = []
       @transactions = true

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe BlueprintsBoy::Configuration do
   it "should have filename with default value" do
-    subject.filenames.should == %w{blueprints/*.rb spec/blueprints/*.rb test/blueprints/*.rb}.collect do |f|
+    subject.filenames.should == %w{blueprints.rb blueprints/*.rb spec/blueprints.rb spec/blueprints/*.rb test/blueprints.rb test/blueprints/*.rb}.collect do |f|
       Pathname.new(f)
     end
   end

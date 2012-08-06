@@ -14,7 +14,7 @@ module Fixtures
   def create_env(klass)
     klass.new.tap do |object|
       object.extend(BlueprintsBoy::Helper)
-      object.instance_variable_set(:@_blueprint_results, {})
+      object.instance_variable_set(:@_blueprint_data, {})
     end
   end
 

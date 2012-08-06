@@ -25,7 +25,7 @@ describe 'rspec integration' do
 
     it "should allow reaching fixtures through fixtures method" do
       set :apple, 'apple'
-      fixtures(:apple).should == 'apple'
+      blueprint_data(:apple).should == 'apple'
     end
   end
 
@@ -42,7 +42,7 @@ describe 'rspec integration' do
     end
 
     it "should not allow to reach blueprints from previous specs" do
-      fixtures(:apple).should be_nil
+      blueprint_data(:apple).should be_nil
     end
   end
 end

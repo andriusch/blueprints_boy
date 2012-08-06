@@ -2,8 +2,9 @@ require_relative 'setup'
 require 'rspec'
 require 'blueprints_boy'
 
-BlueprintsBoy.enable
-require 'blueprints_boy/integration/active_record'
+BlueprintsBoy.enable do |config|
+  config.root = File.dirname(__FILE__)
+end
 
 describe ActiveRecord::Base do
   it "should create record in database" do

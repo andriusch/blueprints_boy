@@ -9,9 +9,10 @@ module BlueprintsBoy
     end
 
     def [](factory_class)
-      klass = factory_class
-      klass = klass.superclass until @factories.key?(klass) or klass.nil?
-      @factories[klass] or raise FactoryNotFound, "Factory for #{factory_class} can't be located"
+      factory_class.ancestors.each do |ancestor|
+        return @factories[ancestor] if @factories.key?(ancestor)
+      end
+      raise FactoryNotFound, "Factory for #{factory_class} can't be located"
     end
   end
 end
