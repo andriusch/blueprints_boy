@@ -3,6 +3,7 @@ module BlueprintsBoy
     attr_reader :blueprints, :built
 
     def initialize
+      @before_test, @after_test = [], []
       @blueprints = {}
       teardown
     end
@@ -29,11 +30,21 @@ module BlueprintsBoy
     end
 
     def setup(environment)
-      environment.instance_variable_set(:@_fixtures, {})
+      environment.instance_variable_set(:@_blueprint_results, {})
+      @before_test.each { |block| block.call }
     end
 
     def teardown
       @built = Set.new
+      @after_test.each { |block| block.call }
+    end
+
+    def before_test(&block)
+      @before_test << block
+    end
+
+    def after_test(&block)
+      @after_test << block
     end
 
     private

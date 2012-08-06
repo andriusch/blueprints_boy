@@ -24,7 +24,7 @@ module BlueprintsBoy
         File.join([dir, 'blueprints/*.rb'].compact)
       end
       @prebuild = []
-      @transactions = false
+      @transactions = true
       @root = defined?(Rails) ? Rails.root : Pathname.pwd
     end
 

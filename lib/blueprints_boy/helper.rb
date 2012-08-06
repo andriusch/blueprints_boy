@@ -1,9 +1,9 @@
 module BlueprintsBoy::Helper
   def set(name, value)
-    @_fixtures[name] = value
+    @_blueprint_results[name] = value
     instance_eval <<-RUBY, __FILE__, __LINE__ + 1
       def self.#{name}
-        @_fixtures[:#{name}]
+        @_blueprint_results[:#{name}]
       end
     RUBY
   end
@@ -13,7 +13,7 @@ module BlueprintsBoy::Helper
   end
 
   def fixtures(name)
-    @_fixtures[name]
+    @_blueprint_results[name]
   end
 
   def build(*names)

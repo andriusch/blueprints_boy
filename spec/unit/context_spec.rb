@@ -77,4 +77,24 @@ describe BlueprintsBoy::Context do
       context.attrs.should == {attr1: 'val1', attr2: 'v2', attr3: 'v3'}
     end
   end
+
+  describe "factories" do
+    before do
+      BlueprintsBoy.factories.add(Integer) { |*args| args }
+    end
+
+    it "should set block to nil" do
+      empty_context.block.should be_nil
+    end
+
+    it "should create new context with block" do
+      context = empty_context.factory(Fixnum)
+      context.block.call.should == [Fixnum]
+    end
+
+    it "should allow chaining after factory" do
+      context = empty_context.factory(Fixnum).attributes(attr: 'value')
+      context.block.call.should == [Fixnum]
+    end
+  end
 end

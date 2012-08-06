@@ -105,10 +105,19 @@ describe BlueprintsBoy::Blueprint do
       blueprint1
       env.instance_variable_set(:@value, 2)
       blueprint2 { [options, attributes] }.attributes(:attr => Blueprints::Dependency.new(:blueprint))
-      options, attributes = blueprint2.build(env, :options => {:attr2 => lambda { @value + 2 }, :attr3 => :value})
+      options, attributes = blueprint2.build(env, options: {:attr2 => lambda { @value + 2 }, attr3: :value})
 
       options.should == {:attr2 => 4, :attr3 => :value}
       attributes.should == {:attr => mock1, :attr2 => 4, :attr3 => :value}
+    end
+  end
+
+  describe "factory" do
+    it "should use factory when building blueprint" do
+      BlueprintsBoy.factories.add(Array) { |factory_class| factory_class.new(attributes[:size]) }
+      blueprint = create_blueprint('blueprint1').factory(Array)
+      blueprint.build(env, size: 3)
+      env.blueprint1.should == Array.new(3)
     end
   end
 end

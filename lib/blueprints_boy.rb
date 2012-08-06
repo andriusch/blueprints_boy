@@ -6,11 +6,13 @@ module BlueprintsBoy
   extend ActiveSupport::Autoload
 
   autoload :BlueprintNotFound, 'blueprints_boy/errors'
+  autoload :FactoryNotFound, 'blueprints_boy/errors'
 
   autoload :Configuration
   autoload :Helper
   autoload :Context
   autoload :Manager
+  autoload :Factories
   autoload :Blueprint
 
   def self.enable
@@ -37,5 +39,9 @@ module BlueprintsBoy
 
   def self.config
     @config ||= Configuration.new
+  end
+
+  def self.factories
+    @factories ||= Factories.new
   end
 end

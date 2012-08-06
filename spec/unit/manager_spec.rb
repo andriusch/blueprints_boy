@@ -55,12 +55,33 @@ describe BlueprintsBoy::Manager do
     end
   end
 
+  describe "setup" do
+    it "should set @_blueprint_results to {}" do
+      subject.setup(env)
+      env.instance_variable_get(:@_blueprint_results).should == {}
+    end
+
+    it "should run before test callbacks" do
+      subject.before_test { throw :success }
+      expect {
+        subject.setup(env)
+      }.to throw_symbol(:success)
+    end
+  end
+
   describe "teardown" do
     it "should mark all teardown all blueprints" do
       subject.add(blueprint1)
       subject.build(env, [:blueprint1])
       subject.teardown
       subject.built.should be_empty
+    end
+
+    it "should run before test callbacks" do
+      subject.after_test { throw :success }
+      expect {
+        subject.teardown
+      }.to throw_symbol(:success)
     end
   end
 end

@@ -4,16 +4,17 @@ class BlueprintsBoy::Blueprint
   def initialize(context, name, attrs = {}, &block)
     @context = context
     @name = name.to_sym
-    @block = block || proc { dependencies.map { |dep| send(dep) } }
+    @block = block
     attributes(attrs)
   end
 
   def build(environment, options = {})
+    block = @block || @context.block || proc { dependencies.map { |dep| send(dep) } }
     result = nil
     with_method(environment, :options, options) do
       with_method(environment, :attributes, context.attrs.merge(options)) do
         with_method(environment, :dependencies, context.dependencies) do
-          result = environment.instance_eval(&@block)
+          result = environment.instance_eval(&block)
         end
       end
     end
@@ -21,17 +22,21 @@ class BlueprintsBoy::Blueprint
   end
 
   def depends_on(*dependencies)
-    update_context dependencies, nil
+    update_context dependencies, nil, nil
   end
 
   def attributes(attributes)
-    update_context nil, attributes
+    update_context nil, attributes, nil
+  end
+
+  def factory(factory_class)
+    update_context nil, nil, factory_class
   end
 
   private
 
-  def update_context(dependencies, attributes)
-    @context = @context.chain(dependencies, attributes)
+  def update_context(dependencies, attributes, factory_class)
+    @context = @context.chain(dependencies, attributes, factory_class)
     self
   end
 
