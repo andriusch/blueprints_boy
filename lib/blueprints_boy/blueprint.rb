@@ -12,8 +12,8 @@ class BlueprintsBoy::Blueprint
     block = @block || @context.block || proc { dependencies.map { |dep| send(dep) } }
     result = nil
     with_method(environment, :options, options) do
-      with_method(environment, :attributes, context.attrs.merge(options)) do
-        with_method(environment, :dependencies, context.dependencies) do
+      with_method(environment, :attributes, normalized_attributes(environment).merge(options)) do
+        with_method(environment, :dependencies, @context.dependencies) do
           result = environment.instance_eval(&block)
         end
       end
@@ -31,6 +31,17 @@ class BlueprintsBoy::Blueprint
 
   def factory(factory_class)
     update_context nil, nil, factory_class
+  end
+
+  def normalized_attributes(environment)
+    @context.attrs.each_with_object({}) do |(key, value), normalized|
+      normalized[key] = case value
+                        when BlueprintsBoy::Dependency
+                          environment.instance_eval(&value)
+                        else
+                          value
+                        end
+    end
   end
 
   private

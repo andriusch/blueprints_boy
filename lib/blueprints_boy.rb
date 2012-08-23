@@ -15,6 +15,7 @@ module BlueprintsBoy
   autoload :Manager
   autoload :Factories
   autoload :Blueprint
+  autoload :Dependency
 
   def self.enable
     yield config if block_given?

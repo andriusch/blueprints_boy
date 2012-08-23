@@ -99,16 +99,27 @@ describe BlueprintsBoy::Blueprint do
       env.options.should == :options
       env.attributes.should == :attributes
     end
+  end
 
-    it "should normalize options and attributes" do
-      pending
-      blueprint1
-      env.instance_variable_set(:@value, 2)
-      blueprint2 { [options, attributes] }.attributes(:attr => Blueprints::Dependency.new(:blueprint))
-      options, attributes = blueprint2.build(env, options: {:attr2 => lambda { @value + 2 }, attr3: :value})
+  describe "normalized attributes" do
+    before do
+      BlueprintsBoy.manager.add blueprint1
+      blueprint1.build(env)
+    end
 
-      options.should == {:attr2 => 4, :attr3 => :value}
-      attributes.should == {:attr => mock1, :attr2 => 4, :attr3 => :value}
+    subject do
+      create_blueprint(:subject) { attributes }
+    end
+
+    it "should return normalized attributes" do
+      subject.attributes(attr: empty_context.blueprint1)
+      subject.normalized_attributes(env).should == {attr: mock1}
+    end
+
+    it "should use normalized attributes when building" do
+      subject.attributes(attr: empty_context.blueprint1)
+      subject.build(env)
+      env.subject.should == {attr: mock1}
     end
   end
 

@@ -7,6 +7,7 @@ module BlueprintsBoy
       @manager = manager
       @dependencies = []
       @attrs = {}
+      @block = nil
       instance_eval(File.read(file_name), file_name)
     end
 
@@ -25,7 +26,7 @@ module BlueprintsBoy
     def chain(dependencies, attributes, factory_class, &block)
       dup.tap do |context|
         context.dependencies |= dependencies if dependencies
-        context.attrs.merge!(attributes) if attributes
+        context.attrs = context.attrs.merge(attributes) if attributes
         context.block = proc { instance_exec(factory_class, &BlueprintsBoy.factories[factory_class]) } if factory_class
         context.instance_eval(&block) if block
       end
@@ -34,5 +35,11 @@ module BlueprintsBoy
     def blueprint(*args, &block)
       @manager.add(Blueprint.new(self, *args, &block))
     end
+
+    def dependency(name, *args, &block)
+      BlueprintsBoy::Dependency.new(name, *args, &block)
+    end
+
+    alias_method :method_missing, :dependency
   end
 end

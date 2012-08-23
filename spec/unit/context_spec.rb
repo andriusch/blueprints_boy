@@ -55,6 +55,11 @@ describe BlueprintsBoy::Context do
       context = empty_context.depends_on(:blueprint).depends_on(:blueprint)
       context.dependencies.should == [:blueprint]
     end
+
+    it "should not modify original dependencies" do
+      empty_context.depends_on(:blueprint)
+      empty_context.dependencies.should == []
+    end
   end
 
   describe "attributes" do
@@ -76,6 +81,11 @@ describe BlueprintsBoy::Context do
       end
       context.attrs.should == {attr1: 'val1', attr2: 'v2', attr3: 'v3'}
     end
+
+    it "should not modify original attributes" do
+      empty_context.attributes(attr: 'val')
+      empty_context.attrs.should == {}
+    end
   end
 
   describe "factories" do
@@ -95,6 +105,22 @@ describe BlueprintsBoy::Context do
     it "should allow chaining after factory" do
       context = empty_context.factory(Fixnum).attributes(attr: 'value')
       context.block.call.should == [Fixnum]
+    end
+  end
+
+  describe "creating dependencies" do
+    it "should allow dependencies in attributes" do
+      dependency = empty_context.blueprint1
+      (BlueprintsBoy::Dependency === dependency).should be_true
+    end
+
+    it "should pass blueprint_name and options" do
+      dependency = empty_context.blueprint1(:blueprint_name, option: 'value')
+      dependency.instance_eval do
+        @name.should == :blueprint1
+        @blueprint_name.should == :blueprint_name
+        @options.should == {option: 'value'}
+      end
     end
   end
 end
