@@ -25,6 +25,7 @@ task :default do
   def run(caption, command)
     puts caption
     system command
+    puts '-' * 80
   end
 
   run 'Unit tests', 'bundle exec rake spec:unit'
