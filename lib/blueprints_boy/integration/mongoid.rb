@@ -1,3 +1,3 @@
-BlueprintsBoy.factories.add(Mongoid::Document) { |factory_class| factory_class.create!(attributes, without_protection: true) }
+BlueprintsBoy.factories.add(Mongoid::Document) { |data| data.factory.create!(data.attributes, without_protection: true) }
 
 DatabaseCleaner[:mongoid].strategy = :truncation

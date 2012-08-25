@@ -18,6 +18,13 @@ describe BlueprintsBoy::Blueprint do
       blueprint1.build(env)
       env.blueprint1.should == :correct
     end
+
+    it "should allow building blueprint with no block" do
+      blueprint = create_blueprint(:blueprint1)
+      expect {
+        blueprint.build(env)
+      }.not_to raise_error
+    end
   end
 
   describe "depends_on" do
@@ -28,19 +35,6 @@ describe BlueprintsBoy::Blueprint do
     it "should allow setting dependencies" do
       blueprint1.depends_on(:blueprint2)
       blueprint1.context.dependencies.should == [:blueprint2]
-    end
-
-    it "should allow getting dependencies" do
-      blueprint = described_class.new(empty_context, :blueprint) { dependencies }.depends_on(:blueprint2)
-      blueprint.build(env)
-      env.blueprint.should == [:blueprint2]
-    end
-
-    it "should set return values of all dependent blueprints" do
-      blueprint1.build(env)
-      blueprint2.build(env)
-      empty_context.blueprint(:blueprint3).depends_on(:blueprint1, :blueprint2).build(env)
-      env.blueprint3.should == [mock1, mock2]
     end
   end
 
@@ -56,13 +50,13 @@ describe BlueprintsBoy::Blueprint do
     end
 
     it "should allow passing options" do
-      blueprint = described_class.new(empty_context, :blueprint) { options }
+      blueprint = described_class.new(empty_context, :blueprint) { |data| data.options }
       blueprint.build(env, attr: 'value')
       env.blueprint.should == {attr: 'value'}
     end
 
     it "should allow using attributes with merged options in blueprint" do
-      blueprint = described_class.new(empty_context, :blueprint, attr1: 'value1', attr2: 'value2') { attributes }
+      blueprint = described_class.new(empty_context, :blueprint, attr1: 'value1', attr2: 'value2') { |data| data.attributes }
       blueprint.build(env, attr2: 'v2', attr3: 'v3')
       env.blueprint.should == {attr1: 'value1', attr2: 'v2', attr3: 'v3'}
     end
@@ -108,7 +102,7 @@ describe BlueprintsBoy::Blueprint do
     end
 
     subject do
-      create_blueprint(:subject) { attributes }
+      create_blueprint(:subject) { |data| data.attributes }
     end
 
     it "should return normalized attributes" do
@@ -125,7 +119,7 @@ describe BlueprintsBoy::Blueprint do
 
   describe "factory" do
     it "should use factory when building blueprint" do
-      BlueprintsBoy.factories.add(Array) { |factory_class| factory_class.new(attributes[:size]) }
+      BlueprintsBoy.factories.add(Array) { |data| data.factory.new(data.attributes[:size]) }
       blueprint = create_blueprint('blueprint1').factory(Array)
       blueprint.build(env, size: 3)
       env.blueprint1.should == Array.new(3)

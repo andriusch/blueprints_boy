@@ -1,13 +1,13 @@
 module BlueprintsBoy
   class Context
-    attr_accessor :dependencies, :attrs, :block
+    attr_accessor :dependencies, :attrs, :factory_class
 
     def initialize(file_name, manager)
       @file_name = file_name
       @manager = manager
       @dependencies = []
       @attrs = {}
-      @block = nil
+      @factory_class = nil
       instance_eval(File.read(file_name), file_name)
     end
 
@@ -23,11 +23,11 @@ module BlueprintsBoy
       chain(nil, nil, factory_class, &block)
     end
 
-    def chain(dependencies, attributes, factory_class, &block)
+    def chain(dependencies, attributes, factory, &block)
       dup.tap do |context|
         context.dependencies |= dependencies if dependencies
         context.attrs = context.attrs.merge(attributes) if attributes
-        context.block = proc { instance_exec(factory_class, &BlueprintsBoy.factories[factory_class]) } if factory_class
+        context.factory_class = factory if factory
         context.instance_eval(&block) if block
       end
     end

@@ -20,7 +20,7 @@ describe BlueprintsBoy::Dependency do
   end
 
   it "should allow passing options for building" do
-    BlueprintsBoy.manager.add(create_blueprint(:options_blueprint) { options })
+    BlueprintsBoy.manager.add(create_blueprint(:options_blueprint) { |data| data.options })
     value(described_class.new(:options_blueprint, :option => 'value')).should == {:option => 'value'}
   end
 

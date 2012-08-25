@@ -49,7 +49,7 @@ describe BlueprintsBoy::Manager do
     end
 
     it "should allow passing options" do
-      subject.add(create_blueprint(:options_blueprint) { options[:name] })
+      subject.add(create_blueprint(:options_blueprint) { |data| data.options[:name] })
       subject.build(env, [{:options_blueprint => {name: 'success'}}])
       env.options_blueprint.should == 'success'
     end

@@ -99,12 +99,12 @@ describe BlueprintsBoy::Context do
 
     it "should create new context with block" do
       context = empty_context.factory(Fixnum)
-      context.block.call.should == [Fixnum]
+      context.factory_class.should == Fixnum
     end
 
     it "should allow chaining after factory" do
       context = empty_context.factory(Fixnum).attributes(attr: 'value')
-      context.block.call.should == [Fixnum]
+      context.factory_class.should == Fixnum
     end
   end
 
