@@ -12,6 +12,10 @@ describe 'rspec integration' do
       apple.should == 'apple'
     end
 
+    it "should return value that is set" do
+      set(:apple, 'apple').should == 'apple'
+    end
+
     it "should auto set variable" do
       autoset :apple, 'apple'
       apple.should == 'apple'
@@ -21,6 +25,20 @@ describe 'rspec integration' do
       set :variable, :correct
       autoset :variable, :incorrect
       variable.should == :correct
+    end
+
+    it "should still autoset variable in blueprint_data even if environment defines method with same name" do
+      def self.variable
+      end
+
+      autoset :variable, :correct
+      variable.should be_nil
+      blueprint_data(:variable).should == :correct
+    end
+
+    it "should still return original value if variable is already set" do
+      set :variable, :correct
+      autoset(:variable, :incorrect).should == :correct
     end
 
     it "should allow reaching fixtures through fixtures method" do

@@ -53,6 +53,20 @@ describe BlueprintsBoy::Manager do
       subject.build(env, [{:options_blueprint => {name: 'success'}}])
       env.options_blueprint.should == 'success'
     end
+
+    it "should return results" do
+      subject.add(blueprint2)
+      subject.build(env, [:blueprint1, :blueprint2 => {attr: 'val'}]).should == [mock1, mock2]
+    end
+
+    it "should return 1 result if only one blueprint was built" do
+      subject.build(env, [:blueprint1]).should == mock1
+    end
+
+    it "should return results for already built blueprints" do
+      subject.build(env, [:blueprint1])
+      subject.build(env, [:blueprint1]).should == mock1
+    end
   end
 
   describe "setup" do

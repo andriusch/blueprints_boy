@@ -18,14 +18,11 @@ module BlueprintsBoy
     alias_method :[], :find
 
     def build(environment, names)
-      parse_names(names).each do |name, build_options|
-        unless @built.include?(name)
-          @built << name
-          blueprint = find(name)
-          build environment, blueprint.context.dependencies
-          blueprint.build(environment, build_options || {})
-        end
+      result = parse_names(names).collect do |name, build_options|
+        build_blueprint(environment, name, build_options)
+        environment.blueprint_data(name)
       end
+      result.size > 1 ? result : result.first
     end
 
     def setup(environment)
@@ -43,6 +40,15 @@ module BlueprintsBoy
     end
 
     private
+
+    def build_blueprint(environment, name, options)
+      unless @built.include?(name)
+        @built << name
+        blueprint = find(name)
+        build environment, blueprint.context.dependencies
+        blueprint.build(environment, options || {})
+      end
+    end
 
     def parse_names(names)
       names_with_options = names.extract_options!

@@ -36,6 +36,12 @@ module BlueprintsBoy
       @manager.add(Blueprint.new(self, *args, &block))
     end
 
+    def group(groups)
+      groups.collect do |name, children|
+        blueprint(name) { build *children }
+      end
+    end
+
     def dependency(name, *args, &block)
       BlueprintsBoy::Dependency.new(name, *args, &block)
     end
