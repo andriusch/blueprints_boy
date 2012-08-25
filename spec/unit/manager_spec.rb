@@ -42,6 +42,12 @@ describe BlueprintsBoy::Manager do
       subject.build(env, [:blueprint1, :blueprint1])
     end
 
+    it "should use update strategy if options are present and blueprint is already built" do
+      mock1.should_receive(:update)
+      blueprint1.blueprint(:update) { blueprint1.update }
+      subject.build(env, [:blueprint1, {:blueprint1 => {option: 'value'}}])
+    end
+
     it "should build dependencies of blueprint" do
       subject.add blueprint2.depends_on(:blueprint1)
       subject.build env, [:blueprint2]

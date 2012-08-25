@@ -42,12 +42,18 @@ module BlueprintsBoy
     private
 
     def build_blueprint(environment, name, attributes, options)
-      unless @built.include?(name)
-        @built << name
-        blueprint = find(name)
-        build environment, blueprint.context.dependencies
-        blueprint.build(environment, options[:strategy], attributes || {})
+      if @built.include?(name)
+        if attributes.present?
+          options[:strategy] = :update
+        else
+          return
+        end
       end
+
+      @built << name
+      blueprint = find(name)
+      build environment, blueprint.context.dependencies
+      blueprint.build(environment, options[:strategy], attributes || {})
     end
 
     def parse_names(names)

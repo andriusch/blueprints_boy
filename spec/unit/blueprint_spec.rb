@@ -62,6 +62,14 @@ describe BlueprintsBoy::Blueprint do
     end
   end
 
+  describe "name" do
+    it "should put name in data" do
+      blueprint = create_blueprint(:blueprint1) { |data| data.name }
+      blueprint.build(env)
+      env.blueprint1.should == :blueprint1
+    end
+  end
+
   describe "strategies" do
     it "should allow having multiple strategies" do
       blueprint1.blueprint(:options) { |data| data.options }

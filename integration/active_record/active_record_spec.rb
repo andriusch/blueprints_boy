@@ -28,4 +28,10 @@ describe ActiveRecord::Base do
     apple.should be_new_record
     apple.species.should == 'apple'
   end
+
+  it "should allow updating built blueprint" do
+    build :apple
+    build :apple => {species: 'orange'}
+    apple.reload.species.should == 'orange'
+  end
 end

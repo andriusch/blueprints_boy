@@ -1,5 +1,5 @@
 class BlueprintsBoy::Blueprint
-  Data = Struct.new(:options, :attributes, :factory)
+  Data = Struct.new(:name, :options, :attributes, :factory)
   attr_reader :name, :context
 
   def initialize(context, name, attrs = {}, &block)
@@ -16,7 +16,7 @@ class BlueprintsBoy::Blueprint
     options = args.extract_options!
     strategy = args.shift || :create
 
-    data = Data.new(options, normalized_attributes(environment).merge(options), @context.factory_class)
+    data = Data.new(@name, options, normalized_attributes(environment).merge(options), @context.factory_class)
     block = @strategies[strategy]
     block ||= BlueprintsBoy.factories[@context.factory_class, strategy] if @context.factory_class
     if block
