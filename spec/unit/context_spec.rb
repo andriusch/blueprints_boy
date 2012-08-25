@@ -6,9 +6,11 @@ describe BlueprintsBoy::Context do
   end
 
   describe "initialize" do
-    it "should read file into manager" do
-      described_class.new(ROOT.join('spec/support/manager_fixture.rb').to_s, manager)
-      manager.blueprints[:test].should be_instance_of(BlueprintsBoy::Blueprint)
+    it "should read file and callback for each blueprint" do
+      blueprints = []
+      described_class.new(ROOT.join('spec/support/manager_fixture.rb').to_s) { |blueprint| blueprints << blueprint }
+      blueprints.should have(1).element
+      blueprints.first.name.should == :test
     end
   end
 
@@ -16,7 +18,7 @@ describe BlueprintsBoy::Context do
     it "should add new blueprint" do
       blueprint = empty_context.blueprint(:blueprint1) {}
       blueprint.should be_instance_of(BlueprintsBoy::Blueprint)
-      manager.blueprints[:blueprint1].should equal(blueprint)
+      blueprint.name.should == :blueprint1
     end
 
     it "should set context" do

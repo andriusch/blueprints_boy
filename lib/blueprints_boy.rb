@@ -35,7 +35,7 @@ module BlueprintsBoy
   def self.read_files
     config.filenames.each do |pattern|
       Dir[config.root.join(pattern)].each do |file_name|
-        Context.new(file_name, manager) if File.file?(file_name)
+        Context.new(file_name) { |blueprint| manager.add(blueprint) } if File.file?(file_name)
       end
     end
   end

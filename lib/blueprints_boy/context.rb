@@ -2,9 +2,9 @@ module BlueprintsBoy
   class Context
     attr_accessor :dependencies, :attrs, :factory_class
 
-    def initialize(file_name, manager)
+    def initialize(file_name, &added_callback)
       @file_name = file_name
-      @manager = manager
+      @added_callback = added_callback
       @dependencies = []
       @attrs = {}
       @factory_class = nil
@@ -33,7 +33,9 @@ module BlueprintsBoy
     end
 
     def blueprint(*args, &block)
-      @manager.add(Blueprint.new(self, *args, &block))
+      Blueprint.new(self, *args, &block).tap do |blueprint|
+        @added_callback.call blueprint if @added_callback
+      end
     end
 
     def group(groups)
