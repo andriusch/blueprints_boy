@@ -28,6 +28,8 @@ class BlueprintsBoy::Blueprint
     update_context nil, nil, factory_class
   end
 
+  private
+
   def normalized_attributes(environment)
     @context.attrs.each_with_object({}) do |(key, value), normalized|
       normalized[key] = case value
@@ -38,8 +40,6 @@ class BlueprintsBoy::Blueprint
                         end
     end
   end
-
-  private
 
   def update_context(dependencies, attributes, factory_class)
     @context = @context.chain(dependencies, attributes, factory_class)
