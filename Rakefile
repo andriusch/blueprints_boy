@@ -5,6 +5,18 @@ namespace :spec do
   RSpec::Core::RakeTask.new(:unit) do |t|
     t.pattern = "spec/unit/**/*_spec.rb"
   end
+  RSpec::Core::RakeTask.new(:rspec) do |t|
+    t.pattern = "integration/rspec/rspec_spec.rb"
+  end
+  RSpec::Core::RakeTask.new(:active_record) do |t|
+    t.pattern = "integration/active_record/active_record_spec.rb"
+  end
+  RSpec::Core::RakeTask.new(:active_record_truncation) do |t|
+    t.pattern = "integration/active_record/active_record_truncation_spec.rb"
+  end
+  RSpec::Core::RakeTask.new(:mongoid) do |t|
+    t.pattern = "integration/mongoid/mongoid_spec.rb"
+  end
 end
 
 namespace :prepare do
@@ -21,16 +33,4 @@ namespace :prepare do
   end
 end
 
-task :default do
-  def run(caption, command)
-    puts caption
-    system command
-    puts '-' * 80
-  end
-
-  run 'Unit tests', 'bundle exec rake spec:unit'
-  run 'RSpec integration', 'bundle exec rspec integration/rspec/rspec_spec.rb'
-  run 'Active record integration', 'bundle exec rspec integration/active_record/active_record_spec.rb'
-  run 'Active record (truncation) integration', 'bundle exec rspec integration/active_record/active_record_truncation_spec.rb'
-  run 'Mongoid integration', 'bundle exec rspec integration/mongoid/mongoid_spec.rb'
-end
+task :default => %w(spec:unit spec:rspec spec:active_record spec:active_record_truncation spec:mongoid)
