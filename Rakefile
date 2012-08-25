@@ -33,4 +33,5 @@ namespace :prepare do
   end
 end
 
-task :default => %w(spec:unit spec:rspec spec:active_record spec:active_record_truncation spec:mongoid)
+task :spec => %w(spec:unit spec:rspec spec:active_record spec:active_record_truncation spec:mongoid)
+task :default => :spec
