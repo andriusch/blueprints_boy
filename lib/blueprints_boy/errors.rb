@@ -4,4 +4,7 @@ module BlueprintsBoy
 
   class FactoryNotFound < StandardError
   end
+
+  class StrategyNotFound < StandardError
+  end
 end

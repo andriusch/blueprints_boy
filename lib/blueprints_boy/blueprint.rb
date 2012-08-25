@@ -19,7 +19,11 @@ class BlueprintsBoy::Blueprint
     data = Data.new(options, normalized_attributes(environment).merge(options), @context.factory_class)
     block = @strategies[strategy]
     block ||= BlueprintsBoy.factories[@context.factory_class, strategy] if @context.factory_class
-    environment.autoset(@name, environment.instance_exec(data, &block)) if block
+    if block
+      environment.autoset(@name, environment.instance_exec(data, &block))
+    else
+      raise BlueprintsBoy::StrategyNotFound, "Blueprint #{@name.inspect} does not define strategy #{strategy.inspect}"
+    end
   end
 
   def depends_on(*dependencies)

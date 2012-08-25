@@ -8,6 +8,7 @@ module BlueprintsBoy
 
   autoload :BlueprintNotFound, 'blueprints_boy/errors'
   autoload :FactoryNotFound, 'blueprints_boy/errors'
+  autoload :StrategyNotFound, 'blueprints_boy/errors'
 
   autoload :Configuration
   autoload :Helper

@@ -18,13 +18,6 @@ describe BlueprintsBoy::Blueprint do
       blueprint1.build(env)
       env.blueprint1.should == :correct
     end
-
-    it "should allow building blueprint with no block" do
-      blueprint = create_blueprint(:blueprint1)
-      expect {
-        blueprint.build(env)
-      }.not_to raise_error
-    end
   end
 
   describe "depends_on" do
@@ -80,6 +73,12 @@ describe BlueprintsBoy::Blueprint do
       blueprint1.attributes(attr: 'val')
       blueprint1.build(env, :attributes)
       env.blueprint1.should == {attr: 'val'}
+    end
+
+    it "should raise error if blueprint doesn't define strategy" do
+      expect {
+        blueprint1.build(env, :not_existing_strategy)
+      }.to raise_error(BlueprintsBoy::StrategyNotFound, 'Blueprint :blueprint1 does not define strategy :not_existing_strategy')
     end
   end
 
