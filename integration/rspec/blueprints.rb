@@ -2,6 +2,6 @@ blueprint :apple do
   'apple'
 end
 
-blueprint :orange do
-  'orange'
+attributes(name: 'orange').blueprint :orange do |data|
+  data.attributes[:name]
 end

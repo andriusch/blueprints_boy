@@ -1,16 +1,16 @@
 module BlueprintsBoy
   class Factories
     def initialize
-      @factories = {}
+      @factories = Hash.new { |hash, key| hash[key] = {} }
     end
 
-    def add(factory_class, &block)
-      @factories[factory_class] = block
+    def add(factory_class, strategy, &block)
+      @factories[factory_class][strategy] = block
     end
 
-    def [](factory_class)
+    def [](factory_class, strategy)
       factory_class.ancestors.each do |ancestor|
-        return @factories[ancestor] if @factories.key?(ancestor)
+        return @factories[ancestor][strategy] if @factories.key?(ancestor)
       end
       raise FactoryNotFound, "Factory for #{factory_class} can't be located"
     end

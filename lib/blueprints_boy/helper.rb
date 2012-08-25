@@ -23,4 +23,8 @@ module BlueprintsBoy::Helper
   def build(*names)
     BlueprintsBoy.manager.build(self, names)
   end
+
+  def build_with(strategy, *names)
+    BlueprintsBoy.manager.build(self, names, strategy: strategy)
+  end
 end

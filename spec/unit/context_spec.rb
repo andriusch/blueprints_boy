@@ -91,12 +91,8 @@ describe BlueprintsBoy::Context do
   end
 
   describe "factories" do
-    before do
-      BlueprintsBoy.factories.add(Integer) { |*args| args }
-    end
-
     it "should set block to nil" do
-      empty_context.block.should be_nil
+      empty_context.factory_class.should be_nil
     end
 
     it "should create new context with block" do

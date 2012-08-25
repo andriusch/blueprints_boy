@@ -69,9 +69,23 @@ describe BlueprintsBoy::Blueprint do
     end
   end
 
+  describe "strategies" do
+    it "should allow having multiple strategies" do
+      blueprint1.blueprint(:options) { |data| data.options }
+      blueprint1.build(env, :options, option: 'val')
+      env.blueprint1.should == {option: 'val'}
+    end
+
+    it "should have attributes strategy" do
+      blueprint1.attributes(attr: 'val')
+      blueprint1.build(env, :attributes)
+      env.blueprint1.should == {attr: 'val'}
+    end
+  end
+
   describe "factory" do
     it "should use factory when building blueprint" do
-      BlueprintsBoy.factories.add(Array) { |data| data.factory.new(data.attributes[:size]) }
+      BlueprintsBoy.factories.add(Array, :create) { |data| data.factory.new(data.attributes[:size]) }
       blueprint = create_blueprint('blueprint1').factory(Array)
       blueprint.build(env, size: 3)
       env.blueprint1.should == Array.new(3)

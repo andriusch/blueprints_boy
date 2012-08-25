@@ -21,4 +21,11 @@ describe ActiveRecord::Base do
   it "should use transactions for cleaning database" do
     ActiveRecord::Base.connection.open_transactions.should == 1
   end
+
+  it "should allow building using :new strategy" do
+    build_with :new, :apple
+    apple.should be_a(ARFruit)
+    apple.should be_new_record
+    apple.species.should == 'apple'
+  end
 end

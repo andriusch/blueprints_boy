@@ -30,4 +30,11 @@ describe Mongoid do
   it "should clean database before each test" do
     MongoidFruit.all.to_a.should == []
   end
+
+  it "should allow building using :new strategy" do
+    build_with :new, :apple
+    apple.should be_a(MongoidFruit)
+    apple.should be_new_record
+    apple.species.should == 'apple'
+  end
 end

@@ -67,6 +67,12 @@ describe BlueprintsBoy::Manager do
       subject.build(env, [:blueprint1])
       subject.build(env, [:blueprint1]).should == mock1
     end
+
+    it "should allow passing strategy" do
+      blueprint1.blueprint(:new) { :new_strat }
+      subject.build(env, [:blueprint1], strategy: :new)
+      env.blueprint1.should == :new_strat
+    end
   end
 
   describe "setup" do

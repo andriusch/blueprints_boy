@@ -5,14 +5,20 @@ class BlueprintsBoy::Blueprint
   def initialize(context, name, attrs = {}, &block)
     @context = context
     @name = name.to_sym
-    @block = block
+    @strategies = {
+        create: block,
+        attributes: proc { |data| data.attributes }
+    }
     attributes(attrs)
   end
 
-  def build(environment, options = {})
+  def build(environment, *args)
+    options = args.extract_options!
+    strategy = args.shift || :create
+
     data = Data.new(options, normalized_attributes(environment).merge(options), @context.factory_class)
-    block = @block
-    block ||= BlueprintsBoy.factories[@context.factory_class] if @context.factory_class
+    block = @strategies[strategy]
+    block ||= BlueprintsBoy.factories[@context.factory_class, strategy] if @context.factory_class
     environment.autoset(@name, environment.instance_exec(data, &block)) if block
   end
 
@@ -26,6 +32,10 @@ class BlueprintsBoy::Blueprint
 
   def factory(factory_class)
     update_context nil, nil, factory_class
+  end
+
+  def blueprint(strategy, &block)
+    @strategies[strategy] = block
   end
 
   private

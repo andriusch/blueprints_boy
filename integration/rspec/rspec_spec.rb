@@ -63,4 +63,11 @@ describe 'rspec integration' do
       blueprint_data(:apple).should be_nil
     end
   end
+
+  describe "build with" do
+    it "should allow building using different strategy" do
+      build_with :attributes, :orange
+      orange.should == {name: 'orange'}
+    end
+  end
 end
