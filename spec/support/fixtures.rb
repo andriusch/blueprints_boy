@@ -1,8 +1,4 @@
-require 'mocha'
-
 module Fixtures
-  include Mocha::API
-
   def self.fixture(name, &block)
     iv_name = :"@#{name}"
     define_method(name) do |*args|

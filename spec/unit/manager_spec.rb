@@ -38,7 +38,7 @@ describe BlueprintsBoy::Manager do
     end
 
     it "should not build same blueprint twice" do
-      env.expects(:autoset).once
+      env.should_receive(:autoset).once
       subject.build(env, [:blueprint1, :blueprint1])
     end
 

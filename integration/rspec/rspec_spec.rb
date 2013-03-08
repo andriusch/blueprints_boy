@@ -70,4 +70,12 @@ describe 'rspec integration' do
       orange.should == {name: 'orange'}
     end
   end
+
+  describe "class level set" do
+    build :apple
+
+    it "should build blueprints in before filter" do
+      apple.should == 'apple'
+    end
+  end
 end

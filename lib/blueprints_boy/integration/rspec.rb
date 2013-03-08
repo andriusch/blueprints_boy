@@ -1,5 +1,14 @@
+module BlueprintsBoy::RSpecHelper
+  def build(*args)
+    before do
+      build *args
+    end
+  end
+end
+
 RSpec.configure do |config|
   config.include BlueprintsBoy::Helper
+  config.extend BlueprintsBoy::RSpecHelper
 
   config.before do
     BlueprintsBoy.manager.setup(self)
