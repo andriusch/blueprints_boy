@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.version = BlueprintsBoy::VERSION
   s.authors = ["Andrius Chamentauskas"]
   s.email = ["andrius.chamentauskas@gmail.com"]
-  s.homepage = ""
-  s.summary = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.homepage = "http://andriusch.github.io/blueprints_boy/"
+  s.summary = %q{The ultimate solution to managing test data.}
+  s.description = %q{The ultimate DRY and fast solution to managing any kind of test data. Based on Blueprints.}
 
   s.rubyforge_project = "blueprints_boy"
 
