@@ -1,0 +1,13 @@
+language: ruby
+rvm:
+  - 1.9.3
+  - 2.0.0
+  - jruby-19mode # JRuby in 1.9 mode
+  - rbx-2.1.1
+gemfile:
+  - Gemfile
+  - gemfiles/ar31
+  - gemfiles/ar32
+  - gemfiles/ar40
+  - gemfiles/mongoid2
+  - gemfiles/mongoid3
