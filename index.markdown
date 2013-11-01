@@ -3,7 +3,7 @@ layout: application
 title: Home
 ---
  
-## Getting started
+# Getting started
  
 In spec/spec_helper.rb or test/test_helper.rb:
 
