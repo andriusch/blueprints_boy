@@ -1,21 +1,30 @@
 require "bundler/gem_tasks"
 
 require 'rspec/core/rake_task'
-namespace :spec do
+spec_namespace = namespace :spec do |ns|
   RSpec::Core::RakeTask.new(:unit) do |t|
     t.pattern = "spec/unit/**/*_spec.rb"
   end
   RSpec::Core::RakeTask.new(:rspec) do |t|
     t.pattern = "integration/rspec/rspec_spec.rb"
   end
-  RSpec::Core::RakeTask.new(:active_record) do |t|
-    t.pattern = "integration/active_record/active_record_spec.rb"
+
+  [31, 32, 40].each do |version|
+    RSpec::Core::RakeTask.new("active_record_#{version}") do |t|
+      ENV['BUNDLE_GEMFILE'] = "gemfiles/ar#{version}.gemfile"
+      t.pattern = "integration/active_record/active_record_spec.rb"
+    end
+    RSpec::Core::RakeTask.new("active_record_#{version}_truncation") do |t|
+      ENV['BUNDLE_GEMFILE'] = "gemfiles/ar#{version}.gemfile"
+      t.pattern = "integration/active_record/active_record_truncation_spec.rb"
+    end
   end
-  RSpec::Core::RakeTask.new(:active_record_truncation) do |t|
-    t.pattern = "integration/active_record/active_record_truncation_spec.rb"
-  end
-  RSpec::Core::RakeTask.new(:mongoid) do |t|
-    t.pattern = "integration/mongoid/mongoid_spec.rb"
+
+  [2, 3].each do |version|
+    RSpec::Core::RakeTask.new("mongoid_#{version}") do |t|
+      ENV['BUNDLE_GEMFILE'] = "gemfiles/mongoid#{version}.gemfile"
+      t.pattern = "integration/mongoid/mongoid_spec.rb"
+    end
   end
 end
 
@@ -33,5 +42,13 @@ namespace :prepare do
   end
 end
 
-task :spec => %w(spec:unit spec:rspec spec:active_record spec:active_record_truncation spec:mongoid)
+desc 'Run all specs'
+task :spec do
+  spec_namespace.tasks.each do |task|
+    puts "Running #{task.name}"
+    task.invoke
+    puts "\n\n"
+  end
+end
+
 task :default => :spec

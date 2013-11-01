@@ -10,8 +10,11 @@ class MongoidFruit
   attr_protected :species
 end
 
-Mongoid.configure do |config|
-  config.connect_to 'blueprints_test'
+Mongoid.configure.logger = Logger.new(File.expand_path('../debug.log', __FILE__))
+if Mongoid.configure.respond_to?(:connect_to)
+  Mongoid.configure.connect_to 'blueprints_test'
+else
+  Mongoid.configure.from_hash 'database' => 'blueprints_test'
 end
 
 require 'blueprints_boy'

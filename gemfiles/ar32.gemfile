@@ -1,0 +1,4 @@
+eval_gemfile File.expand_path("../../Gemfile", __FILE__)
+
+gem 'activerecord', '~> 3.2.0'
+gem 'mysql2'

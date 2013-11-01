@@ -14,7 +14,7 @@ describe BlueprintsBoy::Dependency do
   end
 
   it "should allow getting another instance variable" do
-    preset_mock = mock
+    preset_mock = double
     env.set(:preset_key, preset_mock)
     value(described_class.new(:preset_key, :blueprint1)).should == preset_mock
   end
