@@ -1,4 +1,3 @@
-require 'bundler/setup'
 require 'active_record'
 require 'mysql2'
 ActiveRecord::Base.establish_connection(adapter: 'mysql2', database: 'blueprints_boy_test')

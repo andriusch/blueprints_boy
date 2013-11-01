@@ -1,3 +1,5 @@
+require "bundler/setup"
+require 'appraisal'
 require "bundler/gem_tasks"
 
 require 'rspec/core/rake_task'
@@ -42,8 +44,9 @@ task :spec do
   end
 
   def run(task)
-    puts "\n\nRunning #{task}"
+    puts "Running #{task}"
     Rake::Task[task].invoke
+    puts "\n\n"
   end
 
   if find_gem('activerecord')

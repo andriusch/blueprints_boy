@@ -2,7 +2,7 @@
 
 source "http://rubygems.org"
 
-gem "mongoid", "~> 2.0"
-gem "bson_ext"
+gem "activerecord", "~> 3.2.15"
+gem "mysql2"
 
 gemspec :path => "../"

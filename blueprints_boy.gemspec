@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "rake"
   s.add_development_dependency "rspec"
+  s.add_development_dependency 'appraisal'
   s.add_runtime_dependency "activesupport", ">= 3.0.0"
   s.add_runtime_dependency "database_cleaner"
 end
