@@ -6,8 +6,8 @@ rvm:
   - rbx-2.1.1
 gemfile:
   - Gemfile
-  - gemfiles/ar31
-  - gemfiles/ar32
-  - gemfiles/ar40
-  - gemfiles/mongoid2
-  - gemfiles/mongoid3
+  - gemfiles/ar3.1.gemfile
+  - gemfiles/ar3.2.gemfile
+  - gemfiles/ar4.0.gemfile
+  - gemfiles/mongoid2.gemfile
+  - gemfiles/mongoid3.gemfile
