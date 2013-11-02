@@ -2,7 +2,7 @@ language: ruby
 rvm:
   - 1.9.3
   - 2.0.0
-  - rbx-2.1.1
+  - rbx-19mode
 gemfile:
   - Gemfile
   - gemfiles/ar3.1.gemfile
