@@ -11,14 +11,14 @@ namespace :spec do
     t.pattern = "integration/rspec/rspec_spec.rb"
   end
 
-  RSpec::Core::RakeTask.new("active_record") do |t|
+  RSpec::Core::RakeTask.new(:active_record => 'prepare:active_record') do |t|
     t.pattern = "integration/active_record/active_record_spec.rb"
   end
-  RSpec::Core::RakeTask.new("active_record_truncation") do |t|
+  RSpec::Core::RakeTask.new(:active_record_truncation => 'prepare:active_record') do |t|
     t.pattern = "integration/active_record/active_record_truncation_spec.rb"
   end
 
-  RSpec::Core::RakeTask.new("mongoid") do |t|
+  RSpec::Core::RakeTask.new(:mongoid) do |t|
     t.pattern = "integration/mongoid/mongoid_spec.rb"
   end
 end
