@@ -1,6 +1,7 @@
 BlueprintsBoy
 ========
 
+[![Build Status](https://travis-ci.org/andriusch/blueprints_boy.png?branch=master)](https://travis-ci.org/andriusch/blueprints_boy)
 The ultimate DRY and fast solution to loading test data in Ruby and Rails. Blueprints allows you to create and manage 
 data for tests in simple but powerful ways.
 
