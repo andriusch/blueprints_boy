@@ -11,3 +11,7 @@ gemfile:
   - gemfiles/ar4.0.gemfile
   - gemfiles/mongoid2.gemfile
   - gemfiles/mongoid3.gemfile
+services:
+  - mongodb
+before_script:
+  - mysql -e 'create database blueprints_boy_test;'
