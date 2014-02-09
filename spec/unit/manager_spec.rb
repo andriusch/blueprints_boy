@@ -25,6 +25,7 @@ describe BlueprintsBoy::Manager do
   describe "build" do
     before do
       subject.add(blueprint1)
+      subject.push_registry
     end
 
     it "should build blueprint" do
@@ -32,9 +33,9 @@ describe BlueprintsBoy::Manager do
       env.blueprint1.should == mock1
     end
 
-    it "should add blueprint to build blueprints" do
+    it "should add blueprint to built blueprints" do
       subject.build(env, [:blueprint1])
-      subject.built.should include(:blueprint1)
+      subject.registry.built.should include(:blueprint1)
     end
 
     it "should not build same blueprint twice" do
@@ -51,7 +52,7 @@ describe BlueprintsBoy::Manager do
     it "should build dependencies of blueprint" do
       subject.add blueprint2.depends_on(:blueprint1)
       subject.build env, [:blueprint2]
-      subject.built.to_a.should == [:blueprint2, :blueprint1]
+      subject.registry.built.to_a.should == [:blueprint2, :blueprint1]
     end
 
     it "should allow passing options" do
@@ -82,18 +83,33 @@ describe BlueprintsBoy::Manager do
   end
 
   describe "setup" do
-    it "should set @_blueprint_results to {}" do
+    it "should set @_blueprint_data to {}" do
       subject.setup(env)
       env.instance_variable_get(:@_blueprint_data).should == {}
+    end
+
+    it "should restore blueprints from registry to @_blueprint_data" do
+      blueprint1
+      blueprint2
+      subject.add(blueprint1)
+      subject.add(blueprint2)
+
+      subject.push_registry([:blueprint1])
+      subject.push_registry([:blueprint2])
+
+      subject.setup(env)
+      env.instance_variable_get(:@_blueprint_data).should == {blueprint1: mock1, blueprint2: mock2}
     end
   end
 
   describe "teardown" do
-    it "should mark all teardown all blueprints" do
+    it "should pop registry" do
       subject.add(blueprint1)
+      subject.push_registry
       subject.build(env, [:blueprint1])
+
       subject.teardown
-      subject.built.should be_empty
+      subject.registry.should be_nil
     end
   end
 end

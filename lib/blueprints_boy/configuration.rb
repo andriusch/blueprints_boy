@@ -15,6 +15,8 @@ module BlueprintsBoy
     attr_reader :root
     # By default blueprints runs each test in it's own transaction. This may sometimes be not desirable so this options allows to turn this off.
     attr_accessor :transactions
+    # Define global blueprints that are prebuilt in all tests
+    attr_reader :global
 
     # Initializes new Configuration object with default attributes.
     # By defaults filename patterns are: blueprint.rb and blueprint/*.rb in spec, test and root directories.
@@ -28,6 +30,7 @@ module BlueprintsBoy
       @prebuild = []
       @transactions = true
       @root = defined?(Rails) ? Rails.root : Pathname.pwd
+      @global = []
     end
 
     def filenames=(value)
@@ -36,6 +39,10 @@ module BlueprintsBoy
 
     def root=(value)
       @root = Pathname.new(value)
+    end
+
+    def global=(value)
+      @global = Array(value)
     end
   end
 end

@@ -16,8 +16,12 @@ module BlueprintsBoy::Helper
     end
   end
 
-  def blueprint_data(name)
-    @_blueprint_data[name]
+  def blueprint_data(name = nil)
+    if name
+      @_blueprint_data[name]
+    else
+      @_blueprint_data
+    end
   end
 
   def build(*names)

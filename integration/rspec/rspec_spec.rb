@@ -1,8 +1,10 @@
+require 'bundler/setup'
 require 'rspec'
 require 'blueprints_boy'
 
 BlueprintsBoy.enable do |config|
   config.root = File.dirname(__FILE__)
+  config.global = :global_cherry
 end
 
 describe 'rspec integration' do
@@ -76,6 +78,12 @@ describe 'rspec integration' do
 
     it "should build blueprints in before filter" do
       apple.should == 'apple'
+    end
+  end
+
+  describe "global" do
+    it "should build global blueprints" do
+      global_cherry.should == 'cherry'
     end
   end
 end

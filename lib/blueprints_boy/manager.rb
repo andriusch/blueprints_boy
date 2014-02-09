@@ -1,10 +1,10 @@
 module BlueprintsBoy
   class Manager
-    attr_reader :blueprints, :built
+    attr_reader :blueprints, :registry
 
     def initialize
       @blueprints = {}
-      teardown
+      @registry = nil
     end
 
     def add(blueprint)
@@ -26,23 +26,40 @@ module BlueprintsBoy
     end
 
     def setup(environment)
-      environment.instance_variable_set(:@_blueprint_data, {})
+      prepare_env(environment)
+      push_registry
+      @registry.restore.each { |name, value| environment.set name, value }
+
       DatabaseCleaner.start
     rescue DatabaseCleaner::NoORMDetected
       # ignored
     end
 
     def teardown
-      @built = Set.new
+      @registry = @registry.parent
       DatabaseCleaner.clean
     rescue DatabaseCleaner::NoORMDetected
       # ignored
     end
 
+    def push_registry(blueprint_names = [])
+      @registry = Registry.new(blueprint_names, @registry)
+
+      environment = Object.new
+      environment.singleton_class.send(:include, BlueprintsBoy::Helper)
+      prepare_env(environment)
+      build(environment, @registry.names)
+      @registry.store environment.blueprint_data
+    end
+
     private
 
+    def prepare_env(environment)
+      environment.instance_variable_set(:@_blueprint_data, {})
+    end
+
     def build_blueprint(environment, name, attributes, options)
-      if @built.include?(name)
+      if @registry.built.include?(name)
         if attributes.present?
           options[:strategy] = :update
         else
@@ -50,7 +67,7 @@ module BlueprintsBoy
         end
       end
 
-      @built << name
+      @registry.built << name
       blueprint = find(name)
       build environment, blueprint.context.dependencies
       blueprint.build(environment, options[:strategy], attributes || {})

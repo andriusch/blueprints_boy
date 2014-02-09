@@ -32,4 +32,10 @@ describe BlueprintsBoy::Configuration do
     subject.filenames = "my_file.rb"
     subject.filenames.should == [Pathname.new("my_file.rb")]
   end
+
+  it "should set global to array of global blueprints" do
+    subject.global.should == []
+    subject.global = :cherry
+    subject.global.should == [:cherry]
+  end
 end

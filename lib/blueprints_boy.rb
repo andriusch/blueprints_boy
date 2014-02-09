@@ -1,6 +1,7 @@
 require 'active_support/dependencies/autoload'
 require 'active_support/core_ext/array/extract_options'
 require 'active_support/core_ext/object/blank'
+require 'active_support/core_ext/hash/reverse_merge'
 require 'database_cleaner'
 require 'blueprints_boy/version'
 
@@ -18,6 +19,7 @@ module BlueprintsBoy
   autoload :Factories
   autoload :Blueprint
   autoload :Dependency
+  autoload :Registry
 
   def self.enable
     yield config if block_given?
@@ -25,6 +27,7 @@ module BlueprintsBoy
     require 'blueprints_boy/integration/active_record' if defined?(ActiveRecord)
     require 'blueprints_boy/integration/mongoid' if defined?(Mongoid)
     prepare
+    manager.push_registry(config.global)
   end
 
   def self.prepare

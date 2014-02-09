@@ -126,6 +126,7 @@ describe BlueprintsBoy::Context do
     before do
       BlueprintsBoy.manager.add blueprint1
       BlueprintsBoy.manager.add blueprint2
+      BlueprintsBoy.manager.setup env
     end
 
     it "should allow grouping blueprints" do

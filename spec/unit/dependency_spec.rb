@@ -3,6 +3,7 @@ require 'spec_helper'
 describe BlueprintsBoy::Dependency do
   before do
     BlueprintsBoy.manager.add blueprint1
+    BlueprintsBoy.manager.setup env
   end
 
   def value(dep)
