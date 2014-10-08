@@ -3,6 +3,8 @@ require 'appraisal'
 require "bundler/gem_tasks"
 
 require 'rspec/core/rake_task'
+require 'rake/testtask'
+
 namespace :spec do
   RSpec::Core::RakeTask.new(:unit) do |t|
     t.pattern = "spec/unit/**/*_spec.rb"
@@ -20,6 +22,10 @@ namespace :spec do
 
   RSpec::Core::RakeTask.new(:mongoid) do |t|
     t.pattern = "integration/mongoid/mongoid_spec.rb"
+  end
+
+  Rake::TestTask.new(:minitest) do |t|
+    t.pattern = "integration/minitest/test_*.rb"
   end
 end
 
@@ -56,6 +62,7 @@ task :spec do
     run 'spec:mongoid'
   else
     run 'spec:rspec'
+    run 'spec:minitest'
     run 'spec:unit'
   end
 end
