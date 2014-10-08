@@ -1,6 +1,7 @@
 require 'bundler/setup'
 require 'rspec'
 require 'blueprints_boy'
+require_relative '../shared'
 
 BlueprintsBoy.enable do |config|
   config.root = File.dirname(__FILE__)

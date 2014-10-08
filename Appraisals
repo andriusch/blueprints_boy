@@ -13,6 +13,11 @@ appraise "ar4.0" do
   gem 'mysql2'
 end
 
+appraise "ar4.1" do
+  gem "activerecord", "~> 4.1.0"
+  gem 'mysql2'
+end
+
 appraise "mongoid2" do
   gem "mongoid", "~> 2.0"
   gem 'bson_ext'
@@ -21,4 +26,12 @@ end
 appraise "mongoid3" do
   gem "mongoid", "~> 3.0"
   gem 'bson_ext'
+end
+
+appraise "mongoid4" do
+  gem "mongoid", "~> 4.0"
+  gem 'bson_ext'
+end
+
+appraise "noorm" do
 end

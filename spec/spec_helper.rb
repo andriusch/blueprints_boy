@@ -15,4 +15,11 @@ RSpec.configure do |config|
       @factories = nil
     end
   end
+
+  config.expect_with :rspec do |c|
+    c.syntax = :should, :expect
+  end
+  config.mock_with :rspec do |c|
+    c.syntax = :should, :expect
+  end
 end

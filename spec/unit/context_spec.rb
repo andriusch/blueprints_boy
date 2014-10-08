@@ -9,7 +9,7 @@ describe BlueprintsBoy::Context do
     it "should read file and callback for each blueprint" do
       blueprints = []
       described_class.new(ROOT.join('spec/support/manager_fixture.rb').to_s) { |blueprint| blueprints << blueprint }
-      blueprints.should have(1).element
+      blueprints.size.should == 1
       blueprints.first.name.should == :test
     end
   end
@@ -109,7 +109,7 @@ describe BlueprintsBoy::Context do
   describe "creating dependencies" do
     it "should allow dependencies in attributes" do
       dependency = empty_context.blueprint1
-      (BlueprintsBoy::Dependency === dependency).should be_true
+      dependency.should be_a(BlueprintsBoy::Dependency)
     end
 
     it "should pass blueprint_name and options" do

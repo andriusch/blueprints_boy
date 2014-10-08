@@ -1,5 +1,6 @@
 require 'rspec'
 require 'mongoid'
+require_relative '../shared'
 
 class MongoidFruit
   include Mongoid::Document
@@ -7,7 +8,7 @@ class MongoidFruit
   field :species
   field :size, :type => Integer
 
-  attr_protected :species
+  attr_protected :species if Mongoid::VERSION.to_i < 4
 end
 
 Mongoid.configure.logger = Logger.new(File.expand_path('../debug.log', __FILE__))
