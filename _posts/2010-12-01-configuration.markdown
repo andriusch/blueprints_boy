@@ -23,6 +23,19 @@ BlueprintsBoy.config.filenames = 'data/blueprints.rb'
 
 There are several things BlueprintsBoy allows to configure:
 
+## global
+
+By default blueprints starts transactions on an empty database. This option allows you to specify blueprints that are
+built before starting transaction. This means that data for them will be available in all tests and they will need to be
+built only once (not once before each test case but once before test suite). Note that if you're not using transactions
+this option should not be used as it will not speedup your test suite.
+
+{% highlight ruby %}
+BlueprintsBoy.enable do |config|
+  config.global = :user, :post
+end
+{% endhighlight %}
+
 ## root
 BlueprintsBoy tries it's best to determine the root directory of your application. It will use Rails.root if it's 
 available or assume current dir otherwise. However you may want to customize it to any other dir you want. Root accepts 
