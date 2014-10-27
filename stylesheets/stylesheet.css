@@ -214,13 +214,17 @@ table {
     border: 1px solid #ebebeb;
 }
 
+td, th {
+    border: 1px solid #ebebeb;
+    padding: 2px 5px;
+}
+
 th {
-    font-weight: 500;
+    font-weight: bold;
 }
 
 td {
-    border: 1px solid #ebebeb;
-    text-align: center;
+    text-align: left;
     font-weight: 300;
 }
 

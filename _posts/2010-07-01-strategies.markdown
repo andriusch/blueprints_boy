@@ -3,6 +3,16 @@ layout: application
 title: Strategies
 ---
 
+# Building using strategies
+
+Blueprints boy allows defining blueprint to be built using different strategies. These three are the most common:
+
+Name      | Description
+----------|------------
+`:create` | Default strategy, initializes object and saves it in whatever data storage it uses
+`:update` | Default strategy for already build blueprints, updates object with new options that are passed
+`:new`    | Only initialize object, don't save it to database
+
 # Defining strategies
 
 Each blueprint can define multiple strategies on how it can be built. For example this blueprint
@@ -36,6 +46,23 @@ build :apple => {name: 'red apple'}
 apple.name.should == 'red apple'
 {% endhighlight %}
 
+# Building multiple times
+
+If you want to build same blueprint multiple times (creating object that blueprint creates multiple times). You can use
+`build!` method.
+
+{% highlight ruby %}
+blueprint :apple do
+  Fruit.new 'apple'
+end
+
+# Spec
+apple1 = build!(:apple)
+apple2 = build!(:apple)
+# Different objects but both are instances of Fruit and have name 'apple'
+apple1.object_id.should_not == apple2.object_id
+{% endhighlight %}
+
 # Factories
 
 When adding [factories](/blueprints_boy/factories) you can define class and strategy that particular factory is used for.
@@ -44,3 +71,12 @@ When adding [factories](/blueprints_boy/factories) you can define class and stra
 BlueprintsBoy.factories.add(Fruit, :create) { |data| data.factory.create!(data.attributes) }
 BlueprintsBoy.factories.add(Fruit, :update) { |data| blueprint_data(data.name).update_attributes!(data.options) }
 {% endhighlight %}
+
+# Summary of build methods
+
+Method     | Strategy
+-----------|-------------------
+build      | `:create` or [`:update`](/blueprints_boy/strategies#updating-blueprint)
+build!     | `:create`
+build_new  | `:new`
+build_with | Passed as first argument
