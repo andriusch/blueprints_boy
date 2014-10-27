@@ -4,7 +4,7 @@ end
 
 attributes(name: 'orange').blueprint :orange do |data|
   data.attributes[:name]
-end.blueprint :new do |data|
+end.blueprint(:new) do |data|
   "new #{data.attributes[:name]}"
 end
 
