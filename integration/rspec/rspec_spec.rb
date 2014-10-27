@@ -39,9 +39,9 @@ describe 'rspec integration' do
       blueprint_data(:variable).should == :correct
     end
 
-    it "should still return original value if variable is already set" do
+    it "should still return new value if variable is already set" do
       set :variable, :correct
-      autoset(:variable, :incorrect).should == :correct
+      autoset(:variable, :incorrect).should == :incorrect
     end
 
     it "should allow reaching fixtures through fixtures method" do
@@ -71,6 +71,15 @@ describe 'rspec integration' do
     it "should allow building using different strategy" do
       build_with :attributes, :orange
       orange.should == {name: 'orange'}
+    end
+  end
+
+  describe "build!" do
+    it "allows building blueprint twice" do
+      orange1 = build! :orange
+      orange2 = build! :orange => {name: 'not apple'}
+      orange1.should == 'orange'
+      orange2.should == 'not apple'
     end
   end
 

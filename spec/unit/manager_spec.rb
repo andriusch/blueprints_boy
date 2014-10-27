@@ -80,6 +80,13 @@ describe BlueprintsBoy::Manager do
       subject.build(env, [:blueprint1], strategy: :new)
       env.blueprint1.should == :new_strat
     end
+
+    it "does not overwrite strategy with :update" do
+      counter = 0
+      blueprint1.blueprint(:counter) { counter += 1 }
+      2.times { subject.build(env, [:blueprint1], strategy: :counter) }
+      counter.should == 2
+    end
   end
 
   describe "setup" do

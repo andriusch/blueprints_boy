@@ -20,7 +20,6 @@ module BlueprintsBoy
     def build(environment, names, options = {})
       result = parse_names(names).collect do |name, attributes|
         build_blueprint(environment, name, attributes, options)
-        environment.blueprint_data(name)
       end
       result.size > 1 ? result : result.first
     end
@@ -59,23 +58,30 @@ module BlueprintsBoy
     end
 
     def build_blueprint(environment, name, attributes, options)
-      if @registry.built.include?(name)
-        if attributes.present?
-          options[:strategy] = :update
-        else
-          return
-        end
-      end
+      strategy = options[:strategy] || default_strategy_for(name, attributes)
+      return environment.blueprint_data(name) if strategy.nil? # Blueprint is already built
 
       @registry.built << name
       blueprint = find(name)
-      build environment, blueprint.context.dependencies
-      blueprint.build(environment, options[:strategy], attributes || {})
+      build environment, blueprint.context.dependencies if blueprint.context.dependencies.present?
+      blueprint.build(environment, strategy, attributes || {})
+    end
+
+    def default_strategy_for(name, attributes)
+      if @registry.built.include?(name)
+        if attributes.present?
+          :update
+        else
+          nil
+        end
+      else
+        :create
+      end
     end
 
     def parse_names(names)
       names_with_options = names.extract_options!
-      names.push *names_with_options
+      names.push(*names_with_options)
     end
   end
 end

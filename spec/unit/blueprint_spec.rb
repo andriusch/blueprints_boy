@@ -9,13 +9,13 @@ describe BlueprintsBoy::Blueprint do
 
   describe "build" do
     it "should build blueprint" do
-      blueprint1.build(env)
+      blueprint1.build(env, :create)
       env.blueprint1.should == mock1
     end
 
     it "should not replace existing method" do
       env.set :blueprint1, :correct
-      blueprint1.build(env)
+      blueprint1.build(env, :create)
       env.blueprint1.should == :correct
     end
   end
@@ -44,13 +44,13 @@ describe BlueprintsBoy::Blueprint do
 
     it "should allow passing options" do
       blueprint = described_class.new(empty_context, :blueprint) { |data| data.options }
-      blueprint.build(env, attr: 'value')
+      blueprint.build(env, :create, attr: 'value')
       env.blueprint.should == {attr: 'value'}
     end
 
     it "should allow using attributes with merged options in blueprint" do
       blueprint = described_class.new(empty_context, :blueprint, attr1: 'value1', attr2: 'value2') { |data| data.attributes }
-      blueprint.build(env, attr2: 'v2', attr3: 'v3')
+      blueprint.build(env, :create, attr2: 'v2', attr3: 'v3')
       env.blueprint.should == {attr1: 'value1', attr2: 'v2', attr3: 'v3'}
     end
 
@@ -58,7 +58,7 @@ describe BlueprintsBoy::Blueprint do
       BlueprintsBoy.manager.add blueprint1
       BlueprintsBoy.manager.setup(env)
       blueprint = described_class.new(empty_context, :blueprint, attr: empty_context.blueprint1) { |data| data.attributes }
-      blueprint.build(env)
+      blueprint.build(env, :create)
       env.blueprint.should == {attr: mock1}
     end
   end
@@ -66,7 +66,7 @@ describe BlueprintsBoy::Blueprint do
   describe "name" do
     it "should put name in data" do
       blueprint = create_blueprint(:blueprint1) { |data| data.name }
-      blueprint.build(env)
+      blueprint.build(env, :create)
       env.blueprint1.should == :blueprint1
     end
   end
@@ -95,7 +95,7 @@ describe BlueprintsBoy::Blueprint do
     it "should use factory when building blueprint" do
       BlueprintsBoy.factories.add(Array, :create) { |data| data.factory.new(data.attributes[:size]) }
       blueprint = create_blueprint('blueprint1').factory(Array)
-      blueprint.build(env, size: 3)
+      blueprint.build(env, :create, size: 3)
       env.blueprint1.should == Array.new(3)
     end
   end

@@ -131,14 +131,14 @@ describe BlueprintsBoy::Context do
 
     it "should allow grouping blueprints" do
       group, = empty_context.group(:blueprints => [:blueprint1, :blueprint2])
-      group.build(env)
+      group.build(env, :create)
       env.blueprints.should == [mock1, mock2]
     end
 
     it "should allow multiple groups" do
       BlueprintsBoy.manager.add blueprint3
       _, group2 = empty_context.group(:group1 => [:blueprint1, :blueprint2], :group2 => [:blueprint2, :blueprint3])
-      group2.build(env)
+      group2.build(env, :create)
       env.group2.should == [mock2, mock3]
     end
   end

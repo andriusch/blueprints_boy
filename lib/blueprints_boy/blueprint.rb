@@ -12,10 +12,7 @@ class BlueprintsBoy::Blueprint
     attributes(attrs)
   end
 
-  def build(environment, *args)
-    options = args.extract_options!
-    strategy = args.shift || :create
-
+  def build(environment, strategy, options = {})
     data = Data.new(@name, options, normalized_attributes(environment).merge(options), @context.factory_class)
     block = @strategies[strategy]
     block ||= BlueprintsBoy.factories[@context.factory_class, strategy] if @context.factory_class

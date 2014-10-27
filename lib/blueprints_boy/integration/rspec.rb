@@ -1,7 +1,7 @@
 module BlueprintsBoy::RSpecHelper
   def build(*args)
     before do
-      build *args
+      build(*args)
     end
   end
 end

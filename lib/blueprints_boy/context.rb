@@ -40,7 +40,7 @@ module BlueprintsBoy
 
     def group(groups)
       groups.collect do |name, children|
-        blueprint(name) { build *children }
+        blueprint(name) { build(*children) }
       end
     end
 

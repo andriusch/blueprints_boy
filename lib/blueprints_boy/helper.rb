@@ -14,6 +14,7 @@ module BlueprintsBoy::Helper
     else
       set(name, value)
     end
+    value
   end
 
   def blueprint_data(name = nil)
@@ -26,6 +27,10 @@ module BlueprintsBoy::Helper
 
   def build(*names)
     BlueprintsBoy.manager.build(self, names)
+  end
+
+  def build!(*names)
+    BlueprintsBoy.manager.build(self, names, strategy: :create)
   end
 
   def build_with(strategy, *names)

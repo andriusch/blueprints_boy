@@ -12,7 +12,7 @@ module BlueprintsBoy::MinitestHelper
   module ClassMethods
     def build(*args)
       before do
-        build *args
+        build(*args)
       end
     end
   end
