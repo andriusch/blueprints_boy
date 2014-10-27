@@ -33,6 +33,10 @@ module BlueprintsBoy::Helper
     BlueprintsBoy.manager.build(self, names, strategy: :create)
   end
 
+  def build_new(*names)
+    BlueprintsBoy.manager.build(self, names, strategy: :new)
+  end
+
   def build_with(strategy, *names)
     BlueprintsBoy.manager.build(self, names, strategy: strategy)
   end

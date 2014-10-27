@@ -83,6 +83,13 @@ describe 'rspec integration' do
     end
   end
 
+  describe "build_new" do
+    it "builds blueprint using :new strategy" do
+      build_new :orange
+      orange.should == 'new orange'
+    end
+  end
+
   describe "class level set" do
     build :apple
 
