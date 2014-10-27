@@ -7,11 +7,12 @@ title: Strategies
 
 Blueprints boy allows defining blueprint to be built using different strategies. These three are the most common:
 
-Name      | Description
-----------|------------
-`:create` | Default strategy, initializes object and saves it in whatever data storage it uses
-`:update` | Default strategy for already build blueprints, updates object with new options that are passed
-`:new`    | Only initialize object, don't save it to database
+Name          | Description
+--------------|------------
+`:create`     | Default strategy, initializes object and saves it in database
+`:update`     | Default strategy for already build blueprints, updates object with new options that are passed
+`:new`        | Only initialize object, don't save it to database
+`:attributes` | Only return attributes that would be used to build blueprint
 
 # Defining strategies
 
@@ -74,9 +75,10 @@ BlueprintsBoy.factories.add(Fruit, :update) { |data| blueprint_data(data.name).u
 
 # Summary of build methods
 
-Method     | Strategy
------------|-------------------
-build      | `:create` or [`:update`](/blueprints_boy/strategies#updating-blueprint)
-build!     | `:create`
-build_new  | `:new`
-build_with | Passed as first argument
+Method           | Strategy
+-----------------|-------------------
+build            | `:create` or [`:update`](/blueprints_boy/strategies#updating-blueprint)
+build!           | `:create`
+build_new        | `:new`
+build_attributes | `:attributes`
+build_with       | Passed as first argument
