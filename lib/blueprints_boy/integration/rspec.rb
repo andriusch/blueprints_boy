@@ -17,4 +17,4 @@ RSpec.configure do |config|
   config.after do
     BlueprintsBoy.manager.teardown
   end
-end
+end if RSpec.respond_to?(:configure) # Otherwise db:seed might crash
