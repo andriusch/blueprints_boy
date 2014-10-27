@@ -26,15 +26,19 @@ module BlueprintsBoy::Helper
   end
 
   def build(*names)
-    BlueprintsBoy.manager.build(self, names)
+    build_with nil, *names
   end
 
   def build!(*names)
-    BlueprintsBoy.manager.build(self, names, strategy: :create)
+    build_with :create, *names
   end
 
   def build_new(*names)
-    BlueprintsBoy.manager.build(self, names, strategy: :new)
+    build_with :new, *names
+  end
+
+  def build_attributes(*names)
+    build_with :attributes, *names
   end
 
   def build_with(strategy, *names)

@@ -90,6 +90,13 @@ describe 'rspec integration' do
     end
   end
 
+  describe "build_attributes" do
+    it "returns attributes for building" do
+      build_attributes :orange => {size: 2}
+      orange.should == {name: 'orange', size: 2}
+    end
+  end
+
   describe "class level set" do
     build :apple
 
