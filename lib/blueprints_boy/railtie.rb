@@ -17,6 +17,8 @@ class BlueprintsBoy::Railtie < Rails::Railtie
   end
 
   initializer 'blueprints_boy.set_seed_loader' do
-    ActiveRecord::Tasks::DatabaseTasks.seed_loader = Seeder.new(ActiveRecord::Tasks::DatabaseTasks.seed_loader)
+    if defined?(ActiveRecord::Tasks::DatabaseTasks)
+      ActiveRecord::Tasks::DatabaseTasks.seed_loader = Seeder.new(ActiveRecord::Tasks::DatabaseTasks.seed_loader)
+    end
   end
 end
