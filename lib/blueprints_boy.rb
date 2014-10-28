@@ -26,6 +26,7 @@ module BlueprintsBoy
     yield config if block_given?
     require 'blueprints_boy/integration/minitest' if defined?(MiniTest)
     require 'blueprints_boy/integration/rspec' if defined?(RSpec)
+    require 'blueprints_boy/integration/cucumber' if defined?(Cucumber)
     require 'blueprints_boy/integration/active_record' if defined?(ActiveRecord)
     require 'blueprints_boy/integration/mongoid' if defined?(Mongoid)
     prepare

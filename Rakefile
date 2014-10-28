@@ -4,6 +4,7 @@ require "bundler/gem_tasks"
 
 require 'rspec/core/rake_task'
 require 'rake/testtask'
+require 'cucumber/rake/task'
 
 namespace :spec do
   RSpec::Core::RakeTask.new(:unit) do |t|
@@ -26,6 +27,10 @@ namespace :spec do
 
   Rake::TestTask.new(:minitest) do |t|
     t.pattern = "integration/minitest/test_*.rb"
+  end
+
+  Cucumber::Rake::Task.new(:cucumber) do |t|
+    t.cucumber_opts = "integration/cucumber --format pretty"
   end
 end
 
@@ -64,6 +69,7 @@ task :spec do
     run 'spec:rspec'
     run 'spec:minitest'
     run 'spec:unit'
+    run 'spec:cucumber'
   end
 end
 
