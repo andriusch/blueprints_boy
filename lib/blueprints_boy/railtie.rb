@@ -1,5 +1,3 @@
-main = self
-
 class BlueprintsBoy::Railtie < Rails::Railtie
   class Seeder
     def initialize(parent)
