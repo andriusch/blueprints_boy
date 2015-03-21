@@ -74,3 +74,15 @@ BlueprintsBoy.enable do |config|
   config.transactions = false
 end
 {% endhighlight %}
+
+## cleaner
+
+By default BlueprintsBoy uses DatabaseCleaner for cleaning up before test suite and each test. If for some reason you
+want to use something else it's possible to use custom cleaner for that. It's best to check BlueprintsBoy::Cleaner
+class for an example on how to roll your own solution.
+
+{% highlight ruby %}
+BlueprintsBoy.enable do |config|
+  config.cleaner = MyCleaner.new
+end
+{% endhighlight %}
