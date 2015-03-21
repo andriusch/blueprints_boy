@@ -28,17 +28,12 @@ module BlueprintsBoy
       prepare_env(environment)
       push_registry
       @registry.restore.each { |name, value| environment.set name, value }
-
-      DatabaseCleaner.start
-    rescue DatabaseCleaner::NoORMDetected
-      # ignored
+      BlueprintsBoy.config.cleaner.on_setup
     end
 
     def teardown
       @registry = @registry.parent
-      DatabaseCleaner.clean
-    rescue DatabaseCleaner::NoORMDetected
-      # ignored
+      BlueprintsBoy.config.cleaner.on_teardown
     end
 
     def push_registry(blueprint_names = [])

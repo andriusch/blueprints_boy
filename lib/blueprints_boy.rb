@@ -21,6 +21,7 @@ module BlueprintsBoy
   autoload :Blueprint
   autoload :Dependency
   autoload :Registry
+  autoload :Cleaner
 
   def self.enable
     yield config if block_given?
@@ -35,9 +36,7 @@ module BlueprintsBoy
 
   def self.prepare
     read_files
-    DatabaseCleaner.clean_with(:truncation)
-  rescue DatabaseCleaner::NoORMDetected
-    # ignored
+    config.cleaner.before_suite
   end
 
   def self.read_files

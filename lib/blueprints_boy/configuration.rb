@@ -15,8 +15,9 @@ module BlueprintsBoy
     attr_accessor :transactions
     # Define global blueprints that are prebuilt in all tests
     attr_reader :global
+    # Define object that does the cleaning. By default uses instance of BlueprintsBoy::Cleaner
+    attr_accessor :cleaner
 
-    # Initializes new Configuration object with default attributes.
     def initialize
       self.filenames = [nil, "spec", "test"].map do |dir|
         ['blueprints.rb', 'blueprints/*.rb'].map do |pattern|
@@ -26,6 +27,7 @@ module BlueprintsBoy
       @transactions = true
       @root = defined?(Rails) ? Rails.root : Pathname.pwd
       @global = []
+      @cleaner = BlueprintsBoy::Cleaner.new
     end
 
     def filenames=(value)

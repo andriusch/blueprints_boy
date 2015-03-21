@@ -11,6 +11,7 @@ describe BlueprintsBoy::Configuration do
     subject.global.should == []
     subject.transactions.should be_truthy
     subject.root.should == Pathname.pwd
+    subject.cleaner.should be_a(BlueprintsBoy::Cleaner)
   end
 
   it "should use Rails root for root if it's defined" do
