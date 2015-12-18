@@ -1,21 +1,21 @@
 appraise "ar3.1" do
   gem "activerecord", "~> 3.1.12"
-  gem 'mysql2'
+  gem 'mysql2', '~> 0.3.10'
 end
 
 appraise "ar3.2" do
   gem "activerecord", "~> 3.2.15"
-  gem 'mysql2'
+  gem 'mysql2', '~> 0.3.10'
 end
 
 appraise "ar4.0" do
   gem "activerecord", "~> 4.0.0"
-  gem 'mysql2'
+  gem 'mysql2', '~> 0.3.10'
 end
 
 appraise "ar4.1" do
   gem "activerecord", "~> 4.1.0"
-  gem 'mysql2'
+  gem 'mysql2', '~> 0.3.10'
 end
 
 appraise "ar4.2" do
