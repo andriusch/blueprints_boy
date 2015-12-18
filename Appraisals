@@ -38,5 +38,10 @@ appraise "mongoid4" do
   gem 'bson_ext'
 end
 
+appraise "mongoid5" do
+  gem "mongoid", "~> 5.0"
+  gem 'bson_ext'
+end
+
 appraise "noorm" do
 end
