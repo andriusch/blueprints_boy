@@ -25,18 +25,30 @@ module BlueprintsBoy
 
   def self.enable
     yield config if block_given?
+    require_integrations
+    clean
+    prepare
+  end
+
+  def self.enable_seeds
+    prepare
+  end
+
+  def self.clean
+    config.cleaner.before_suite
+  end
+
+  def self.require_integrations
     require 'blueprints_boy/integration/minitest' if defined?(MiniTest)
     require 'blueprints_boy/integration/rspec' if defined?(RSpec)
     require 'blueprints_boy/integration/cucumber' if defined?(Cucumber)
     require 'blueprints_boy/integration/active_record' if defined?(ActiveRecord)
     require 'blueprints_boy/integration/mongoid' if defined?(Mongoid)
-    prepare
-    manager.push_registry(config.global)
   end
 
   def self.prepare
     read_files
-    config.cleaner.before_suite
+    manager.push_registry(config.global)
   end
 
   def self.read_files

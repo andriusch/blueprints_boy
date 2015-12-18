@@ -5,7 +5,8 @@ class BlueprintsBoy::Railtie < Rails::Railtie
     end
 
     def load_seed
-      BlueprintsBoy.enable
+      BlueprintsBoy.require_integrations
+      BlueprintsBoy.prepare
 
       TOPLEVEL_BINDING.eval('self').instance_eval do
         @_blueprint_data = {}
