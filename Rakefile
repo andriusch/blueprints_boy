@@ -30,7 +30,7 @@ namespace :spec do
   end
 
   Cucumber::Rake::Task.new(:cucumber) do |t|
-    t.cucumber_opts = "integration/cucumber --format pretty"
+    t.cucumber_opts = "integration/cucumber --format pretty -r integration/cucumber"
   end
 end
 
