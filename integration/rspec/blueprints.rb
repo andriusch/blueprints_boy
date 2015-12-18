@@ -2,12 +2,12 @@ blueprint :apple do
   'apple'
 end
 
-attributes(name: 'orange').blueprint(:orange) do |data|
-  data.attributes[:name]
-end.blueprint(:new) do |data|
-  "new #{data.attributes[:name]}"
+attributes(name: 'orange').blueprint(:orange) do |attributes:|
+  attributes[:name]
+end.blueprint(:new) do |attributes:|
+  "new #{attributes[:name]}"
 end
 
-blueprint :global_cherry, name: 'cherry' do |data|
-  data.attributes[:name]
+blueprint :global_cherry, name: 'cherry' do |attributes:|
+  attributes[:name]
 end

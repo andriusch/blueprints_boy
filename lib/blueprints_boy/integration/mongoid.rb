@@ -1,11 +1,11 @@
 if Mongoid::VERSION.to_i < 4
-  BlueprintsBoy.factories.add(Mongoid::Document, :create) { |data| data.factory.create!(data.attributes, without_protection: true) }
-  BlueprintsBoy.factories.add(Mongoid::Document, :new) { |data| data.factory.new(data.attributes, without_protection: true) }
-  BlueprintsBoy.factories.add(Mongoid::Document, :update) { |data| blueprint_data(data.name).update_attributes!(data.options, without_protection: true) }
+  BlueprintsBoy.factories.add(Mongoid::Document, :create) { |factory:, attributes:| factory.create!(attributes, without_protection: true) }
+  BlueprintsBoy.factories.add(Mongoid::Document, :new) { |factory:, attributes:| factory.new(attributes, without_protection: true) }
+  BlueprintsBoy.factories.add(Mongoid::Document, :update) { |name:, options:| blueprint_data(name).update_attributes!(options, without_protection: true) }
 else
-  BlueprintsBoy.factories.add(Mongoid::Document, :create) { |data| data.factory.create!(data.attributes) }
-  BlueprintsBoy.factories.add(Mongoid::Document, :new) { |data| data.factory.new(data.attributes) }
-  BlueprintsBoy.factories.add(Mongoid::Document, :update) { |data| blueprint_data(data.name).update_attributes!(data.options) }
+  BlueprintsBoy.factories.add(Mongoid::Document, :create) { |factory:, attributes:| factory.create!(attributes) }
+  BlueprintsBoy.factories.add(Mongoid::Document, :new) { |factory:, attributes:| factory.new(attributes) }
+  BlueprintsBoy.factories.add(Mongoid::Document, :update) { |name:, options:| blueprint_data(name).update_attributes!(options) }
 end
 
 DatabaseCleaner[:mongoid].strategy = :truncation

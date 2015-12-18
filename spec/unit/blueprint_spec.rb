@@ -43,13 +43,13 @@ describe BlueprintsBoy::Blueprint do
     end
 
     it "should allow passing options" do
-      blueprint = described_class.new(empty_context, :blueprint) { |data| data.options }
+      blueprint = described_class.new(empty_context, :blueprint) { |options:, attributes:| options }
       blueprint.build(env, :create, attr: 'value')
       env.blueprint.should == {attr: 'value'}
     end
 
     it "should allow using attributes with merged options in blueprint" do
-      blueprint = described_class.new(empty_context, :blueprint, attr1: 'value1', attr2: 'value2') { |data| data.attributes }
+      blueprint = described_class.new(empty_context, :blueprint, attr1: 'value1', attr2: 'value2') { |attributes:| attributes }
       blueprint.build(env, :create, attr2: 'v2', attr3: 'v3')
       env.blueprint.should == {attr1: 'value1', attr2: 'v2', attr3: 'v3'}
     end
@@ -57,7 +57,7 @@ describe BlueprintsBoy::Blueprint do
     it "should use normalized attributes when building" do
       BlueprintsBoy.manager.add blueprint1
       BlueprintsBoy.manager.setup(env)
-      blueprint = described_class.new(empty_context, :blueprint, attr: empty_context.blueprint1) { |data| data.attributes }
+      blueprint = described_class.new(empty_context, :blueprint, attr: empty_context.blueprint1) { |attributes:| attributes }
       blueprint.build(env, :create)
       env.blueprint.should == {attr: mock1}
     end
@@ -65,7 +65,7 @@ describe BlueprintsBoy::Blueprint do
 
   describe "name" do
     it "should put name in data" do
-      blueprint = create_blueprint(:blueprint1) { |data| data.name }
+      blueprint = create_blueprint(:blueprint1) { |name:| name }
       blueprint.build(env, :create)
       env.blueprint1.should == :blueprint1
     end
@@ -73,7 +73,7 @@ describe BlueprintsBoy::Blueprint do
 
   describe "strategies" do
     it "should allow having multiple strategies" do
-      blueprint1.blueprint(:options) { |data| data.options }
+      blueprint1.blueprint(:options) { |options:| options }
       blueprint1.build(env, :options, option: 'val')
       env.blueprint1.should == {option: 'val'}
     end
@@ -93,7 +93,7 @@ describe BlueprintsBoy::Blueprint do
 
   describe "factory" do
     it "should use factory when building blueprint" do
-      BlueprintsBoy.factories.add(Array, :create) { |data| data.factory.new(data.attributes[:size]) }
+      BlueprintsBoy.factories.add(Array, :create) { |factory:, attributes:| factory.new(attributes[:size]) }
       blueprint = create_blueprint('blueprint1').factory(Array)
       blueprint.build(env, :create, size: 3)
       env.blueprint1.should == Array.new(3)

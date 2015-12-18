@@ -7,7 +7,7 @@ class BlueprintsBoy::Blueprint
     @name = name.to_sym
     @strategies = {
         create: block,
-        attributes: proc { |data| data.attributes }
+        attributes: proc { |attributes:| attributes }
     }
     attributes(attrs)
   end
@@ -17,7 +17,7 @@ class BlueprintsBoy::Blueprint
     block = @strategies[strategy]
     block ||= BlueprintsBoy.factories[@context.factory_class, strategy] if @context.factory_class
     if block
-      environment.autoset(@name, environment.instance_exec(data, &block))
+      environment.autoset(@name, eval_block(environment, data, &block))
     else
       raise BlueprintsBoy::StrategyNotFound, "Blueprint #{@name.inspect} does not define strategy #{strategy.inspect}"
     end
@@ -41,13 +41,18 @@ class BlueprintsBoy::Blueprint
 
   private
 
+  def eval_block(environment, data, &block)
+    required = block.parameters.select { |key, _| key == :keyreq }.map { |_, name| [name, data.send(name)] }.to_h
+    environment.instance_exec(required, &block)
+  end
+
   def normalized_attributes(environment)
     @context.attrs.each_with_object({}) do |(key, value), normalized|
       normalized[key] = case value
-                        when BlueprintsBoy::Dependency
-                          environment.instance_eval(&value)
-                        else
-                          value
+                          when BlueprintsBoy::Dependency
+                            environment.instance_eval(&value)
+                          else
+                            value
                         end
     end
   end
