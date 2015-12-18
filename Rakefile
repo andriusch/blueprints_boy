@@ -66,9 +66,9 @@ task :spec do
   elsif find_gem('mongoid')
     run 'spec:mongoid'
   else
+    run 'spec:unit'
     run 'spec:rspec'
     run 'spec:minitest'
-    run 'spec:unit'
     run 'spec:cucumber'
   end
 end
