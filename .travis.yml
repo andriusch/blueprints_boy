@@ -1,9 +1,11 @@
 language: ruby
+
 rvm:
   - 1.9.3
   - 2.0.0
-  - 2.1.3
+  - 2.1
   - rbx
+
 gemfile:
   - Gemfile
   - gemfiles/ar3.1.gemfile
@@ -14,7 +16,11 @@ gemfile:
   - gemfiles/mongoid3.gemfile
   - gemfiles/mongoid4.gemfile
   - gemfiles/noorm.gemfile
+
+sudo: false
+
 services:
   - mongodb
+
 before_script:
   - mysql -e 'create database blueprints_boy_test;'
