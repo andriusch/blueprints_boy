@@ -43,7 +43,7 @@ class BlueprintsBoy::Blueprint
 
   def eval_block(environment, data, &block)
     required = block.parameters.select { |key, _| key == :keyreq }.map { |_, name| [name, data.send(name)] }.to_h
-    environment.instance_exec(required, &block)
+    environment.instance_exec(**required, &block)
   end
 
   def normalized_attributes(environment)

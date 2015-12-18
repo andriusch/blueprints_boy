@@ -3,7 +3,6 @@ language: ruby
 rvm:
   - 2.1
   - 2.2
-  - rbx
 
 gemfile:
   - gemfiles/ar3.1.gemfile
