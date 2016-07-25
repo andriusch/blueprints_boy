@@ -23,6 +23,11 @@ appraise "ar4.2" do
   gem 'mysql2'
 end
 
+appraise "ar5.0" do
+  gem "activerecord", "~> 5.0.0"
+  gem 'mysql2'
+end
+
 appraise "mongoid2" do
   gem "mongoid", "~> 2.0"
   gem 'bson_ext'
@@ -44,4 +49,5 @@ appraise "mongoid5" do
 end
 
 appraise "noorm" do
+  gem 'activesupport', '< 5.0', platforms: [:ruby_21, :ruby_22]
 end
