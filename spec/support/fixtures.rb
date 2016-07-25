@@ -36,6 +36,10 @@ module Fixtures
   end
 
   fixture :empty_context do
-    BlueprintsBoy::Context.new(ROOT.join('spec/support/empty_file.rb').to_s)
+    BlueprintsBoy::Context.new
+  end
+
+  fixture :dsl do
+    BlueprintsBoy::DSL.new(manager)
   end
 end

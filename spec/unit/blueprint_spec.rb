@@ -57,7 +57,7 @@ describe BlueprintsBoy::Blueprint do
     it "should use normalized attributes when building" do
       BlueprintsBoy.manager.add blueprint1
       BlueprintsBoy.manager.setup(env)
-      blueprint = described_class.new(empty_context, :blueprint, attr: empty_context.blueprint1) { |attributes:| attributes }
+      blueprint = described_class.new(empty_context, :blueprint, attr: dsl.blueprint1) { |attributes:| attributes }
       blueprint.build(env, :create)
       env.blueprint.should eq(attr: mock1)
     end

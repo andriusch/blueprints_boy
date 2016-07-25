@@ -23,16 +23,11 @@ class BlueprintsBoy::Blueprint
     end
   end
 
-  def depends_on(*dependencies)
-    update_context dependencies, nil, nil
-  end
-
-  def attributes(attributes)
-    update_context nil, attributes, nil
-  end
-
-  def factory(factory_class)
-    update_context nil, nil, factory_class
+  %i[depends_on attributes factory].each do |method|
+    define_method(method) do |*args, &block|
+      @context.public_send(method, *args)
+      self
+    end
   end
 
   def blueprint(strategy, &block)
@@ -55,10 +50,5 @@ class BlueprintsBoy::Blueprint
                             value
                         end
     end
-  end
-
-  def update_context(dependencies, attributes, factory_class)
-    @context = @context.chain(dependencies, attributes, factory_class)
-    self
   end
 end

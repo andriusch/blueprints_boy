@@ -16,6 +16,7 @@ module BlueprintsBoy
   autoload :Configuration
   autoload :Helper
   autoload :Context
+  autoload :DSL
   autoload :Manager
   autoload :Factories
   autoload :Blueprint
@@ -54,7 +55,7 @@ module BlueprintsBoy
   def self.read_files
     config.filenames.each do |pattern|
       Dir[config.root.join(pattern)].each do |file_name|
-        Context.new(file_name) { |blueprint| manager.add(blueprint) } if File.file?(file_name)
+        DSL.from_file(file_name, manager) if File.file?(file_name)
       end
     end
   end
