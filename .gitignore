@@ -4,3 +4,4 @@ Gemfile.lock
 /gemfiles/*.gemfile.lock
 pkg/*
 /integration/*/*.log
+/integration/active_record/database.yml

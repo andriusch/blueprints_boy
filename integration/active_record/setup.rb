@@ -1,6 +1,8 @@
 require 'active_record'
 require 'mysql2'
-ActiveRecord::Base.establish_connection(adapter: 'mysql2', database: 'blueprints_boy_test')
+require 'yaml'
+ActiveRecord::Base.configurations = YAML.load_file(File.expand_path('../database.yml', __FILE__))
+ActiveRecord::Base.establish_connection('default_env')
 
 class ARFruit < ActiveRecord::Base
   self.table_name = 'fruits'

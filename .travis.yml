@@ -22,4 +22,5 @@ services:
   - mongodb
 
 before_script:
+  - cp integration/active_record/database.yml.example integration/active_record/database.yml
   - mysql -e 'create database blueprints_boy_test;'
