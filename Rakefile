@@ -26,6 +26,7 @@ namespace :spec do
   end
 
   Rake::TestTask.new(:minitest) do |t|
+    t.libs = %w[minitest]
     t.pattern = "integration/minitest/test_*.rb"
   end
 
