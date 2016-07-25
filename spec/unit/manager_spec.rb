@@ -4,7 +4,7 @@ describe BlueprintsBoy::Manager do
   describe "add" do
     it "should add blueprint" do
       subject.add(blueprint1)
-      subject.blueprints.should == {:blueprint1 => blueprint1}
+      subject.blueprints.should eq(:blueprint1 => blueprint1)
     end
   end
 
@@ -30,7 +30,7 @@ describe BlueprintsBoy::Manager do
 
     it "should build blueprint" do
       subject.build(env, [:blueprint1])
-      env.blueprint1.should == mock1
+      env.blueprint1.should eq(mock1)
     end
 
     it "should add blueprint to built blueprints" do
@@ -52,47 +52,47 @@ describe BlueprintsBoy::Manager do
     it "should build dependencies of blueprint" do
       subject.add blueprint2.depends_on(:blueprint1)
       subject.build env, [:blueprint2]
-      subject.registry.built.to_a.should == [:blueprint2, :blueprint1]
+      subject.registry.built.to_a.should eq([:blueprint2, :blueprint1])
     end
 
     it "should allow passing options" do
       subject.add(create_blueprint(:options_blueprint) { |options:| options[:name] })
       subject.build(env, [{:options_blueprint => {name: 'success'}}])
-      env.options_blueprint.should == 'success'
+      env.options_blueprint.should eq('success')
     end
 
     it "should return results" do
       subject.add(blueprint2)
-      subject.build(env, [:blueprint1, :blueprint2 => {attr: 'val'}]).should == [mock1, mock2]
+      subject.build(env, [:blueprint1, :blueprint2 => {attr: 'val'}]).should eq([mock1, mock2])
     end
 
     it "should return 1 result if only one blueprint was built" do
-      subject.build(env, [:blueprint1]).should == mock1
+      subject.build(env, [:blueprint1]).should eq(mock1)
     end
 
     it "should return results for already built blueprints" do
       subject.build(env, [:blueprint1])
-      subject.build(env, [:blueprint1]).should == mock1
+      subject.build(env, [:blueprint1]).should eq(mock1)
     end
 
     it "should allow passing strategy" do
       blueprint1.blueprint(:new) { :new_strat }
       subject.build(env, [:blueprint1], strategy: :new)
-      env.blueprint1.should == :new_strat
+      env.blueprint1.should eq(:new_strat)
     end
 
     it "does not overwrite strategy with :update" do
       counter = 0
       blueprint1.blueprint(:counter) { counter += 1 }
       2.times { subject.build(env, [:blueprint1], strategy: :counter) }
-      counter.should == 2
+      counter.should eq(2)
     end
   end
 
   describe "setup" do
     it "should set @_blueprint_data to {}" do
       subject.setup(env)
-      env.instance_variable_get(:@_blueprint_data).should == {}
+      env.instance_variable_get(:@_blueprint_data).should eq({})
     end
 
     it "should restore blueprints from registry to @_blueprint_data" do
@@ -105,7 +105,7 @@ describe BlueprintsBoy::Manager do
       subject.push_registry([:blueprint2])
 
       subject.setup(env)
-      env.instance_variable_get(:@_blueprint_data).should == {blueprint1: mock1, blueprint2: mock2}
+      env.instance_variable_get(:@_blueprint_data).should eq(blueprint1: mock1, blueprint2: mock2)
     end
   end
 

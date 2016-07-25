@@ -12,27 +12,27 @@ describe ActiveRecord::Base do
     build :apple
     apple.should be_a(ARFruit)
     apple.should be_persisted
-    apple.species.should == 'apple'
+    apple.species.should eq('apple')
   end
 
   it "should clean database before each test" do
-    ARFruit.all.should == []
+    ARFruit.all.should eq([])
   end
 
   it "should use transactions for cleaning database" do
-    ActiveRecord::Base.connection.open_transactions.should == 1
+    ActiveRecord::Base.connection.open_transactions.should eq(1)
   end
 
   it "should allow building using :new strategy" do
     build_with :new, :apple
     apple.should be_a(ARFruit)
     apple.should be_new_record
-    apple.species.should == 'apple'
+    apple.species.should eq('apple')
   end
 
   it "should allow updating built blueprint" do
     build :apple
     build :apple => {species: 'orange'}
-    apple.reload.species.should == 'orange'
+    apple.reload.species.should eq('orange')
   end
 end

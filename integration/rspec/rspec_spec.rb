@@ -12,22 +12,22 @@ describe 'rspec integration' do
   describe "set" do
     it "should allow setting methods directly" do
       set :apple, 'apple'
-      apple.should == 'apple'
+      apple.should eq('apple')
     end
 
     it "should return value that is set" do
-      set(:apple, 'apple').should == 'apple'
+      set(:apple, 'apple').should eq('apple')
     end
 
     it "should auto set variable" do
       autoset :apple, 'apple'
-      apple.should == 'apple'
+      apple.should eq('apple')
     end
 
     it "should not auto set variable if it's already set" do
       set :variable, :correct
       autoset :variable, :incorrect
-      variable.should == :correct
+      variable.should eq(:correct)
     end
 
     it "should still autoset variable in blueprint_data even if environment defines method with same name" do
@@ -36,30 +36,30 @@ describe 'rspec integration' do
 
       autoset :variable, :correct
       variable.should be_nil
-      blueprint_data(:variable).should == :correct
+      blueprint_data(:variable).should eq(:correct)
     end
 
     it "should still return new value if variable is already set" do
       set :variable, :correct
-      autoset(:variable, :incorrect).should == :incorrect
+      autoset(:variable, :incorrect).should eq(:incorrect)
     end
 
     it "should allow reaching fixtures through fixtures method" do
       set :apple, 'apple'
-      blueprint_data(:apple).should == 'apple'
+      blueprint_data(:apple).should eq('apple')
     end
   end
 
   describe "build" do
     it "should allow building blueprint" do
       build :apple
-      apple.should == 'apple'
+      apple.should eq('apple')
     end
 
     it "should allow building several blueprints" do
       build :apple, :orange
-      apple.should == 'apple'
-      orange.should == 'orange'
+      apple.should eq('apple')
+      orange.should eq('orange')
     end
 
     it "should not allow to reach blueprints from previous specs" do
@@ -70,7 +70,7 @@ describe 'rspec integration' do
   describe "build with" do
     it "should allow building using different strategy" do
       build_with :attributes, :orange
-      orange.should == {name: 'orange'}
+      orange.should eq(name: 'orange')
     end
   end
 
@@ -78,22 +78,22 @@ describe 'rspec integration' do
     it "allows building blueprint twice" do
       orange1 = build! :orange
       orange2 = build! :orange => {name: 'not apple'}
-      orange1.should == 'orange'
-      orange2.should == 'not apple'
+      orange1.should eq('orange')
+      orange2.should eq('not apple')
     end
   end
 
   describe "build_new" do
     it "builds blueprint using :new strategy" do
       build_new :orange
-      orange.should == 'new orange'
+      orange.should eq('new orange')
     end
   end
 
   describe "build_attributes" do
     it "returns attributes for building" do
       build_attributes :orange => {size: 2}
-      orange.should == {name: 'orange', size: 2}
+      orange.should eq(name: 'orange', size: 2)
     end
   end
 
@@ -101,13 +101,13 @@ describe 'rspec integration' do
     build :apple
 
     it "should build blueprints in before filter" do
-      apple.should == 'apple'
+      apple.should eq('apple')
     end
   end
 
   describe "global" do
     it "should build global blueprints" do
-      global_cherry.should == 'cherry'
+      global_cherry.should eq('cherry')
     end
   end
 end

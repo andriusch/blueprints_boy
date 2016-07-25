@@ -28,23 +28,23 @@ describe Mongoid do
     build :apple
     apple.should be_a(MongoidFruit)
     apple.should be_persisted
-    apple.species.should == 'apple'
+    apple.species.should eq('apple')
   end
 
   it "should clean database before each test" do
-    MongoidFruit.all.to_a.should == []
+    MongoidFruit.all.to_a.should eq([])
   end
 
   it "should allow building using :new strategy" do
     build_with :new, :apple
     apple.should be_a(MongoidFruit)
     apple.should be_new_record
-    apple.species.should == 'apple'
+    apple.species.should eq('apple')
   end
 
   it "should allow updating built blueprint" do
     build :apple
     build :apple => {species: 'orange'}
-    apple.reload.species.should == 'orange'
+    apple.reload.species.should eq('orange')
   end
 end
