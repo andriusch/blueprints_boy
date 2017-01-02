@@ -37,6 +37,12 @@ describe BlueprintsBoy::Blueprint do
       blueprint.context.attrs.should eq(attr: 'value')
     end
 
+    it "saves blueprint attributes into separate context" do
+      blueprint = described_class.new(empty_context, :blueprint, attr: 'value')
+      described_class.new(empty_context, :blueprint, attr2: 'value2')
+      blueprint.context.attrs.should eq(attr: 'value')
+    end
+
     it "should adding attributes to blueprint later" do
       blueprint = described_class.new(empty_context, :blueprint).attributes(attr: 'value')
       blueprint.context.attrs.should eq(attr: 'value')

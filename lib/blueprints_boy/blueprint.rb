@@ -3,7 +3,7 @@ class BlueprintsBoy::Blueprint
   attr_reader :name, :context
 
   def initialize(context, name, attrs = {}, &block)
-    @context = context
+    @context = context.dup
     @name = name.to_sym
     @strategies = {
         create: block,
