@@ -36,6 +36,8 @@ matrix:
     gemfile: gemfiles/ar5.0.gemfile
   - rvm: 2.1
     gemfile: gemfiles/ar5.1.gemfile
+  - rvm: 2.1
+    gemfile: gemfiles/mongoid6.gemfile
   - rvm: 2.2
     gemfile: gemfiles/ar5.1.gemfile
   - rvm: 2.2
