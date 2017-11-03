@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 class BlueprintsBoy::Dependency < BasicObject
-  def initialize(name, *args)
+  def initialize(name, blueprint_name = name, **options)
     @name = name
-    @options = args.extract_options!
-    @blueprint_name = args.first || @name
+    @options = options
+    @blueprint_name = blueprint_name
     @registry = []
   end
 

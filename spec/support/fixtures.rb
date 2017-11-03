@@ -15,7 +15,10 @@ module Fixtures
   end
 
   def create_blueprint(name, &block)
-    BlueprintsBoy::Blueprint.new(empty_context, name, &block)
+    BlueprintsBoy::Blueprint.new.tap do |blueprint|
+      blueprint.name = name
+      blueprint.strategies = blueprint.strategies.merge(create: block)
+    end
   end
 
   fixture :env do
@@ -27,7 +30,7 @@ module Fixtures
 
     fixture "blueprint#{n}" do |result|
       result ||= send("mock#{n}")
-      create_blueprint("blueprint#{n}") { result }
+      create_blueprint(:"blueprint#{n}") { result }
     end
   end
 
@@ -36,7 +39,11 @@ module Fixtures
   end
 
   fixture :empty_context do
-    BlueprintsBoy::Context.new
+    BlueprintsBoy::Blueprint.new
+  end
+
+  fixture :empty_proc do
+    proc {}
   end
 
   fixture :dsl do

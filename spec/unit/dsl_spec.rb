@@ -15,15 +15,24 @@ describe BlueprintsBoy::DSL do
 
   describe '#blueprint' do
     it 'adds new blueprint' do
-      blueprint = subject.blueprint(:blueprint1) {}
+      subject.blueprint(:blueprint1, foo: 'bar', &empty_proc)
+      blueprint = manager.find(:blueprint1)
       blueprint.should be_instance_of(BlueprintsBoy::Blueprint)
       blueprint.name.should eq(:blueprint1)
+      blueprint.attributes.should eq(foo: 'bar')
+      blueprint.strategies.should match(create: empty_proc, attributes: instance_of(Proc))
     end
 
-    it 'sets context' do
+    it 'sets definition' do
       blueprint = subject.depends_on(:blueprint2).blueprint(:blueprint1) {}
-      blueprint.context.should be_instance_of(BlueprintsBoy::Context)
-      blueprint.context.dependencies.should eq([:blueprint2])
+      blueprint.definition.should be_instance_of(BlueprintsBoy::Blueprint)
+      blueprint.definition.dependencies.should eq([:blueprint2])
+    end
+
+    it 'updates blueprint with new definition' do
+      subject.blueprint(:blueprint1) {}.depends_on(:blueprint2)
+      blueprint = manager.find(:blueprint1)
+      blueprint.dependencies.should eq([:blueprint2])
     end
   end
 
@@ -32,12 +41,17 @@ describe BlueprintsBoy::DSL do
       chain = subject.depends_on(:blueprint, :blueprint2)
       chain.should be_instance_of(BlueprintsBoy::DSL)
       chain.should_not equal(subject)
-      chain.context.dependencies.should eq([:blueprint, :blueprint2])
+      chain.definition.dependencies.should eq([:blueprint, :blueprint2])
     end
 
     it 'allows chaining dependencies' do
       chain = subject.depends_on(:blueprint).depends_on(:blueprint2)
-      chain.context.dependencies.should eq([:blueprint, :blueprint2])
+      chain.definition.dependencies.should eq([:blueprint, :blueprint2])
+    end
+
+    it 'merges dependencies' do
+      chain = subject.depends_on(:blueprint, :blueprint2).depends_on(:blueprint2, :blueprint3)
+      chain.definition.dependencies.should eq([:blueprint, :blueprint2, :blueprint3])
     end
 
     it 'allows using block form to chain dependencies' do
@@ -45,12 +59,12 @@ describe BlueprintsBoy::DSL do
       subject.depends_on(:blueprint) do
         chain = depends_on(:blueprint2)
       end
-      chain.context.dependencies.should eq([:blueprint, :blueprint2])
+      chain.definition.dependencies.should eq([:blueprint, :blueprint2])
     end
 
     it 'does not modify original dependencies' do
       subject.depends_on(:blueprint)
-      subject.context.dependencies.should eq([])
+      subject.definition.dependencies.should eq([])
     end
   end
 
@@ -59,7 +73,7 @@ describe BlueprintsBoy::DSL do
       chain = subject.attributes(attr: 'val')
       chain.should be_instance_of(BlueprintsBoy::DSL)
       chain.should_not equal(subject)
-      chain.context.attrs.should eq(attr: 'val')
+      chain.definition.attributes.should eq(attr: 'val')
     end
 
     it 'allows chaining attributes using block form' do
@@ -67,24 +81,47 @@ describe BlueprintsBoy::DSL do
       subject.attributes(attr1: 'val1', attr2: 'val2') do
         chain = attributes(attr2: 'v2', attr3: 'v3')
       end
-      chain.context.attrs.should eq(attr1: 'val1', attr2: 'v2', attr3: 'v3')
+      chain.definition.attributes.should eq(attr1: 'val1', attr2: 'v2', attr3: 'v3')
     end
 
     it 'does not modify original attributes' do
       subject.attributes(attr: 'val')
-      subject.context.attrs.should eq({})
+      subject.definition.attributes.should eq({})
     end
   end
 
   describe '#factory' do
     it 'should create new chain with block' do
       chain = subject.factory(Integer)
-      chain.context.factory_class.should eq(Integer)
+      chain.definition.factory_class.should eq(Integer)
     end
 
     it 'should allow chaining after factory' do
       chain = subject.factory(Integer).attributes(attr: 'value')
-      chain.context.factory_class.should eq(Integer)
+      chain.definition.factory_class.should eq(Integer)
+    end
+  end
+
+  describe '#strategy' do
+    it 'creates new chain with strategy added' do
+      chain = subject.strategy(:update, empty_proc)
+      chain.should be_instance_of(BlueprintsBoy::DSL)
+      chain.should_not equal(subject)
+      chain.definition.strategies.should match(attributes: instance_of(Proc), update: empty_proc)
+    end
+
+    it 'allows chaining strategies' do
+      empty_proc = self.empty_proc
+      chain = nil
+      subject.strategy(:update, empty_proc) do
+        chain = strategy(:new, empty_proc)
+      end
+      chain.definition.strategies.should match(attributes: instance_of(Proc), update: empty_proc, new: empty_proc)
+    end
+
+    it 'does not modify original strategies' do
+      subject.strategy(:update, empty_proc)
+      subject.definition.strategies.should match(attributes: instance_of(Proc))
     end
   end
 
@@ -106,8 +143,8 @@ describe BlueprintsBoy::DSL do
 
   describe 'group' do
     before do
-      manager.add blueprint1
-      manager.add blueprint2
+      manager.set blueprint1
+      manager.set blueprint2
       manager.setup env
     end
 
@@ -118,7 +155,7 @@ describe BlueprintsBoy::DSL do
     end
 
     it 'should allow multiple groups' do
-      manager.add blueprint3
+      manager.set blueprint3
       subject.group(:group1 => [:blueprint1, :blueprint2], :group2 => [:blueprint2, :blueprint3])
       manager.build(env, [:group2])
       env.group2.should eq([mock2, mock3])

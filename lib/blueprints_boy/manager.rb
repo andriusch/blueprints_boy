@@ -8,7 +8,7 @@ module BlueprintsBoy
       @registry = nil
     end
 
-    def add(blueprint)
+    def set(blueprint)
       @blueprints[blueprint.name] = blueprint
     end
 
@@ -59,8 +59,8 @@ module BlueprintsBoy
 
       @registry.built << name
       blueprint = find(name)
-      build environment, blueprint.context.dependencies if blueprint.context.dependencies.present?
-      blueprint.build(environment, strategy, attributes || {})
+      build environment, blueprint.dependencies if blueprint.dependencies.present?
+      BlueprintBuilder.new(blueprint, environment, strategy, attributes || {}).build
     end
 
     def default_strategy_for(name, attributes)
@@ -73,7 +73,7 @@ module BlueprintsBoy
 
     def parse_names(names)
       names_with_options = names.extract_options!
-      names.push(*names_with_options)
+      names + names_with_options.to_a
     end
   end
 end

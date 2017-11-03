@@ -1,25 +1,37 @@
 # frozen_string_literal: true
 module BlueprintsBoy
   class DSL
-    attr_reader :context
+    attr_reader :definition
 
     def self.from_file(file_name, manager)
       new(manager).instance_eval(File.read(file_name), file_name)
     end
 
-    def initialize(manager, context = Context.new)
+    def initialize(manager, definition = Blueprint.new)
       @manager = manager
-      @context = context
+      @definition = definition
     end
 
-    %i[depends_on attributes factory].each do |method|
-      define_method(method) do |*args, &block|
-        chain_context(block) { |context| context.public_send(method, *args) }
+    def depends_on(*dependencies, &block)
+      chain(block) { |definition| definition.dependencies |= dependencies }
+    end
+
+    def attributes(**attributes, &block)
+      chain(block) { |definition| definition.attributes = definition.attributes.merge(attributes) }
+    end
+
+    def factory(factory, &block)
+      chain(block) { |definition| definition.factory_class = factory }
+    end
+
+    def strategy(name, strategy, &block)
+      chain(block) { |definition| definition.strategies = definition.strategies.merge(name => strategy) }
+    end
+
+    def blueprint(name, **attributes, &block)
+      attributes(**attributes).strategy(:create, block).chain(nil) do |definition|
+        definition.name = name.to_sym
       end
-    end
-
-    def blueprint(*args, &block)
-      @manager.add Blueprint.new(@context, *args, &block)
     end
 
     def group(groups)
@@ -34,14 +46,16 @@ module BlueprintsBoy
 
     alias method_missing dependency
 
-    private
+    protected
 
-    def chain_context(block)
-      context = @context.dup
-      yield context
+    def chain(block)
+      definition = @definition.dup
+      yield definition
 
-      self.class.new(@manager, context).tap do |context_chain|
-        context_chain.instance_eval(&block) if block
+      @manager.set(definition) if definition.name
+
+      self.class.new(@manager, definition).tap do |definition_chain|
+        definition_chain.instance_eval(&block) if block
       end
     end
   end

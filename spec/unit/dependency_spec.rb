@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe BlueprintsBoy::Dependency do
   before do
-    BlueprintsBoy.manager.add blueprint1
+    BlueprintsBoy.manager.set blueprint1
     BlueprintsBoy.manager.setup env
   end
 
@@ -21,7 +21,7 @@ describe BlueprintsBoy::Dependency do
   end
 
   it 'should allow passing options for building' do
-    BlueprintsBoy.manager.add(create_blueprint(:options_blueprint) { |options:| options })
+    BlueprintsBoy.manager.set(create_blueprint(:options_blueprint) { |options:| options })
     value(described_class.new(:options_blueprint, :option => 'value')).should eq(:option => 'value')
   end
 

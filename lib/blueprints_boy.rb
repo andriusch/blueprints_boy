@@ -16,11 +16,11 @@ module BlueprintsBoy
 
   autoload :Configuration
   autoload :Helper
-  autoload :Context
+  autoload :Blueprint
   autoload :DSL
   autoload :Manager
   autoload :Factories
-  autoload :Blueprint
+  autoload :BlueprintBuilder
   autoload :Dependency
   autoload :Registry
   autoload :Cleaner
