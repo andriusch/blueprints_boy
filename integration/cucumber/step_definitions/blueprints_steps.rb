@@ -9,7 +9,7 @@ Then(/^(\w+) should (NOT )?be available$/) do |name, negative|
     expect(data).not_to be_nil
   end
 end
-When(/^(\w+) should equal "([^\"]*)"/) do |name, value|
+When(/^(\w+) should equal "([^"]*)"/) do |name, value|
   expect(send(name)).to eq(value)
 end
 Then(/^I change global_cherry$/) do

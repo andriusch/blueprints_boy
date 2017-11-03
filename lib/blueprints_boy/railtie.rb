@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class BlueprintsBoy::Railtie < Rails::Railtie
   class Seeder
     def initialize(parent)

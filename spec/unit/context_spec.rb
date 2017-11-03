@@ -43,8 +43,8 @@ describe BlueprintsBoy::Context do
 
   describe '#factory' do
     it 'sets factory class' do
-      subject.factory(Fixnum)
-      subject.factory_class.should eq(Fixnum)
+      subject.factory(Integer)
+      subject.factory_class.should eq(Integer)
     end
   end
 end

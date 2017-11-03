@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module BlueprintsBoy::Helper
   def set(name, value)
     instance_eval <<-RUBY, __FILE__, __LINE__ + 1

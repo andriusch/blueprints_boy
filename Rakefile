@@ -1,6 +1,7 @@
-require "bundler/setup"
+# frozen_string_literal: true
+require 'bundler/setup'
 require 'appraisal'
-require "bundler/gem_tasks"
+require 'bundler/gem_tasks'
 
 require 'rspec/core/rake_task'
 require 'rake/testtask'
@@ -8,35 +9,35 @@ require 'cucumber/rake/task'
 
 namespace :spec do
   RSpec::Core::RakeTask.new(:unit) do |t|
-    t.pattern = "spec/unit/**/*_spec.rb"
+    t.pattern = 'spec/unit/**/*_spec.rb'
   end
   RSpec::Core::RakeTask.new(:rspec) do |t|
-    t.pattern = "integration/rspec/rspec_spec.rb"
+    t.pattern = 'integration/rspec/rspec_spec.rb'
   end
 
   RSpec::Core::RakeTask.new(:active_record => 'prepare:active_record') do |t|
-    t.pattern = "integration/active_record/active_record_spec.rb"
+    t.pattern = 'integration/active_record/active_record_spec.rb'
   end
   RSpec::Core::RakeTask.new(:active_record_truncation => 'prepare:active_record') do |t|
-    t.pattern = "integration/active_record/active_record_truncation_spec.rb"
+    t.pattern = 'integration/active_record/active_record_truncation_spec.rb'
   end
 
   RSpec::Core::RakeTask.new(:mongoid) do |t|
-    t.pattern = "integration/mongoid/mongoid_spec.rb"
+    t.pattern = 'integration/mongoid/mongoid_spec.rb'
   end
 
   Rake::TestTask.new(:minitest) do |t|
     t.libs = %w[minitest]
-    t.pattern = "integration/minitest/test_*.rb"
+    t.pattern = 'integration/minitest/test_*.rb'
   end
 
   Cucumber::Rake::Task.new(:cucumber) do |t|
-    t.cucumber_opts = "integration/cucumber --format pretty -r integration/cucumber"
+    t.cucumber_opts = 'integration/cucumber --format pretty -r integration/cucumber'
   end
 end
 
 namespace :prepare do
-  desc "Prepare database schema for active record"
+  desc 'Prepare database schema for active record'
   task :active_record do
     require_relative 'integration/active_record/setup'
     ActiveRecord::Schema.define(:version => 0) do

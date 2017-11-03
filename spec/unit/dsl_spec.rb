@@ -78,13 +78,13 @@ describe BlueprintsBoy::DSL do
 
   describe '#factory' do
     it 'should create new chain with block' do
-      chain = subject.factory(Fixnum)
-      chain.context.factory_class.should eq(Fixnum)
+      chain = subject.factory(Integer)
+      chain.context.factory_class.should eq(Integer)
     end
 
     it 'should allow chaining after factory' do
-      chain = subject.factory(Fixnum).attributes(attr: 'value')
-      chain.context.factory_class.should eq(Fixnum)
+      chain = subject.factory(Integer).attributes(attr: 'value')
+      chain.context.factory_class.should eq(Integer)
     end
   end
 

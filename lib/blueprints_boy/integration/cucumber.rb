@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 World BlueprintsBoy::Helper
 
 Before do

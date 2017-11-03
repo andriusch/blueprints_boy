@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module BlueprintsBoy
   class Cleaner
     def before_suite
@@ -22,8 +23,7 @@ module BlueprintsBoy
 
     def ignore_no_orm
       yield
-    rescue DatabaseCleaner::NoORMDetected
-      # ignored
+    rescue DatabaseCleaner::NoORMDetected # rubocop:disable Lint/HandleExceptions
     end
   end
 end

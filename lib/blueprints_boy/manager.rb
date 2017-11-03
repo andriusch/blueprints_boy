@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module BlueprintsBoy
   class Manager
     attr_reader :blueprints, :registry
@@ -15,7 +16,7 @@ module BlueprintsBoy
       @blueprints[name] or raise BlueprintNotFound, "Blueprint :#{name} cannot be found"
     end
 
-    alias_method :[], :find
+    alias [] find
 
     def build(environment, names, options = {})
       result = parse_names(names).collect do |name, attributes|
@@ -64,11 +65,7 @@ module BlueprintsBoy
 
     def default_strategy_for(name, attributes)
       if @registry.built.include?(name)
-        if attributes.present?
-          :update
-        else
-          nil
-        end
+        :update if attributes.present?
       else
         :create
       end

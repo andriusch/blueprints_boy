@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class BlueprintsBoy::Blueprint
   Data = Struct.new(:name, :options, :attributes, :factory)
   attr_reader :name, :context
@@ -6,8 +7,8 @@ class BlueprintsBoy::Blueprint
     @context = context.dup
     @name = name.to_sym
     @strategies = {
-        create: block,
-        attributes: proc { |attributes:| attributes }
+      create: block,
+      attributes: proc { |attributes:| attributes }
     }
     attributes(attrs)
   end
@@ -25,7 +26,7 @@ class BlueprintsBoy::Blueprint
 
   %i[depends_on attributes factory].each do |method|
     define_method(method) do |*args, &block|
-      @context.public_send(method, *args)
+      @context.public_send(method, *args, &block)
       self
     end
   end
@@ -44,10 +45,10 @@ class BlueprintsBoy::Blueprint
   def normalized_attributes(environment)
     @context.attrs.each_with_object({}) do |(key, value), normalized|
       normalized[key] = case value
-                          when BlueprintsBoy::Dependency
-                            environment.instance_eval(&value)
-                          else
-                            value
+                        when BlueprintsBoy::Dependency
+                          environment.instance_eval(&value)
+                        else
+                          value
                         end
     end
   end

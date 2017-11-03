@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module BlueprintsBoy
   class Context
     attr_reader :dependencies, :attrs, :factory_class

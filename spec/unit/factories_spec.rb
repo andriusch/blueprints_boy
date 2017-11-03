@@ -1,19 +1,19 @@
 require_relative '../spec_helper'
 
 describe BlueprintsBoy::Factories do
-  describe "finding" do
+  describe 'finding' do
     before do
       subject.add(Integer, :create) { 5 }
     end
 
-    it "should allow defining and finding a factory" do
+    it 'should allow defining and finding a factory' do
       factory = subject[Integer, :create]
       factory.should be_instance_of(Proc)
       factory.call.should eq(5)
     end
 
-    it "should find factory for child class" do
-      factory = subject[Fixnum, :create]
+    it 'should find factory for child class' do
+      factory = subject[Integer, :create]
       factory.should be_instance_of(Proc)
       factory.call.should eq(5)
     end

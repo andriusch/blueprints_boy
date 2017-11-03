@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module BlueprintsBoy
   # Contains configuration of blueprints. Instance of this is yielded in Blueprints.enable block.
   # @example Configuring through Blueprints.enable block
@@ -19,8 +20,8 @@ module BlueprintsBoy
     attr_accessor :cleaner
 
     def initialize
-      self.filenames = [nil, "spec", "test"].map do |dir|
-        ['blueprints.rb', 'blueprints/*.rb'].map do |pattern|
+      self.filenames = [nil, 'spec', 'test'].map do |dir|
+        %w[blueprints.rb blueprints/*.rb].map do |pattern|
           File.join([dir, pattern].compact)
         end
       end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module BlueprintsBoy
   class Registry
     attr_reader :built, :parent, :names

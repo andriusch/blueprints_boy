@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module BlueprintsBoy
   class DSL
     attr_reader :context
@@ -31,7 +32,7 @@ module BlueprintsBoy
       BlueprintsBoy::Dependency.new(name, *args, &block)
     end
 
-    alias_method :method_missing, :dependency
+    alias method_missing dependency
 
     private
 

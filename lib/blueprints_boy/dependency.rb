@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class BlueprintsBoy::Dependency < BasicObject
   def initialize(name, *args)
     @name = name
@@ -19,5 +20,9 @@ class BlueprintsBoy::Dependency < BasicObject
   def method_missing(method, *args, &block)
     @registry << [method, args, block]
     self
+  end
+
+  def respond_to_missing?(*)
+    true
   end
 end

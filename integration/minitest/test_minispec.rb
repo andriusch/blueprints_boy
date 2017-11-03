@@ -9,32 +9,32 @@ BlueprintsBoy.enable do |config|
 end
 
 describe BlueprintsBoy do
-  describe "build" do
-    it "allows building blueprint" do
+  describe 'build' do
+    it 'allows building blueprint' do
       build :apple
       apple.must_equal 'apple'
     end
 
-    it "should not allow to reach blueprints from previous specs" do
+    it 'should not allow to reach blueprints from previous specs' do
       blueprint_data(:apple).must_be_nil
     end
 
-    it "allows building same blueprint in another spec" do
+    it 'allows building same blueprint in another spec' do
       build :apple
       apple.must_equal 'apple'
     end
   end
 
-  describe "class level set" do
+  describe 'class level set' do
     build :apple
 
-    it "should build blueprints in before filter" do
+    it 'should build blueprints in before filter' do
       apple.must_equal 'apple'
     end
   end
 
-  describe "global" do
-    it "should build global blueprints" do
+  describe 'global' do
+    it 'should build global blueprints' do
       global_cherry.must_equal 'cherry'
     end
   end
