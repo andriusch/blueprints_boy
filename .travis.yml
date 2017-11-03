@@ -34,9 +34,17 @@ matrix:
   exclude:
   - rvm: 2.1
     gemfile: gemfiles/ar5.0.gemfile
-  - rvm: 2.2
-    gemfile: gemfiles/ar5.0.gemfile
   - rvm: 2.1
     gemfile: gemfiles/ar5.1.gemfile
   - rvm: 2.2
     gemfile: gemfiles/ar5.1.gemfile
+  - rvm: 2.2
+    gemfile: gemfiles/ar5.0.gemfile
+  - rvm: 2.4
+    gemfile: gemfiles/ar3.1.gemfile
+  - rvm: 2.4
+    gemfile: gemfiles/ar3.2.gemfile
+  - rvm: 2.4
+    gemfile: gemfiles/ar4.0.gemfile
+  - rvm: 2.4
+    gemfile: gemfiles/ar4.1.gemfile
