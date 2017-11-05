@@ -84,7 +84,7 @@ describe BlueprintsBoy::Manager do
 
     it 'does not overwrite strategy with :update' do
       counter = 0
-      blueprint1.strategies = blueprint1.strategies.merge(counter: proc {counter += 1})
+      blueprint1.strategies = blueprint1.strategies.merge(counter: proc { counter += 1 })
       2.times { subject.build(env, [:blueprint1], strategy: :counter) }
       counter.should eq(2)
     end

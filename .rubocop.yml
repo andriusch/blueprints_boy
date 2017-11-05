@@ -3,6 +3,9 @@ AllCops:
   TargetRubyVersion: 2.4
   DisplayCopNames: true
 
+Metrics/AbcSize:
+  Max: 20
+
 Metrics/BlockLength:
   Enabled: true
   Exclude:
@@ -44,6 +47,9 @@ Style/PercentLiteralDelimiters:
     "%r": "{}"
     "%w": "[]"
     "%W": "[]"
+
+Style/SignalException:
+  EnforcedStyle: semantic
 
 Style/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space

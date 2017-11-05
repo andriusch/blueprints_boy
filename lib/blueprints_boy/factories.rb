@@ -13,7 +13,7 @@ module BlueprintsBoy
       factory_class.ancestors.each do |ancestor|
         return @factories[ancestor][strategy] if @factories.key?(ancestor)
       end
-      raise FactoryNotFound, "Factory for #{factory_class} can't be located"
+      fail FactoryNotFound, "Factory for #{factory_class} can't be located"
     end
   end
 end

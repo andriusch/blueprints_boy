@@ -13,7 +13,7 @@ module BlueprintsBoy
     end
 
     def find(name)
-      @blueprints[name] or raise BlueprintNotFound, "Blueprint :#{name} cannot be found"
+      @blueprints[name] or fail BlueprintNotFound, "Blueprint :#{name} cannot be found"
     end
 
     alias [] find

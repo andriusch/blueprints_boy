@@ -15,7 +15,7 @@ class BlueprintsBoy::BlueprintBuilder
 
   def build
     required = @strategy.parameters.select { |key, _| key == :keyreq }
-                 .map { |_, name| [name, instance_variable_get("@#{name}")] }.to_h
+                        .map { |_, name| [name, instance_variable_get("@#{name}")] }.to_h
     @environment.autoset @name, @environment.instance_exec(**required, &@strategy)
   end
 

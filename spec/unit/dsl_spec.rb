@@ -111,12 +111,12 @@ describe BlueprintsBoy::DSL do
     end
 
     it 'allows chaining strategies' do
-      empty_proc = self.empty_proc
+      proc = empty_proc
       chain = nil
-      subject.strategy(:update, empty_proc) do
-        chain = strategy(:new, empty_proc)
+      subject.strategy(:update, proc) do
+        chain = strategy(:new, proc)
       end
-      chain.definition.strategies.should match(attributes: instance_of(Proc), update: empty_proc, new: empty_proc)
+      chain.definition.strategies.should match(attributes: instance_of(Proc), update: proc, new: proc)
     end
 
     it 'does not modify original strategies' do
