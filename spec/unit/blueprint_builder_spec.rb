@@ -55,7 +55,7 @@ describe BlueprintsBoy::BlueprintBuilder do
       let(:strategy) { :attributes }
 
       it 'allows checking normalized attributes with merged options' do
-        BlueprintsBoy.manager.set blueprint2
+        BlueprintsBoy.manager.blueprints.set blueprint2
         BlueprintsBoy.manager.setup(env)
         subject.should eq(attr1: 'value1', attr2: 'v2', attr3: 'v3', normalize: mock2)
       end

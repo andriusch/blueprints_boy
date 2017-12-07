@@ -1,5 +1,6 @@
 require 'rspec'
 require 'blueprints_boy'
+require 'pathname'
 
 ROOT = Pathname.new('../../').expand_path(__FILE__)
 

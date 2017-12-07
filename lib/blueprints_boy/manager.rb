@@ -4,23 +4,13 @@ module BlueprintsBoy
     attr_reader :blueprints, :registry
 
     def initialize
-      @blueprints = {}
+      @blueprints = Blueprints.new
       @registry = nil
     end
 
-    def set(blueprint)
-      @blueprints[blueprint.name] = blueprint
-    end
-
-    def find(name)
-      @blueprints[name] or fail BlueprintNotFound, "Blueprint :#{name} cannot be found"
-    end
-
-    alias [] find
-
-    def build(environment, names, options = {})
+    def build(environment, names, **options)
       result = parse_names(names).collect do |name, attributes|
-        build_blueprint(environment, name, attributes, options)
+        build_blueprint(environment, name, attributes, **options)
       end
       result.size > 1 ? result : result.first
     end
@@ -53,12 +43,12 @@ module BlueprintsBoy
       environment.instance_variable_set(:@_blueprint_data, {})
     end
 
-    def build_blueprint(environment, name, attributes, options)
-      strategy = options[:strategy] || default_strategy_for(name, attributes)
+    def build_blueprint(environment, name, attributes, strategy: nil)
+      strategy ||= default_strategy_for(name, attributes)
       return environment.blueprint_data(name) if strategy.nil? # Blueprint is already built
 
       @registry.built << name
-      blueprint = find(name)
+      blueprint = blueprints.find(name)
       build environment, blueprint.dependencies if blueprint.dependencies.present?
       BlueprintBuilder.new(blueprint, environment, strategy, attributes || {}).build
     end
