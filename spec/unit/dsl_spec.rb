@@ -8,7 +8,6 @@ describe BlueprintsBoy::DSL do
   describe '.from_file' do
     it 'reads file and callback for each blueprint' do
       described_class.from_file(ROOT.join('spec/support/manager_fixture.rb').to_s, manager)
-      manager.blueprints.keys.should eq([:test])
       manager.blueprints[:test].name.should eq(:test)
     end
   end
@@ -16,7 +15,7 @@ describe BlueprintsBoy::DSL do
   describe '#blueprint' do
     it 'adds new blueprint' do
       subject.blueprint(:blueprint1, foo: 'bar', &empty_proc)
-      blueprint = manager.find(:blueprint1)
+      blueprint = manager.blueprints[:blueprint1]
       blueprint.should be_instance_of(BlueprintsBoy::Blueprint)
       blueprint.name.should eq(:blueprint1)
       blueprint.attributes.should eq(foo: 'bar')
@@ -31,7 +30,7 @@ describe BlueprintsBoy::DSL do
 
     it 'updates blueprint with new definition' do
       subject.blueprint(:blueprint1) {}.depends_on(:blueprint2)
-      blueprint = manager.find(:blueprint1)
+      blueprint = manager.blueprints[:blueprint1]
       blueprint.dependencies.should eq([:blueprint2])
     end
   end
@@ -143,8 +142,8 @@ describe BlueprintsBoy::DSL do
 
   describe 'group' do
     before do
-      manager.set blueprint1
-      manager.set blueprint2
+      manager.blueprints.set blueprint1
+      manager.blueprints.set blueprint2
       manager.setup env
     end
 
@@ -155,7 +154,7 @@ describe BlueprintsBoy::DSL do
     end
 
     it 'should allow multiple groups' do
-      manager.set blueprint3
+      manager.blueprints.set blueprint3
       subject.group(:group1 => [:blueprint1, :blueprint2], :group2 => [:blueprint2, :blueprint3])
       manager.build(env, [:group2])
       env.group2.should eq([mock2, mock3])

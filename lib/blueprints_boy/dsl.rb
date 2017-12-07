@@ -52,7 +52,7 @@ module BlueprintsBoy
       definition = @definition.dup
       yield definition
 
-      @manager.set(definition) if definition.name
+      @manager.blueprints.set(definition) if definition.name
 
       self.class.new(@manager, definition).tap do |definition_chain|
         definition_chain.instance_eval(&block) if block

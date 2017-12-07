@@ -17,6 +17,7 @@ module BlueprintsBoy
   autoload :Configuration
   autoload :Helper
   autoload :Blueprint
+  autoload :Blueprints
   autoload :DSL
   autoload :Manager
   autoload :Factories

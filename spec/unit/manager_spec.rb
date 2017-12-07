@@ -1,30 +1,9 @@
 require 'spec_helper'
 
 describe BlueprintsBoy::Manager do
-  describe 'set' do
-    it 'should set blueprint' do
-      subject.set(blueprint1)
-      subject.blueprints.should eq(:blueprint1 => blueprint1)
-    end
-  end
-
-  describe 'find' do
-    it 'should find seted blueprint' do
-      subject.set(blueprint1)
-      subject.find(:blueprint1).should equal(blueprint1)
-      subject[:blueprint1].should equal(blueprint1)
-    end
-
-    it 'should raise error if blueprint is not found' do
-      expect {
-        subject.find(:blueprint_not_existing)
-      }.to raise_error(BlueprintsBoy::BlueprintNotFound, 'Blueprint :blueprint_not_existing cannot be found')
-    end
-  end
-
   describe 'build' do
     before do
-      subject.set(blueprint1)
+      subject.blueprints.set(blueprint1)
       subject.push_registry
     end
 
@@ -51,19 +30,19 @@ describe BlueprintsBoy::Manager do
 
     it 'should build dependencies of blueprint' do
       blueprint2.dependencies |= [:blueprint1]
-      subject.set blueprint2
+      subject.blueprints.set blueprint2
       subject.build env, [:blueprint2]
       subject.registry.built.to_a.should eq([:blueprint2, :blueprint1])
     end
 
     it 'should allow passing options' do
-      subject.set(create_blueprint(:options_blueprint) { |options:| options[:name] })
+      subject.blueprints.set(create_blueprint(:options_blueprint) { |options:| options[:name] })
       subject.build(env, [{:options_blueprint => {name: 'success'}}])
       env.options_blueprint.should eq('success')
     end
 
     it 'should return results' do
-      subject.set(blueprint2)
+      subject.blueprints.set(blueprint2)
       subject.build(env, [:blueprint1, :blueprint2 => {attr: 'val'}]).should eq([mock1, mock2])
     end
 
@@ -99,8 +78,8 @@ describe BlueprintsBoy::Manager do
     it 'should restore blueprints from registry to @_blueprint_data' do
       blueprint1
       blueprint2
-      subject.set(blueprint1)
-      subject.set(blueprint2)
+      subject.blueprints.set(blueprint1)
+      subject.blueprints.set(blueprint2)
 
       subject.push_registry([:blueprint1])
       subject.push_registry([:blueprint2])
@@ -112,7 +91,7 @@ describe BlueprintsBoy::Manager do
 
   describe 'teardown' do
     it 'should pop registry' do
-      subject.set(blueprint1)
+      subject.blueprints.set(blueprint1)
       subject.push_registry
       subject.build(env, [:blueprint1])
 
