@@ -10,27 +10,27 @@ end
 
 describe 'rspec integration' do
   describe 'set' do
-    it 'should allow setting methods directly' do
+    it 'allows setting methods directly' do
       set :apple, 'apple'
       apple.should eq('apple')
     end
 
-    it 'should return value that is set' do
+    it 'returns value that is set' do
       set(:apple, 'apple').should eq('apple')
     end
 
-    it 'should auto set variable' do
+    it 'auto sets variable' do
       autoset :apple, 'apple'
       apple.should eq('apple')
     end
 
-    it "should not auto set variable if it's already set" do
+    it "does not auto set variable if it's already set" do
       set :variable, :correct
       autoset :variable, :incorrect
       variable.should eq(:correct)
     end
 
-    it 'should still auto set variable in blueprint_data even if environment defines method with same name' do
+    it 'still auto sets variable in blueprint_data even if environment defines method with same name' do
       def self.variable
       end
 
@@ -39,36 +39,36 @@ describe 'rspec integration' do
       blueprint_data(:variable).should eq(:correct)
     end
 
-    it 'should still return new value if variable is already set' do
+    it 'still returns new value if variable is already set' do
       set :variable, :correct
       autoset(:variable, :incorrect).should eq(:incorrect)
     end
 
-    it 'should allow reaching fixtures through fixtures method' do
+    it 'allows reaching fixtures through fixtures method' do
       set :apple, 'apple'
       blueprint_data(:apple).should eq('apple')
     end
   end
 
   describe 'build' do
-    it 'should allow building blueprint' do
+    it 'allows building blueprint' do
       build :apple
       apple.should eq('apple')
     end
 
-    it 'should allow building several blueprints' do
+    it 'allows building several blueprints' do
       build :apple, :orange
       apple.should eq('apple')
       orange.should eq('orange')
     end
 
-    it 'should not allow to reach blueprints from previous specs' do
+    it 'does not allow to reach blueprints from previous specs' do
       blueprint_data(:apple).should be_nil
     end
   end
 
   describe 'build with' do
-    it 'should allow building using different strategy' do
+    it 'allows building using different strategy' do
       build_with :attributes, :orange
       orange.should eq(name: 'orange')
     end
@@ -100,14 +100,55 @@ describe 'rspec integration' do
   describe 'class level set' do
     build :apple
 
-    it 'should build blueprints in before filter' do
+    it 'builds blueprints in before filter' do
       apple.should eq('apple')
     end
   end
 
   describe 'global' do
-    it 'should build global blueprints' do
+    it 'builds global blueprints' do
       global_cherry.should eq('cherry')
+    end
+  end
+
+  describe 'overriding blueprint' do
+    context 'with overridden blueprint' do
+      before { blueprint :orange, name: 'red orange' }
+
+      it 'builds orange with new attributes' do
+        build :orange
+        expect(orange).to eq('red orange')
+      end
+
+      it 'auto builds orange when method is called' do
+        expect(orange).to eq('red orange')
+      end
+
+      context 'with overridden blueprint in class scope' do
+        blueprint :orange, name: 'mandarin orange'
+
+        it 'builds orange with new attributes' do
+          expect(orange).to eq('mandarin orange')
+        end
+      end
+
+      context 'with multiple blueprint overrides' do
+        blueprint :apple do
+          'red apple'
+        end
+
+        it 'builds both with new attributes' do
+          expect(apple).to eq('red apple')
+          expect(orange).to eq('red orange')
+        end
+      end
+    end
+
+    context 'without overridden blueprint' do
+      it 'uses original attributes by default' do
+        build :orange
+        expect(orange).to eq('orange')
+      end
     end
   end
 end

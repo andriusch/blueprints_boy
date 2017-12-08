@@ -118,6 +118,11 @@ describe BlueprintsBoy::DSL do
       chain.definition.strategies.should match(attributes: instance_of(Proc), update: proc, new: proc)
     end
 
+    it 'does not replace strategy with nil' do
+      chain = subject.strategy(:attributes, nil)
+      chain.definition.strategies.should match(attributes: instance_of(Proc))
+    end
+
     it 'does not modify original strategies' do
       subject.strategy(:update, empty_proc)
       subject.definition.strategies.should match(attributes: instance_of(Proc))

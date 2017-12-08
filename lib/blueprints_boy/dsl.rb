@@ -25,7 +25,7 @@ module BlueprintsBoy
     end
 
     def strategy(name, strategy, &block)
-      chain(block) { |definition| definition.strategies = definition.strategies.merge(name => strategy) }
+      chain(block) { |definition| definition.strategies = definition.strategies.merge(name => strategy) if strategy }
     end
 
     def blueprint(name, **attributes, &block)

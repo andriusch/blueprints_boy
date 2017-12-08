@@ -1,16 +1,18 @@
 # frozen_string_literal: true
-module BlueprintsBoy::RSpecHelper
-  def build(*args)
-    before do
-      build(*args)
-    end
+module BlueprintsBoy::RSpecMacros
+  def build(*args, &block)
+    before { build(*args, &block) }
+  end
+
+  def blueprint(*args, &block)
+    before { blueprint(*args, &block) }
   end
 end
 
 if RSpec.respond_to?(:configure) # Otherwise db:seed might crash
   RSpec.configure do |config|
     config.include BlueprintsBoy::Helper
-    config.extend BlueprintsBoy::RSpecHelper
+    config.extend BlueprintsBoy::RSpecMacros
 
     config.before do
       BlueprintsBoy.manager.setup(self)

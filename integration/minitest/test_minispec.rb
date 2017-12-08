@@ -38,4 +38,21 @@ describe BlueprintsBoy do
       global_cherry.must_equal 'cherry'
     end
   end
+
+  describe 'overriding blueprint' do
+    describe 'with overridden blueprint' do
+      blueprint :orange, name: 'red orange'
+
+      it 'auto builds orange when method is called' do
+        orange.must_equal 'red orange'
+      end
+    end
+
+    describe 'without overridden blueprint' do
+      it 'uses original attributes by default' do
+        build :orange
+        orange.must_equal 'orange'
+      end
+    end
+  end
 end

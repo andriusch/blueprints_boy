@@ -26,3 +26,15 @@ class TestMinitest < MiniTest::Test
     assert_equal 'cherry', global_cherry
   end
 end
+
+class TestMinitestWithOverrides < MiniTest::Test
+  def setup
+    blueprint :apple do
+      'red apple'
+    end
+  end
+
+  def test_overrides
+    assert_equal 'red apple', apple
+  end
+end
