@@ -11,6 +11,9 @@ module Fixtures
     klass.new.tap do |object|
       object.extend(BlueprintsBoy::Helper)
       object.instance_variable_set(:@_blueprint_data, {})
+
+      blueprints = self.blueprints
+      object.define_singleton_method(:blueprints) { blueprints }
     end
   end
 
@@ -36,6 +39,10 @@ module Fixtures
 
   fixture :manager do
     BlueprintsBoy::Manager.new
+  end
+
+  fixture :blueprints do
+    BlueprintsBoy::Blueprints.new
   end
 
   fixture :empty_context do

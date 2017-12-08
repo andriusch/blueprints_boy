@@ -3,8 +3,8 @@ require 'spec_helper'
 describe BlueprintsBoy::Manager do
   describe 'build' do
     before do
-      subject.blueprints.set(blueprint1)
-      subject.push_registry
+      blueprints.set(blueprint1)
+      subject.push_registry(env)
     end
 
     it 'should build blueprint' do
@@ -30,19 +30,19 @@ describe BlueprintsBoy::Manager do
 
     it 'should build dependencies of blueprint' do
       blueprint2.dependencies |= [:blueprint1]
-      subject.blueprints.set blueprint2
+      blueprints.set blueprint2
       subject.build env, [:blueprint2]
       subject.registry.built.to_a.should eq([:blueprint2, :blueprint1])
     end
 
     it 'should allow passing options' do
-      subject.blueprints.set(create_blueprint(:options_blueprint) { |options:| options[:name] })
+      blueprints.set(create_blueprint(:options_blueprint) { |options:| options[:name] })
       subject.build(env, [{:options_blueprint => {name: 'success'}}])
       env.options_blueprint.should eq('success')
     end
 
     it 'should return results' do
-      subject.blueprints.set(blueprint2)
+      blueprints.set(blueprint2)
       subject.build(env, [:blueprint1, :blueprint2 => {attr: 'val'}]).should eq([mock1, mock2])
     end
 
@@ -76,13 +76,11 @@ describe BlueprintsBoy::Manager do
     end
 
     it 'should restore blueprints from registry to @_blueprint_data' do
-      blueprint1
-      blueprint2
-      subject.blueprints.set(blueprint1)
-      subject.blueprints.set(blueprint2)
+      blueprints.set(blueprint1)
+      blueprints.set(blueprint2)
 
-      subject.push_registry([:blueprint1])
-      subject.push_registry([:blueprint2])
+      subject.push_registry(env, [:blueprint1])
+      subject.push_registry(env, [:blueprint2])
 
       subject.setup(env)
       env.instance_variable_get(:@_blueprint_data).should eq(blueprint1: mock1, blueprint2: mock2)
@@ -91,8 +89,8 @@ describe BlueprintsBoy::Manager do
 
   describe 'teardown' do
     it 'should pop registry' do
-      subject.blueprints.set(blueprint1)
-      subject.push_registry
+      blueprints.set(blueprint1)
+      subject.push_registry(env)
       subject.build(env, [:blueprint1])
 
       subject.teardown

@@ -3,12 +3,12 @@ module BlueprintsBoy
   class DSL
     attr_reader :definition
 
-    def self.from_file(file_name, manager)
-      new(manager).instance_eval(File.read(file_name), file_name)
+    def self.from_file(file_name, blueprints)
+      new(blueprints).instance_eval(File.read(file_name), file_name)
     end
 
-    def initialize(manager, definition = Blueprint.new)
-      @manager = manager
+    def initialize(blueprints, definition = Blueprint.new)
+      @blueprints = blueprints
       @definition = definition
     end
 
@@ -52,9 +52,9 @@ module BlueprintsBoy
       definition = @definition.dup
       yield definition
 
-      @manager.blueprints.set(definition) if definition.name
+      @blueprints.set(definition) if definition.name
 
-      self.class.new(@manager, definition).tap do |definition_chain|
+      self.class.new(@blueprints, definition).tap do |definition_chain|
         definition_chain.instance_eval(&block) if block
       end
     end
