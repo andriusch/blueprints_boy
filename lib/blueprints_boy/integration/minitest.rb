@@ -11,10 +11,12 @@ module BlueprintsBoy::MinitestHelper
   end
 
   module ClassMethods
-    def build(*args)
-      before do
-        build(*args)
-      end
+    def build(*args, &block)
+      before { build(*args, &block) }
+    end
+
+    def blueprint(*args, &block)
+      before { blueprint(*args, &block) }
     end
   end
 end
