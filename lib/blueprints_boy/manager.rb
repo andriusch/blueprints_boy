@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 module BlueprintsBoy
   class Manager
-    attr_reader :blueprints, :registry
+    attr_reader :registry
 
     def initialize
-      @blueprints = Blueprints.new
       @registry = nil
     end
 
@@ -16,8 +15,7 @@ module BlueprintsBoy
     end
 
     def setup(environment)
-      prepare_env(environment)
-      push_registry
+      push_registry(environment)
       @registry.restore.each { |name, value| environment.set name, value }
       BlueprintsBoy.config.cleaner.on_setup
     end
@@ -27,28 +25,22 @@ module BlueprintsBoy
       BlueprintsBoy.config.cleaner.on_teardown
     end
 
-    def push_registry(blueprint_names = [])
+    def push_registry(environment, blueprint_names = [])
+      environment.instance_variable_set(:@_blueprint_data, {})
       @registry = Registry.new(blueprint_names, @registry)
 
-      environment = Object.new
-      environment.singleton_class.send(:include, BlueprintsBoy::Helper)
-      prepare_env(environment)
       build(environment, @registry.names)
       @registry.store environment.blueprint_data
     end
 
     private
 
-    def prepare_env(environment)
-      environment.instance_variable_set(:@_blueprint_data, {})
-    end
-
     def build_blueprint(environment, name, attributes, strategy: nil)
       strategy ||= default_strategy_for(name, attributes)
       return environment.blueprint_data(name) if strategy.nil? # Blueprint is already built
 
       @registry.built << name
-      blueprint = blueprints.find(name)
+      blueprint = environment.blueprints.find(name)
       build environment, blueprint.dependencies if blueprint.dependencies.present?
       BlueprintBuilder.new(blueprint, environment, strategy, attributes || {}).build
     end

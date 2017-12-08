@@ -26,15 +26,19 @@ module BlueprintsBoy
   autoload :Registry
   autoload :Cleaner
 
+  def self.create_environment
+    Object.new.tap { |environment| environment.extend(BlueprintsBoy::Helper) }
+  end
+
   def self.enable
     yield config if block_given?
     require_integrations
     clean
-    prepare
+    prepare(create_environment)
   end
 
   def self.enable_seeds
-    prepare
+    prepare(create_environment)
   end
 
   def self.clean
@@ -49,15 +53,15 @@ module BlueprintsBoy
     require 'blueprints_boy/integration/mongoid' if defined?(Mongoid)
   end
 
-  def self.prepare
+  def self.prepare(environment)
     read_files
-    manager.push_registry(config.global)
+    manager.push_registry(environment, config.global)
   end
 
   def self.read_files
     config.filenames.each do |pattern|
       Dir[config.root.join(pattern)].each do |file_name|
-        DSL.from_file(file_name, manager) if File.file?(file_name)
+        DSL.from_file(file_name, blueprints) if File.file?(file_name)
       end
     end
   end
@@ -72,5 +76,9 @@ module BlueprintsBoy
 
   def self.factories
     @factories ||= Factories.new
+  end
+
+  def self.blueprints
+    @blueprints ||= Blueprints.new
   end
 end

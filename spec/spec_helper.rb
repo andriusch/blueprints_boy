@@ -14,6 +14,7 @@ RSpec.configure do |config|
       @manager = nil
       @config = nil
       @factories = nil
+      @blueprints = nil
     end
   end
 
