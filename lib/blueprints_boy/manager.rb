@@ -41,7 +41,7 @@ module BlueprintsBoy
 
       @registry.built << name
       blueprint = environment.blueprints.find(name)
-      build environment, blueprint.dependencies if blueprint.dependencies.present?
+      build environment, blueprint.dependencies, strategy: strategy if blueprint.dependencies.present?
       BlueprintBuilder.new(blueprint, environment, strategy, attributes || {}).build
     end
 
