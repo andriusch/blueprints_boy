@@ -5,3 +5,4 @@ Gemfile.lock
 pkg/*
 /integration/*/*.log
 /integration/active_record/database.yml
+/docs/_site

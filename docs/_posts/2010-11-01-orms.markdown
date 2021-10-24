@@ -1,0 +1,18 @@
+---
+layout: application
+title: ORMs
+---
+
+# Transactions
+
+Blueprints by default uses transaction, meaning that before every test transaction is started and after every test that 
+transaction is dropped which resets database.
+
+Sometimes using transactions is not possible (eg. using MongoDB or in cucumber scenarios). In that case you can turn off
+transactions when enabling Blueprints. Be aware though that disabling transactions on relational databases is quite a 
+major performance loss.
+
+# ORM support
+
+Blueprints is not tied to any ORM, however it does use [database_cleaner gem](https://github.com/bmabey/database_cleaner)
+whenever it can detect any ORM.

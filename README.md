@@ -10,7 +10,7 @@ data for tests in simple but powerful ways.
 Documentation
 -------------
 
-For documentation please visit [andriusch.github.com/blueprints_boy](http://andriusch.github.com/blueprints_boy)
+For documentation please visit [andriusch.github.io/blueprints_boy](http://andriusch.github.io/blueprints_boy)
 
 Credits
 -------
