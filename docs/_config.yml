@@ -1,4 +1,4 @@
-pygments: true
+highlighter: rouge
 permalink: /:title
 baseurl: /blueprints_boy
 
