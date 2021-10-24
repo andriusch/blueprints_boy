@@ -68,7 +68,7 @@ describe Fruit, "apple" do
   end
 
   it "should be an apple" do
-    apple.species.should == 'apple'
+    expect(apple.species).to eq('apple')
   end
 end
 
@@ -78,7 +78,7 @@ describe FruitBowl, "with and apple and an orange" do
   end
 
   it "should have 2 fruits" do
-    fruitbowl.fruits.should == [apple, orange]
+    expect(fruitbowl.fruits).to eq([apple, orange])
   end
 end
 {% endhighlight %}

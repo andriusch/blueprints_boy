@@ -42,9 +42,9 @@ end
 
 # Spec
 build :apple
-apple.name.should == 'apple'
+expect(apple.name).to eq('apple')
 build :apple => {name: 'red apple'}
-apple.name.should == 'red apple'
+expect(apple.name).to eq('red apple')
 {% endhighlight %}
 
 # Building multiple times
@@ -61,7 +61,7 @@ end
 apple1 = build!(:apple)
 apple2 = build!(:apple)
 # Different objects but both are instances of Fruit and have name 'apple'
-apple1.object_id.should_not == apple2.object_id
+expect(apple1.object_id).not_to eq(apple2.object_id)
 {% endhighlight %}
 
 # Factories

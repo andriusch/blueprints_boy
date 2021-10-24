@@ -24,6 +24,6 @@ In test case:
 {% highlight ruby %}
 it "should have species 'apple'" do
   build :apple
-  @apple.species.should == 'apple'
+  expect(@apple.species).to eq('apple')
 end
 {% endhighlight %}

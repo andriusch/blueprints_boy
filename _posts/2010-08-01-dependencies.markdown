@@ -52,5 +52,5 @@ group :fruits => [:apple, :orange]
 
 # spec
 build :fruits
-fruits.should == [apple, orange]
+expect(fruits).to eq([apple, orange])
 {% endhighlight %}

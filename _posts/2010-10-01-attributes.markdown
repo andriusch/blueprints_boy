@@ -16,7 +16,7 @@ end
 # In test case
 it "should return options" do
   build :options => {:attribute => 'value'}
-  options.should == {:attribute => 'value'}
+  expect(options).to eq(:attribute => 'value')
 end
 {% endhighlight %}
 
@@ -56,8 +56,8 @@ Attributes are automatically merged with options at build time, so given bluepri
 {% highlight ruby %}
 it "should merge options to attributes" do
   build :big_apple => {:size => 'small'}
-  @big_apple.name.should == 'apple'
+  expect(@big_apple.name).to eq('apple')
   # Note that passed options overwrite attributes
-  @big_apple.size.should == 'small'
+  expect(@big_apple.size).to eq('small')
 end
 {% endhighlight %}
