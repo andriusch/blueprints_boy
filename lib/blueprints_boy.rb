@@ -3,7 +3,6 @@ require 'active_support/dependencies/autoload'
 require 'active_support/core_ext/array/extract_options'
 require 'active_support/core_ext/object/blank'
 require 'active_support/core_ext/hash/reverse_merge'
-require 'database_cleaner'
 require 'blueprints_boy/version'
 require 'blueprints_boy/railtie' if defined?(Rails)
 

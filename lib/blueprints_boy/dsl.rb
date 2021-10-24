@@ -40,8 +40,8 @@ module BlueprintsBoy
       end
     end
 
-    def dependency(name, *args, &block)
-      BlueprintsBoy::Dependency.new(name, *args, &block)
+    def dependency(name, *args, **options, &block)
+      BlueprintsBoy::Dependency.new(name, *args, **options, &block)
     end
 
     alias method_missing dependency

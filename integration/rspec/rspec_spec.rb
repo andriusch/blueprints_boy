@@ -98,10 +98,11 @@ describe 'rspec integration' do
   end
 
   describe 'class level set' do
-    build :apple
+    build :apple, orange: {name: 'mandarin orange'}
 
     it 'builds blueprints in before filter' do
       apple.should eq('apple')
+      orange.should eq('mandarin orange')
     end
   end
 

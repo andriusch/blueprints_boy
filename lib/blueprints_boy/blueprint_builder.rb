@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class BlueprintsBoy::BlueprintBuilder
-  def initialize(blueprint, environment, strategy, **options)
+  def initialize(blueprint, environment, strategy, options)
     @environment = environment
 
     @name = blueprint.name

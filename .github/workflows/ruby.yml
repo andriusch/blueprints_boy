@@ -9,9 +9,9 @@ name: Ruby
 
 on:
   push:
-    branches: [ $default-branch ]
+    branches: [ master ]
   pull_request:
-    branches: [ $default-branch ]
+    branches: [ master ]
 
 jobs:
   test:
@@ -19,7 +19,6 @@ jobs:
     strategy:
       matrix:
         ruby-version:
-          - 2.3
           - 2.4
           - 2.5
           - 2.6
@@ -35,6 +34,25 @@ jobs:
           - mongoid6
           - mongoid7
           - noorm
+        exclude:
+          - ruby-version: 2.4
+            gemfile: ar6.0
+          - ruby-version: 2.4
+            gemfile: ar6.1
+          - ruby-version: 2.7
+            gemfile: ar4.2
+          - ruby-version: 2.7
+            gemfile: mongoid5
+          - ruby-version: 3.0
+            gemfile: ar4.2
+          - ruby-version: 3.0
+            gemfile: ar5.0
+          - ruby-version: 3.0
+            gemfile: ar5.1
+          - ruby-version: 3.0
+            gemfile: mongoid5
+          - ruby-version: 3.0
+            gemfile: mongoid6
     services:
       postgres:
         image: postgres
@@ -50,6 +68,12 @@ jobs:
         ports:
           # Maps tcp port 5432 on service container to the host
           - 5432:5432
+      mongo:
+        image: mongo
+        env:
+          MONGO_INITDB_DATABASE: blueprints_boy
+        ports:
+          - '27017:27017'
     env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
       DATABASE_URL: "postgres://blueprints_boy:blueprints_boy@localhost:5432/blueprints_boy"

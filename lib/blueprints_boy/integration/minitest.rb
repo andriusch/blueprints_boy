@@ -15,8 +15,8 @@ module BlueprintsBoy::MinitestHelper
       before { build(*args, &block) }
     end
 
-    def blueprint(*args, &block)
-      before { blueprint(*args, &block) }
+    def blueprint(*args, **options, &block)
+      before { blueprint(*args, **options, &block) }
     end
   end
 end

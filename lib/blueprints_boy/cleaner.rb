@@ -2,28 +2,21 @@
 module BlueprintsBoy
   class Cleaner
     def before_suite
-      ignore_no_orm do
-        DatabaseCleaner.clean_with(:truncation)
-      end
+      DatabaseCleaner.clean_with(:deletion) if database_cleaner?
     end
 
     def on_setup
-      ignore_no_orm do
-        DatabaseCleaner.start
-      end
+      DatabaseCleaner.start if database_cleaner?
     end
 
     def on_teardown
-      ignore_no_orm do
-        DatabaseCleaner.clean
-      end
+      DatabaseCleaner.clean if database_cleaner?
     end
 
     private
 
-    def ignore_no_orm
-      yield
-    rescue DatabaseCleaner::NoORMDetected # rubocop:disable Lint/HandleExceptions
+    def database_cleaner?
+      defined?(DatabaseCleaner)
     end
   end
 end

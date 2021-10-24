@@ -12,16 +12,16 @@ describe BlueprintsBoy do
   describe 'build' do
     it 'allows building blueprint' do
       build :apple
-      apple.must_equal 'apple'
+      _(apple).must_equal 'apple'
     end
 
     it 'should not allow to reach blueprints from previous specs' do
-      blueprint_data(:apple).must_be_nil
+      _(blueprint_data(:apple)).must_be_nil
     end
 
     it 'allows building same blueprint in another spec' do
       build :apple
-      apple.must_equal 'apple'
+      _(apple).must_equal 'apple'
     end
   end
 
@@ -29,13 +29,13 @@ describe BlueprintsBoy do
     build :apple
 
     it 'should build blueprints in before filter' do
-      apple.must_equal 'apple'
+      _(apple).must_equal 'apple'
     end
   end
 
   describe 'global' do
     it 'should build global blueprints' do
-      global_cherry.must_equal 'cherry'
+      _(global_cherry).must_equal 'cherry'
     end
   end
 
@@ -44,14 +44,14 @@ describe BlueprintsBoy do
       blueprint :orange, name: 'red orange'
 
       it 'auto builds orange when method is called' do
-        orange.must_equal 'red orange'
+        _(orange).must_equal 'red orange'
       end
     end
 
     describe 'without overridden blueprint' do
       it 'uses original attributes by default' do
         build :orange
-        orange.must_equal 'orange'
+        _(orange).must_equal 'orange'
       end
     end
   end
