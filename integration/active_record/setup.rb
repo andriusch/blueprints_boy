@@ -1,8 +1,10 @@
 require 'active_record'
-require 'mysql2'
+require 'pg'
 require 'yaml'
-ActiveRecord::Base.configurations = YAML.load_file(File.expand_path('../database.yml', __FILE__))
-ActiveRecord::Base.establish_connection(:default_env)
+
+path = Pathname(__dir__).join('database.yml')
+ActiveRecord::Base.configurations = YAML.load_file(path) if path.exist?
+ActiveRecord::Base.establish_connection
 
 class ARFruit < ActiveRecord::Base
   self.table_name = 'fruits'

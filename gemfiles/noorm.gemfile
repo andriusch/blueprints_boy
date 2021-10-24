@@ -2,6 +2,4 @@
 
 source "http://rubygems.org"
 
-gem "activesupport", "< 5.0", :platforms => [:ruby_21, :ruby_22]
-
 gemspec :path => "../"

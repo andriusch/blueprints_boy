@@ -1,0 +1,21 @@
+version: '3.7'
+services:
+  postgresql:
+    image: 'postgres:12.4'
+    environment:
+      POSTGRES_USER: blueprints_boy
+      POSTGRES_PASSWORD: blueprints_boy
+    volumes:
+      - blueprints_boy_dbdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: blueprints_boy
+    ports:
+      - '27017:27017'
+
+volumes:
+  blueprints_boy_dbdata:

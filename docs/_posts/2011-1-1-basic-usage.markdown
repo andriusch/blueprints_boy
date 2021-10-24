@@ -8,6 +8,7 @@ title: Basic usage
 The easiest way to install this gem is simply adding this line to your Gemfile:
 
 {% highlight ruby %}
+gem 'database_cleaner-active_record'
 gem 'blueprints_boy'
 {% endhighlight %}
 

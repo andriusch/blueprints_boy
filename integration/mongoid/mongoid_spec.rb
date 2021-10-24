@@ -13,9 +13,9 @@ end
 
 Mongoid.configure.logger = Logger.new(File.expand_path('../debug.log', __FILE__))
 if Mongoid.configure.respond_to?(:connect_to)
-  Mongoid.configure.connect_to 'blueprints_test'
+  Mongoid.configure.connect_to 'blueprints_boy'
 else
-  Mongoid.configure.from_hash 'database' => 'blueprints_test'
+  Mongoid.configure.from_hash 'database' => 'blueprints_boy'
 end
 
 require 'blueprints_boy'

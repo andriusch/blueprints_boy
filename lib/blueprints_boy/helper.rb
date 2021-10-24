@@ -51,12 +51,12 @@ module BlueprintsBoy
       BlueprintsBoy.blueprints
     end
 
-    def blueprint(name, *args, &block)
+    def blueprint(name, *args, **options, &block)
       def self.blueprints
         @blueprints ||= Blueprints.new(super)
       end
 
-      DSL.new(blueprints, blueprints.find(name).dup).blueprint(name, *args, &block)
+      DSL.new(blueprints, blueprints.find(name).dup).blueprint(name, *args, **options, &block)
 
       instance_eval <<-RUBY, __FILE__, __LINE__ + 1
         def self.#{name}
