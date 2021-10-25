@@ -15,7 +15,7 @@ describe BlueprintsBoy do
       _(apple).must_equal 'apple'
     end
 
-    it 'should not allow to reach blueprints from previous specs' do
+    it 'disallows to reach blueprints from previous specs' do
       _(blueprint_data(:apple)).must_be_nil
     end
 
@@ -28,13 +28,13 @@ describe BlueprintsBoy do
   describe 'class level set' do
     build :apple
 
-    it 'should build blueprints in before filter' do
+    it 'builds blueprints in before filter' do
       _(apple).must_equal 'apple'
     end
   end
 
   describe 'global' do
-    it 'should build global blueprints' do
+    it 'builds global blueprints' do
       _(global_cherry).must_equal 'cherry'
     end
   end

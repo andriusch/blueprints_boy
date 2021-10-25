@@ -22,7 +22,7 @@ end
 In test case:
 
 {% highlight ruby %}
-it "should have species 'apple'" do
+it "has species 'apple'" do
   build :apple
   expect(@apple.species).to eq('apple')
 end

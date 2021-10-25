@@ -14,7 +14,7 @@ blueprint :options do |data|
 end
 
 # In test case
-it "should return options" do
+it "returns options" do
   build :options => {:attribute => 'value'}
   expect(options).to eq(:attribute => 'value')
 end
@@ -54,7 +54,7 @@ end
 Attributes are automatically merged with options at build time, so given blueprints above, this test would pass:
 
 {% highlight ruby %}
-it "should merge options to attributes" do
+it "merges options to attributes" do
   build :big_apple => {:size => 'small'}
   expect(@big_apple.name).to eq('apple')
   # Note that passed options overwrite attributes

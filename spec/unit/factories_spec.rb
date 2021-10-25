@@ -6,19 +6,19 @@ describe BlueprintsBoy::Factories do
       subject.add(Integer, :create) { 5 }
     end
 
-    it 'should allow defining and finding a factory' do
+    it 'allows defining and finding a factory' do
       factory = subject[Integer, :create]
-      factory.should be_instance_of(Proc)
-      factory.call.should eq(5)
+      expect(factory).to be_instance_of(Proc)
+      expect(factory.call).to eq(5)
     end
 
-    it 'should find factory for child class' do
+    it 'finds factory for child class' do
       factory = subject[Integer, :create]
-      factory.should be_instance_of(Proc)
-      factory.call.should eq(5)
+      expect(factory).to be_instance_of(Proc)
+      expect(factory.call).to eq(5)
     end
 
-    it "should raise error if factory can't be found" do
+    it "raises error if factory can't be found" do
       expect {
         subject[Float, :create]
       }.to raise_error(BlueprintsBoy::FactoryNotFound, "Factory for Float can't be located")
