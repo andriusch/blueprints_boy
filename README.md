@@ -12,6 +12,23 @@ Documentation
 
 For documentation please visit [andriusch.github.io/blueprints_boy](http://andriusch.github.io/blueprints_boy)
 
+Development
+-------------
+
+* Clone the repository
+* Setup dependencies
+  ```shell
+  bundle
+  appraisal install
+  ```
+* Do your changes
+* Run tests
+  ```
+  docker-compose up
+  appraisal rake
+  ```
+* Create pull request
+
 Credits
 -------
 
