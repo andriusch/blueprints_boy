@@ -1,6 +1,6 @@
-# -*- encoding: utf-8 -*-
 # frozen_string_literal: true
-$LOAD_PATH.push File.expand_path('../lib', __FILE__)
+
+$LOAD_PATH.push File.expand_path('lib', __dir__)
 require 'blueprints_boy/version'
 
 Gem::Specification.new do |s|
@@ -19,13 +19,13 @@ Gem::Specification.new do |s|
   s.executables = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
   s.require_paths = ['lib']
 
-  s.required_ruby_version = '>= 2.1'
+  s.required_ruby_version = '>= 2.4'
 
+  s.add_development_dependency 'appraisal'
+  s.add_development_dependency 'cucumber'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
-  s.add_development_dependency 'cucumber'
-  s.add_development_dependency 'appraisal'
-  s.add_development_dependency 'rubocop'
+  s.add_development_dependency 'rubocop', '1.11'
   s.add_runtime_dependency 'activesupport', '>= 3.0.0'
   s.add_runtime_dependency 'database_cleaner-core'
 end

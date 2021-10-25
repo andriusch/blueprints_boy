@@ -1,7 +1,17 @@
 AllCops:
   DisabledByDefault: false
+  NewCops: enable
   TargetRubyVersion: 2.4
   DisplayCopNames: true
+
+Layout/LineLength:
+  Enabled: false
+
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+Lint/EmptyBlock:
+  Enabled: false
 
 Metrics/AbcSize:
   Max: 20
@@ -11,9 +21,6 @@ Metrics/BlockLength:
   Exclude:
     - spec/**/*
     - integration/**/*
-
-Metrics/LineLength:
-  Enabled: false
 
 Style/AndOr:
   Enabled: false
@@ -27,13 +34,13 @@ Style/ClassAndModuleChildren:
 Style/Documentation:
   Enabled: false
 
+Style/DocumentDynamicEvalDefinition:
+  Enabled: false
+
 Style/GuardClause:
   Enabled: false
 
 Style/HashSyntax:
-  Enabled: false
-
-Style/MethodMissing:
   Enabled: false
 
 Style/ParallelAssignment:
@@ -50,6 +57,3 @@ Style/PercentLiteralDelimiters:
 
 Style/SignalException:
   EnforcedStyle: semantic
-
-Style/SpaceInsideHashLiteralBraces:
-  EnforcedStyle: no_space

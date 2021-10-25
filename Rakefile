@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'bundler/setup'
 require 'appraisal'
 require 'bundler/gem_tasks'

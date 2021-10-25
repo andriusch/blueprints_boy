@@ -25,6 +25,7 @@ Development
 * Run tests
   ```
   docker-compose up
+  rubocop
   appraisal rake
   ```
 * Create pull request

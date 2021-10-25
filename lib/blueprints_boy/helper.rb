@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module BlueprintsBoy
   module Helper
     def set(name, value)
@@ -52,17 +53,17 @@ module BlueprintsBoy
     end
 
     def blueprint(name, *args, **options, &block)
-      def self.blueprints
-        @blueprints ||= Blueprints.new(super)
-      end
-
-      DSL.new(blueprints, blueprints.find(name).dup).blueprint(name, *args, **options, &block)
-
       instance_eval <<-RUBY, __FILE__, __LINE__ + 1
+        def self.blueprints
+          @blueprints ||= Blueprints.new(super)
+        end
+
         def self.#{name}
           build(:#{name})
         end
       RUBY
+
+      DSL.new(blueprints, blueprints.find(name).dup).blueprint(name, *args, **options, &block)
     end
   end
 end

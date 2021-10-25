@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe BlueprintsBoy::Registry do
   let :names do
-    [:mock1, :mock2]
+    %i[mock1 mock2]
   end
 
   subject do

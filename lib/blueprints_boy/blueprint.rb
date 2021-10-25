@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module BlueprintsBoy
   class Blueprint
     attr_accessor :name, :dependencies, :attributes, :factory_class, :strategies
@@ -11,8 +12,8 @@ module BlueprintsBoy
       self.strategies = {attributes: proc { |attributes:| attributes }}
     end
 
-    [:dependencies, :attributes, :strategies].each do |method|
-      class_eval <<-RUBY
+    %i[dependencies attributes strategies].each do |method|
+      class_eval <<-RUBY, __FILE__, __LINE__ + 1
         def #{method}=(value)
           @#{method} = value.freeze
         end

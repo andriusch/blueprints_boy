@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class BlueprintsBoy::Railtie < Rails::Railtie
   class Seeder
     def initialize(parent)
@@ -19,8 +20,6 @@ class BlueprintsBoy::Railtie < Rails::Railtie
   end
 
   initializer 'blueprints_boy.set_seed_loader' do
-    if defined?(ActiveRecord::Tasks::DatabaseTasks)
-      ActiveRecord::Tasks::DatabaseTasks.seed_loader = Seeder.new(ActiveRecord::Tasks::DatabaseTasks.seed_loader)
-    end
+    ActiveRecord::Tasks::DatabaseTasks.seed_loader = Seeder.new(ActiveRecord::Tasks::DatabaseTasks.seed_loader) if defined?(ActiveRecord::Tasks::DatabaseTasks)
   end
 end

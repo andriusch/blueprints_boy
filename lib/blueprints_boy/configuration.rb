@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module BlueprintsBoy
   # Contains configuration of blueprints. Instance of this is yielded in Blueprints.enable block.
   # @example Configuring through Blueprints.enable block

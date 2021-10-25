@@ -13,13 +13,8 @@ describe BlueprintsBoy::Configuration do
   end
 
   it "uses Rails root for root if it's defined" do
-    module Rails
-      def self.root
-        Pathname.new('rails/root')
-      end
-    end
+    stub_const('Rails', double('rails', root: Pathname.new('rails/root')))
     expect(subject.root).to eq(Pathname.new('rails/root'))
-    Object.send(:remove_const, :Rails)
   end
 
   it 'sets root to pathname' do

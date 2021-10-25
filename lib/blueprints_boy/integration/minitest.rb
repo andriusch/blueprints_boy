@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module BlueprintsBoy::MinitestHelper
   def before_setup
     super
@@ -23,4 +24,4 @@ end
 
 MiniTest::Unit::TestCase.send :include, BlueprintsBoy::Helper, BlueprintsBoy::MinitestHelper if defined?(MiniTest::Unit::TestCase)
 MiniTest::Test.send :include, BlueprintsBoy::Helper, BlueprintsBoy::MinitestHelper if defined?(MiniTest::Test)
-MiniTest::Spec.send :extend, BlueprintsBoy::MinitestHelper::ClassMethods if defined?(MiniTest::Spec)
+MiniTest::Spec.extend BlueprintsBoy::MinitestHelper::ClassMethods if defined?(MiniTest::Spec)

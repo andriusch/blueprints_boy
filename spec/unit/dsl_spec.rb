@@ -40,17 +40,17 @@ describe BlueprintsBoy::DSL do
       chain = subject.depends_on(:blueprint, :blueprint2)
       expect(chain).to be_instance_of(BlueprintsBoy::DSL)
       expect(chain).not_to equal(subject)
-      expect(chain.definition.dependencies).to eq([:blueprint, :blueprint2])
+      expect(chain.definition.dependencies).to eq(%i[blueprint blueprint2])
     end
 
     it 'allows chaining dependencies' do
       chain = subject.depends_on(:blueprint).depends_on(:blueprint2)
-      expect(chain.definition.dependencies).to eq([:blueprint, :blueprint2])
+      expect(chain.definition.dependencies).to eq(%i[blueprint blueprint2])
     end
 
     it 'merges dependencies' do
       chain = subject.depends_on(:blueprint, :blueprint2).depends_on(:blueprint2, :blueprint3)
-      expect(chain.definition.dependencies).to eq([:blueprint, :blueprint2, :blueprint3])
+      expect(chain.definition.dependencies).to eq(%i[blueprint blueprint2 blueprint3])
     end
 
     it 'allows using block form to chain dependencies' do
@@ -58,7 +58,7 @@ describe BlueprintsBoy::DSL do
       subject.depends_on(:blueprint) do
         chain = depends_on(:blueprint2)
       end
-      expect(chain.definition.dependencies).to eq([:blueprint, :blueprint2])
+      expect(chain.definition.dependencies).to eq(%i[blueprint blueprint2])
     end
 
     it 'does not modify original dependencies' do
@@ -153,14 +153,14 @@ describe BlueprintsBoy::DSL do
     end
 
     it 'allows grouping blueprints' do
-      subject.group(:my_group => [:blueprint1, :blueprint2])
+      subject.group(:my_group => %i[blueprint1 blueprint2])
       manager.build(env, [:my_group])
       expect(env.my_group).to eq([mock1, mock2])
     end
 
     it 'allows multiple groups' do
       blueprints.set blueprint3
-      subject.group(:group1 => [:blueprint1, :blueprint2], :group2 => [:blueprint2, :blueprint3])
+      subject.group(:group1 => %i[blueprint1 blueprint2], :group2 => %i[blueprint2 blueprint3])
       manager.build(env, [:group2])
       expect(env.group2).to eq([mock2, mock3])
     end

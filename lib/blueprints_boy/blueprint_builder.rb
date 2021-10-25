@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class BlueprintsBoy::BlueprintBuilder
   def initialize(blueprint, environment, strategy, options)
     @environment = environment
@@ -22,13 +23,13 @@ class BlueprintsBoy::BlueprintBuilder
   private
 
   def normalize_attributes(blueprint)
-    blueprint.attributes.each_with_object({}) do |(key, value), normalized|
-      normalized[key] = case value
-                        when BlueprintsBoy::Dependency
-                          @environment.instance_eval(&value)
-                        else
-                          value
-                        end
+    blueprint.attributes.transform_values do |value|
+      case value
+      when BlueprintsBoy::Dependency
+        @environment.instance_eval(&value)
+      else
+        value
+      end
     end
   end
 end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module BlueprintsBoy
   class Registry
     attr_reader :built, :parent, :names
@@ -19,9 +20,7 @@ module BlueprintsBoy
     end
 
     def restore
-      data = @stored.each_with_object({}) do |(name, dump), result|
-        result[name] = Marshal.load(dump)
-      end
+      data = @stored.transform_values { |dump| Marshal.load(dump) } # rubocop:disable Security/MarshalLoad
       data.reverse_merge!(@parent.restore) if @parent
       data
     end
