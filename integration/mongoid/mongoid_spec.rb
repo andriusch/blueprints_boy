@@ -7,8 +7,6 @@ class MongoidFruit
 
   field :species
   field :size, :type => Integer
-
-  attr_protected :species if Mongoid::VERSION.to_i < 4
 end
 
 Mongoid.configure.logger = Logger.new(File.expand_path('debug.log', __dir__))

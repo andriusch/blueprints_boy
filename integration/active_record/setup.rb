@@ -8,5 +8,4 @@ ActiveRecord::Base.establish_connection
 
 class ARFruit < ActiveRecord::Base
   self.table_name = 'fruits'
-  attr_protected :species if ActiveRecord::VERSION::MAJOR < 4
 end
