@@ -1,6 +1,6 @@
 # BlueprintsBoy
 
-[![Build status](https://github.com/andriusch/blueprints_boy/actions/workflows/ruby.yml/badge.svg)](https://github.com/andriusch/blueprints_boy/actions/workflows/ruby.yml)
+[![Build status](https://github.com/andriusch/blueprints_boy/actions/workflows/build.yml/badge.svg)](https://github.com/andriusch/blueprints_boy/actions/workflows/build.yml)
 [![Code Climate](https://codeclimate.com/github/andriusch/blueprints_boy/badges/gpa.svg)](https://codeclimate.com/github/andriusch/blueprints_boy/badges)
 
 The ultimate DRY and fast solution to loading test data in Ruby and Rails. Blueprints allows you to create and manage 
