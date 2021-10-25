@@ -24,27 +24,27 @@ BlueprintsBoy.enable do |config|
 end
 
 describe Mongoid do
-  it 'should create record in database' do
+  it 'creates record in database' do
     build :apple
-    apple.should be_a(MongoidFruit)
-    apple.should be_persisted
-    apple.species.should eq('apple')
+    expect(apple).to be_a(MongoidFruit)
+    expect(apple).to be_persisted
+    expect(apple.species).to eq('apple')
   end
 
-  it 'should clean database before each test' do
-    MongoidFruit.all.to_a.should eq([])
+  it 'cleans database before each test' do
+    expect(MongoidFruit.all.to_a).to eq([])
   end
 
-  it 'should allow building using :new strategy' do
+  it 'allows building using :new strategy' do
     build_with :new, :apple
-    apple.should be_a(MongoidFruit)
-    apple.should be_new_record
-    apple.species.should eq('apple')
+    expect(apple).to be_a(MongoidFruit)
+    expect(apple).to be_new_record
+    expect(apple.species).to eq('apple')
   end
 
-  it 'should allow updating built blueprint' do
+  it 'allows updating built blueprint' do
     build :apple
     build :apple => {species: 'orange'}
-    apple.reload.species.should eq('orange')
+    expect(apple.reload.species).to eq('orange')
   end
 end

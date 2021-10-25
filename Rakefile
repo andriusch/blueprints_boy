@@ -12,7 +12,7 @@ namespace :spec do
     t.pattern = 'spec/unit/**/*_spec.rb'
   end
   RSpec::Core::RakeTask.new(:rspec) do |t|
-    t.pattern = 'integration/rspec/rspec_spec.rb'
+    t.pattern = 'integration/rspec/*_spec.rb'
   end
 
   RSpec::Core::RakeTask.new(:active_record => 'prepare:active_record') do |t|

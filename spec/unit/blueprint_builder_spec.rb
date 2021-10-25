@@ -20,19 +20,19 @@ describe BlueprintsBoy::BlueprintBuilder do
     end
 
     it 'builds blueprint' do
-      subject.should eq(mock1)
+      expect(subject).to eq(mock1)
     end
 
     it 'does not replace existing method' do
       env.set :blueprint1, :correct
-      subject.should eq(:correct)
+      expect(subject).to eq(:correct)
     end
 
     describe 'blueprint returning name' do
       let(:blueprint1) { create_blueprint(:blueprint1) { |name:| name } }
 
       it 'allows checking name' do
-        subject.should eq(:blueprint1)
+        expect(subject).to eq(:blueprint1)
       end
     end
 
@@ -41,7 +41,7 @@ describe BlueprintsBoy::BlueprintBuilder do
       let(:options) { {attr: 'value'} }
 
       it 'allows checking options' do
-        subject.should eq(attr: 'value')
+        expect(subject).to eq(attr: 'value')
       end
     end
 
@@ -57,7 +57,7 @@ describe BlueprintsBoy::BlueprintBuilder do
       it 'allows checking normalized attributes with merged options' do
         blueprints.set blueprint2
         BlueprintsBoy.manager.setup(env)
-        subject.should eq(attr1: 'value1', attr2: 'v2', attr3: 'v3', normalize: mock2)
+        expect(subject).to eq(attr1: 'value1', attr2: 'v2', attr3: 'v3', normalize: mock2)
       end
     end
 
@@ -71,7 +71,7 @@ describe BlueprintsBoy::BlueprintBuilder do
 
       it 'uses factory when building blueprint' do
         BlueprintsBoy.factories.add(Array, :create) { |factory:, attributes:| factory.new(attributes[:size]) }
-        subject.should eq(Array.new(3))
+        expect(subject).to eq(Array.new(3))
       end
     end
   end

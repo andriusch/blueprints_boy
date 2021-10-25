@@ -10,47 +10,47 @@ describe BlueprintsBoy::Dependency do
     env.instance_eval(&dep)
   end
 
-  it 'should allow getting instance variable value' do
-    value(described_class.new(:blueprint1)).should eq(mock1)
+  it 'allows getting instance variable value' do
+    expect(value(described_class.new(:blueprint1))).to eq(mock1)
   end
 
-  it 'should allow getting another instance variable' do
+  it 'allows getting another instance variable' do
     preset_mock = double
     env.set(:preset_key, preset_mock)
-    value(described_class.new(:preset_key, :blueprint1)).should eq(preset_mock)
+    expect(value(described_class.new(:preset_key, :blueprint1))).to eq(preset_mock)
   end
 
-  it 'should allow passing options for building' do
+  it 'allows passing options for building' do
     blueprints.set(create_blueprint(:options_blueprint) { |options:| options })
-    value(described_class.new(:options_blueprint, :option => 'value')).should eq(:option => 'value')
+    expect(value(described_class.new(:options_blueprint, :option => 'value'))).to eq(:option => 'value')
   end
 
   describe 'missing methods' do
     subject { described_class.new(:blueprint1) }
 
-    it 'should record all missing methods' do
+    it 'records all missing methods' do
       subject.missing_method
-      mock1.should_receive(:missing_method).and_return(mock2)
-      value(subject).should eq(mock2)
+      expect(mock1).to receive(:missing_method).and_return(mock2)
+      expect(value(subject)).to eq(mock2)
     end
 
-    it 'should allow chaining methods' do
+    it 'allows chaining methods' do
       subject.missing_method.another_missing_method
-      mock1.should_receive(:missing_method).and_return(mock2)
-      mock2.should_receive(:another_missing_method).and_return(mock3)
-      value(subject).should eq(mock3)
+      expect(mock1).to receive(:missing_method).and_return(mock2)
+      expect(mock2).to receive(:another_missing_method).and_return(mock3)
+      expect(value(subject)).to eq(mock3)
     end
 
-    it 'should remember parameters' do
+    it 'remembers parameters' do
       subject.missing_method(1, 2)
-      mock1.should_receive(:missing_method).with(1, 2).and_return(mock2)
-      value(subject).should eq(mock2)
+      expect(mock1).to receive(:missing_method).with(1, 2).and_return(mock2)
+      expect(value(subject)).to eq(mock2)
     end
 
-    it 'should remember block' do
+    it 'remembers block' do
       subject.missing_method { |value| value + 2 }
-      mock1.should_receive(:missing_method).and_yield(1)
-      value(subject).should eq(3)
+      expect(mock1).to receive(:missing_method).and_yield(1)
+      expect(value(subject)).to eq(3)
     end
   end
 end

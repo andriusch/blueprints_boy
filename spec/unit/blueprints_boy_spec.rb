@@ -1,15 +1,15 @@
 require 'spec_helper'
 
 describe BlueprintsBoy do
-  it 'should return manager' do
-    BlueprintsBoy.manager.should be_instance_of(BlueprintsBoy::Manager)
+  it 'returns manager' do
+    expect(BlueprintsBoy.manager).to be_instance_of(BlueprintsBoy::Manager)
   end
 
-  it 'should return configuration' do
-    BlueprintsBoy.config.should be_instance_of(BlueprintsBoy::Configuration)
+  it 'returns configuration' do
+    expect(BlueprintsBoy.config).to be_instance_of(BlueprintsBoy::Configuration)
   end
 
-  it 'should return factories' do
-    BlueprintsBoy.factories.should be_instance_of(BlueprintsBoy::Factories)
+  it 'returns factories' do
+    expect(BlueprintsBoy.factories).to be_instance_of(BlueprintsBoy::Factories)
   end
 end

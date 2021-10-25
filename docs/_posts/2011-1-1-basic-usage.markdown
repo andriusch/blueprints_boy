@@ -68,7 +68,7 @@ describe Fruit, "apple" do
     build :apple
   end
 
-  it "should be an apple" do
+  it "is an apple" do
     expect(apple.species).to eq('apple')
   end
 end
@@ -78,7 +78,7 @@ describe FruitBowl, "with and apple and an orange" do
     build :fruitbowl
   end
 
-  it "should have 2 fruits" do
+  it "has 2 fruits" do
     expect(fruitbowl.fruits).to eq([apple, orange])
   end
 end
