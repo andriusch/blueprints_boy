@@ -11,7 +11,7 @@ class MongoidFruit
   attr_protected :species if Mongoid::VERSION.to_i < 4
 end
 
-Mongoid.configure.logger = Logger.new(File.expand_path('../debug.log', __FILE__))
+Mongoid.configure.logger = Logger.new(File.expand_path('debug.log', __dir__))
 if Mongoid.configure.respond_to?(:connect_to)
   Mongoid.configure.connect_to 'blueprints_boy'
 else

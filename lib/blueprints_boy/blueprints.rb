@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module BlueprintsBoy
   class Blueprints
     def initialize(parent = nil)

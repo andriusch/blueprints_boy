@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module BlueprintsBoy
   class DSL
     attr_reader :definition

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'database_cleaner/mongoid'
 
 BlueprintsBoy.factories.add(Mongoid::Document, :create) { |factory:, attributes:| factory.create!(attributes) }

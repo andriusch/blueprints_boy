@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module BlueprintsBoy::RSpecMacros
   def build(*args, &block)
     before { build(*args, &block) }

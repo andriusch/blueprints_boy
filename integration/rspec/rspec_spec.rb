@@ -31,8 +31,7 @@ describe 'rspec integration' do
     end
 
     it 'still auto sets variable in blueprint_data even if environment defines method with same name' do
-      def self.variable
-      end
+      def self.variable; end
 
       autoset :variable, :correct
       expect(variable).to be_nil

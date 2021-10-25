@@ -2,8 +2,8 @@
 
 source "http://rubygems.org"
 
-gem "mongoid", "~> 5.0"
-gem "database_cleaner-mongoid"
 gem "bson_ext"
+gem "database_cleaner-mongoid"
+gem "mongoid", "~> 5.0"
 
-gemspec :path => "../"
+gemspec path: "../"

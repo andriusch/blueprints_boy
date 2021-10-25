@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class BlueprintsBoy::Dependency < BasicObject
   def initialize(name, blueprint_name = name, **options)
     @name = name
@@ -9,7 +10,7 @@ class BlueprintsBoy::Dependency < BasicObject
 
   def to_proc
     name, options, registry, blueprint_name = @name, @options, @registry, @blueprint_name
-    ::Proc.new do
+    ::Proc.new do # rubocop:disable Style/Proc
       build blueprint_name => options
       registry.inject(blueprint_data(name)) do |value, (method, args, block)|
         value.send(method, *args, &block)

@@ -6,4 +6,4 @@ gem "activerecord", "~> 5.0.0"
 gem "database_cleaner-active_record"
 gem "pg", "~> 0.18"
 
-gemspec :path => "../"
+gemspec path: "../"

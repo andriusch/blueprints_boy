@@ -19,7 +19,7 @@ describe BlueprintsBoy::Manager do
 
     it 'does not build same blueprint twice' do
       expect(env).to receive(:autoset).once
-      subject.build(env, [:blueprint1, :blueprint1])
+      subject.build(env, %i[blueprint1 blueprint1])
     end
 
     it 'uses update strategy if options are present and blueprint is already built' do
@@ -41,7 +41,7 @@ describe BlueprintsBoy::Manager do
       blueprint2.dependencies |= [:blueprint1]
       blueprints.set blueprint2
       subject.build env, [:blueprint2]
-      expect(subject.registry.built.to_a).to eq([:blueprint2, :blueprint1])
+      expect(subject.registry.built.to_a).to eq(%i[blueprint2 blueprint1])
     end
 
     it 'allows passing options' do
@@ -52,7 +52,7 @@ describe BlueprintsBoy::Manager do
 
     it 'returns results' do
       blueprints.set(blueprint2)
-      expect(subject.build(env, [:blueprint1, :blueprint2 => {attr: 'val'}])).to eq([mock1, mock2])
+      expect(subject.build(env, [:blueprint1, {:blueprint2 => {attr: 'val'}}])).to eq([mock1, mock2])
     end
 
     it 'returns 1 result if only one blueprint was built' do
