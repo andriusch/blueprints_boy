@@ -22,6 +22,6 @@ module BlueprintsBoy::MinitestHelper
   end
 end
 
-MiniTest::Unit::TestCase.send :include, BlueprintsBoy::Helper, BlueprintsBoy::MinitestHelper if defined?(MiniTest::Unit::TestCase)
-MiniTest::Test.send :include, BlueprintsBoy::Helper, BlueprintsBoy::MinitestHelper if defined?(MiniTest::Test)
+MiniTest::Unit::TestCase.include BlueprintsBoy::Helper, BlueprintsBoy::MinitestHelper if defined?(MiniTest::Unit::TestCase)
+MiniTest::Test.include BlueprintsBoy::Helper, BlueprintsBoy::MinitestHelper if defined?(MiniTest::Test)
 MiniTest::Spec.extend BlueprintsBoy::MinitestHelper::ClassMethods if defined?(MiniTest::Spec)
