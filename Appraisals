@@ -8,7 +8,7 @@
   end
 end
 
-%w[6.0 6.1].each do |version|
+%w[6.0 6.1 7.0].each do |version|
   appraise "ar#{version}" do
     gem 'activerecord', "~> #{version}.0"
     gem 'database_cleaner-active_record'
@@ -16,7 +16,7 @@ end
   end
 end
 
-%w[5 6 7].each do |version|
+%w[5 6 7 8].each do |version|
   appraise "mongoid#{version}" do
     gem 'bson_ext'
     gem 'database_cleaner-mongoid'

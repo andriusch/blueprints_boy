@@ -4,6 +4,9 @@ AllCops:
   TargetRubyVersion: 2.4
   DisplayCopNames: true
 
+Gemspec/DevelopmentDependencies:
+  EnforcedStyle: gemspec
+
 Layout/LineLength:
   Enabled: false
 
